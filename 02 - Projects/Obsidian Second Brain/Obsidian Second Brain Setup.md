@@ -1,52 +1,23 @@
-\---
 
+---
 type: project
-
 status: active
+priority: high
+updated: 2026-07-22
 
-created: 2026-07-22
+# Obsidian Second Brain Setup
 
-\---
+## Objective
 
+Build a professional Second Brain connected to GitHub and Codex.
 
+## Tasks
 
-\# Obsidian Second Brain Setup
+- [x] Create Obsidian vault
+- [x] Connect vault to GitHub
+- [x] Add templates
+- [x] Install plugins
+- [x] Build dashboard
+- [ ] Connect the vault to Codex
 
-
-
-\## Objective
-
-
-
-Create a professional knowledge system connected to GitHub and usable by Codex.
-
-
-
-\## Completed
-
-
-
-\- \[x] Created Obsidian vault
-
-\- \[x] Initialized Git
-
-\- \[x] Created private GitHub repository
-
-\- \[x] Pushed vault to GitHub
-
-\- \[x] Created folder structure
-
-\- \[ ] Create templates
-
-\- \[ ] Configure Obsidian
-
-\- \[ ] Connect Codex
-
-
-
-\## Next Action
-
-
-
-Create professional templates.
 
