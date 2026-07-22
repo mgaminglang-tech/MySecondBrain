@@ -1,0 +1,11 @@
+# Windows files
+Thumbs.db
+desktop.ini
+
+# Obsidian temporary files
+.obsidian/cache/
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Obsidian trash
+.trash/
