@@ -34,6 +34,8 @@ The workflow demonstrates that the connected n8n MCP can create and validate a c
 
 The sample Access test completed successfully in manual execution `6947`. The observed category was `Access`, confidence was `0.95`, and `needs_human_review` was `false`.
 
+Both the Access and Refund Request branches were tested successfully. The Refund Request test returned category `Refund Request`, confidence `0.95`, and `needs_human_review: true`.
+
 The workflow remains inactive and has not been published for production execution.
 
 ## Output Fields
@@ -47,7 +49,7 @@ The workflow remains inactive and has not been published for production executio
 
 ## Next Action
 
-- [ ] Run the Refund Request branch test and verify that `needs_human_review` is `true`.
+- [x] Run the Refund Request branch test and verify that `needs_human_review` is `true`.
 
 ## Related Notes
 

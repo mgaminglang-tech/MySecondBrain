@@ -52,25 +52,30 @@ tags:
 - [x] No credentials were used.
 - [x] Workflow remained inactive after inspection.
 
-## Next Test
+## Refund Request Test
 
-The next test is the Refund Request branch.
+The Refund Request branch test passed successfully.
 
-Suggested test input:
+### Observed Result
 
 ```json
 {
-  "name": "Mervin",
-  "message": "I would like a refund for my payment"
+  "category": "Refund Request",
+  "confidence": 0.95,
+  "needs_human_review": true
 }
 ```
 
-Expected assertions:
+### Verification
 
-- [ ] Category is `Refund Request`.
-- [ ] Confidence is `0.95`.
-- [ ] `needs_human_review` is `true`.
-- [ ] Workflow remains inactive.
+- [x] Category is `Refund Request`.
+- [x] Confidence is `0.95`.
+- [x] `needs_human_review` is `true`.
+- [x] Workflow remains inactive.
+
+## Test Coverage Summary
+
+Both the Access and Refund Request branches were tested successfully.
 
 ## Related Notes
 

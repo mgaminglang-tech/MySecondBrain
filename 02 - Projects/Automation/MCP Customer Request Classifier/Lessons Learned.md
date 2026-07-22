@@ -30,10 +30,11 @@ tags:
 - Node-level and workflow-level validation should pass before workflow creation.
 - Post-creation inspection should confirm node count, connections, credential usage, and inactive state.
 - A successful manual test does not require publishing or activating the workflow.
+- Both the Access and Refund Request branches were tested successfully while the workflow remained inactive.
 
-## Next Learning Goal
+## Verified Branches
 
-Run the Refund Request branch test and verify that the human-review safeguard is enabled only for that category.
+The Access branch correctly avoided human review, while the Refund Request branch correctly enabled the human-review safeguard.
 
 ## Related Notes
 
