@@ -16,66 +16,77 @@ tags:
 
 - Business problem: Manual completeness review, qualification, and forwarding slows lead handling and creates inconsistent decisions.
 - Current process: A salesperson reviews each lead and decides what to do.
-- Desired outcome: Prepare a consistent qualification result, storage record, and internal notification.
-- Stakeholders: Sales operations, sales representatives, project owner, automation maintainer, and data owner.
-- Decision owner: To be confirmed by Demo Sales Company.
-- Expected volume and frequency: Unknown; must be confirmed.
-- Time-sensitive steps: Lead response target is unknown; must be confirmed.
+- Desired v0.1 outcome: Return a consistent, side-effect-free qualification result plus prepared routing, storage, and notification payloads.
+- Stakeholders: Project Owner, Automation Engineer, and future sales operations users.
+- Decision owners: Project Owner and Automation Engineer.
+- Expected DEV volume: Up to 100 dummy test leads per day.
+- Processing target: Under two seconds per lead.
 
 ## Scope
 
 ### Included
 
-- Dummy manual inputs in DEV.
-- Normalization, validation, scoring, status assignment, storage preparation, notification preparation, and final output.
-- Proposed lead fields: `lead_id`, `submitted_at`, `full_name`, `email`, `phone`, `company`, `job_title`, `region`, `product_interest`, `budget_band`, `purchase_timeframe`, `need_summary`, `consent_to_contact`, and `source`.
-- Explainable score breakdown and reason codes.
+- Manual Trigger and dummy data in an inactive DEV workflow.
+- Normalization, validation, scoring, status assignment, queue routing, payload preparation, and final output.
+- Deterministic `lead_id` and email-derived `idempotency_key`.
+- Explainable validation, normalization, scoring, assignment, and review reason codes.
 
 ### Not Included
 
-- Live capture, enrichment, CRM synchronization, storage writes, notification delivery, dashboards, or production deployment.
-- Automated assignment until routing rules are approved.
-- Processing real personal or client data during planning or DEV testing.
+- Airtable or Google Sheets writes.
+- Email or Telegram sends.
+- Historical duplicate lookup or persistent state.
+- External API retries, concurrency controls, automatic triggers, STAGING, PROD, enrichment, or CRM synchronization.
+- Real personal or client data.
 
 ## Functional Requirements
 
 | ID | Requirement | Priority | Acceptance criterion | Owner |
 |---|---|---|---|---|
-| FR-001 | Accept one dummy lead through Manual Trigger and Set Sample Lead. | high | A sanitized fixture reaches Normalize Input with the documented fields. | Developer |
-| FR-002 | Normalize whitespace, email case, phone formatting, enums, booleans, and missing values. | high | Equivalent inputs produce a consistent normalized schema. | Developer |
-| FR-003 | Validate `full_name`, `email`, `company`, `product_interest`, and `consent_to_contact`. | high | Output includes `is_valid`, `missing_fields`, and `validation_errors`. | Project owner |
-| FR-004 | Reject malformed email and unsupported enum values. | high | Invalid values receive explicit reason codes and no qualified status. | Developer |
-| FR-005 | Calculate a deterministic score from 0–100 and return a score breakdown. | high | Total equals the sum of approved rule points and stays within range. | Project owner |
-| FR-006 | Assign `invalid`, `qualified`, `nurture`, or `unqualified`. | high | Status follows validation and approved score thresholds. | Project owner |
-| FR-007 | Recommend an assignment target using an approved routing table. | medium | Output records an owner or `UNASSIGNED_REVIEW_REQUIRED`; no silent fallback occurs. | Sales operations |
-| FR-008 | Prepare a storage record without writing it. | high | Storage payload contains normalized fields, score, reasons, status, routing, and timestamps. | Developer |
-| FR-009 | Prepare an internal notification without sending it. | high | Notification payload contains a subject/title, concise message, severity, recipient role, and lead reference. | Developer |
-| FR-010 | Return a final audit-friendly object. | high | Final output preserves validation, scoring, routing, and both prepared payloads. | Developer |
-| FR-011 | Identify duplicates before future side effects. | medium | Proposed duplicate key and behavior are documented and testable. | Project owner |
+| FR-001 | Accept one complete dummy lead through Manual Trigger and Set Sample Lead. | high | One object reaches Normalize Input; no external trigger exists. | Automation Engineer |
+| FR-002 | Normalize approved string and enum fields without inventing missing values or coercing invalid types. | high | Output follows the normalization rules below and emits warning codes. | Automation Engineer |
+| FR-003 | Validate every required input against the approved contract. | high | Output contains `validation_status` and machine-readable `validation_errors`. | Project Owner |
+| FR-004 | Generate `lead_id` and `idempotency_key`. | high | Key equals `email:<normalized_email>`; no lookup is performed. | Automation Engineer |
+| FR-005 | Score only valid leads using the approved 100-point model. | high | Score equals the sum of five rule results and includes exact reason codes. | Project Owner |
+| FR-006 | Assign `invalid`, `qualified`, `nurture`, or `unqualified`. | high | Status follows validation first, then the approved score ranges. | Project Owner |
+| FR-007 | Route by normalized region. | high | Approved regions map to the exact queue; unsupported or missing regions use General Sales Queue and human review. | Project Owner |
+| FR-008 | Prepare a destination-neutral storage payload without writing it. | high | `operation` is `prepare_only` and `write_requested` is `false`. | Automation Engineer |
+| FR-009 | Prepare a plain-text notification payload without sending it. | high | `operation` is `prepare_only`, `send_requested` is `false`, and no channel credential is referenced. | Automation Engineer |
+| FR-010 | Return the complete final output contract. | high | All required top-level fields in [[Architecture]] are present with approved types. | Automation Engineer |
+| FR-011 | Remain inactive and side-effect free. | high | Execution uses dummy data, no credentials, no persistent lookup, no write, and no send. | Project Owner |
 
-## Data Requirements
+## Required Input Contract
 
-| Field | Classification | Required | Validation or normalization |
-|---|---|---|---|
-| `lead_id` | internal identifier | generated if absent | Stable unique value; generation method to be approved |
-| `submitted_at` | operational metadata | yes in final output | ISO 8601 timestamp |
-| `full_name` | personal data | yes | Trim; collapse repeated whitespace |
-| `email` | personal data | yes | Trim; lowercase; basic format validation |
-| `phone` | personal data | no | Trim; preserve country code; do not invent missing digits |
-| `company` | business contact data | yes | Trim; collapse repeated whitespace |
-| `job_title` | business contact data | no | Trim; map only approved title categories |
-| `region` | business contact data | no | Normalize to approved routing values |
-| `product_interest` | business intent | yes | Must match approved product list |
-| `budget_band` | commercial intent | no | Must match approved bands |
-| `purchase_timeframe` | commercial intent | no | Must match approved bands |
-| `need_summary` | free text | no | Trim; cap length; do not infer sensitive facts |
-| `consent_to_contact` | consent | yes | Explicit boolean; missing is invalid |
-| `source` | attribution | no | Normalize to approved source values |
+All fields are required. Invalid types are not coerced into valid types.
 
-- DEV: dummy or sanitized data only.
-- Optional STAGING: dummy/sanitized data unless the data owner explicitly approves another controlled dataset.
-- PROD: minimum necessary real data only after privacy, retention, and access approval.
-- Retention and deletion requirements: To be confirmed.
+| Field | Required type and rule | Normalization |
+|---|---|---|
+| `full_name` | String, 2–100 characters after trimming | Trim and collapse repeated internal whitespace |
+| `email` | String, valid email, maximum 254 characters | Trim and lowercase |
+| `company` | String, 2–120 characters after trimming | Trim and collapse repeated internal whitespace |
+| `role` | `owner`, `founder`, `executive`, `director`, `manager`, `staff`, or `other` | Trim and lowercase before enum validation |
+| `budget_usd` | Number from 0 through 1,000,000 | No string-to-number coercion |
+| `timeframe_days` | Integer from 1 through 365 | No string-to-number coercion |
+| `product_interest` | `automation`, `website`, `ai-agent`, `consulting`, or `other` | Trim and lowercase |
+| `region` | `APAC`, `North America`, `Europe`, or `Other` | Trim and case-insensitively canonicalize approved values |
+| `message` | String, 20–2,000 characters after trimming | Trim; preserve meaningful internal whitespace |
+| `consent` | Boolean literal `true` | No truthy or string coercion |
+| `source` | `website`, `referral`, `email`, `social`, or `other` | Trim and lowercase |
+| `submitted_at` | Valid ISO-8601 UTC timestamp ending in `Z` | Parse and output canonical UTC ISO string |
+
+Character counts use Unicode characters after the documented trimming step.
+
+## Validation Contract
+
+`validation_status` is `valid` or `invalid`. Each error is:
+
+```json
+{"field":"FIELD_NAME","code":"REASON_CODE","message":"SAFE_DESCRIPTION"}
+```
+
+Approved reason codes are `REQUIRED_FIELD`, `INVALID_TYPE`, `STRING_LENGTH_OUT_OF_RANGE`, `INVALID_EMAIL_FORMAT`, `INVALID_ENUM`, `NUMBER_OUT_OF_RANGE`, `INTEGER_REQUIRED`, `INVALID_TIMESTAMP_UTC`, and `CONSENT_NOT_TRUE`.
+
+Normalization warnings use `{field, code}` with approved codes `TRIMMED_WHITESPACE`, `COLLAPSED_WHITESPACE`, `LOWERCASED_VALUE`, `CANONICALIZED_ENUM`, `CANONICALIZED_TIMESTAMP`, `POTENTIAL_SPREADSHEET_FORMULA`, and `POTENTIAL_CHANNEL_MARKUP`.
 
 ## Proposed Scoring Rules
 
@@ -83,12 +94,24 @@ Scoring applies only after validation output exists. An invalid lead remains `in
 
 | Rule | Condition | Points |
 |---|---|---:|
-| Email type | Business-domain email | 15 |
-| Company completeness | Non-empty company after validation | 10 |
-| Role fit | Approved decision-maker title category | 20 |
-| Budget fit | High = 20; medium = 12; low = 5; unknown = 0 | 0–20 |
-| Purchase timeframe | 0–30 days = 20; 31–90 days = 12; 91+ days = 5; unknown = 0 | 0–20 |
-| Need clarity | Specific need summary meeting approved minimum quality rule | 15 |
+| Role | `owner`, `founder`, `executive`, or `director` = 25; `manager` = 15; `staff` or `other` = 5 | 5–25 |
+| Budget | 5,000+ = 25; 2,000–4,999 = 15; 500–1,999 = 5; below 500 = 0 | 0–25 |
+| Timeframe | 1–30 = 20; 31–60 = 15; 61–90 = 10; over 90 = 5 | 5–20 |
+| Need clarity | At least 40 characters and contains an approved keyword = 20; otherwise = 5 | 5 or 20 |
+| Business email | Domain is not on the free-email list = 10; listed free-email domain = 0 | 0 or 10 |
+
+Approved business-need keywords, matched case-insensitively as whole words: `automation`, `automate`, `workflow`, `integration`, `leads`, `sales`, `support`, `reporting`, `booking`, `operations`.
+
+Approved free-email domains, matched exactly after lowercasing: `gmail.com`, `yahoo.com`, `outlook.com`, `hotmail.com`, `icloud.com`.
+
+Approved score reason codes:
+
+- Role: `ROLE_SENIOR_25`, `ROLE_MANAGER_15`, `ROLE_OTHER_5`
+- Budget: `BUDGET_5000_PLUS_25`, `BUDGET_2000_4999_15`, `BUDGET_500_1999_5`, `BUDGET_BELOW_500_0`
+- Timeframe: `TIMEFRAME_1_30_20`, `TIMEFRAME_31_60_15`, `TIMEFRAME_61_90_10`, `TIMEFRAME_91_365_5`
+- Need: `NEED_CLEAR_20`, `NEED_NOT_CLEAR_5`
+- Email: `BUSINESS_EMAIL_10`, `FREE_EMAIL_0`
+- Invalid input: `SCORING_SKIPPED_INVALID_INPUT`
 
 Proposed statuses:
 
@@ -97,48 +120,57 @@ Proposed statuses:
 - `nurture`: Valid and score is 40–69.
 - `unqualified`: Valid and score is 0–39.
 
-The business-domain list, title categories, budget bands, timeframe bands, and need-quality rule require approval before implementation.
+For invalid leads, `score` is `null`, `score_reasons` contains only `SCORING_SKIPPED_INVALID_INPUT`, and `needs_human_review` is `true`.
+
+Because every valid lead earns at least 15 points and each scoring increment is divisible by five, some values inside the status ranges are not attainable. The ranges remain authoritative; boundary tests use attainable values 70, 65, 40, and 35.
+
+## Routing and Review Contract
+
+| Normalized region | Assigned queue | Assignment reason |
+|---|---|---|
+| `APAC` | `APAC Sales Queue` | `REGION_APAC` |
+| `North America` | `North America Sales Queue` | `REGION_NORTH_AMERICA` |
+| `Europe` | `Europe Sales Queue` | `REGION_EUROPE` |
+| `Other` | `General Sales Queue` | `REGION_OTHER` |
+| Missing or unsupported | `General Sales Queue` | `REGION_FALLBACK_REVIEW` |
+
+Missing or unsupported routing is also invalid under the input contract and sets `needs_human_review: true`. All other valid leads set `needs_human_review: false`.
 
 ## Non-Functional Requirements
 
-- Determinism: Same normalized input and rule version must produce the same result.
-- Auditability: Include `rule_version`, score breakdown, reason codes, and processing timestamp.
-- Performance: Target to be confirmed after expected volume is known.
-- Security: Least-privilege credentials; no secret values in notes, nodes, logs, or exports.
-- Privacy: Minimize personal data and configure execution retention before live use.
-- Reliability: Future side effects require idempotency, bounded retries, timeouts, and failure alerts.
-- Maintainability: Rules and routing should be centralized and documented.
+- Determinism: Same normalized input and workflow version produces the same validation, score, status, queue, and payload content except `processed_at`.
+- Performance: Under two seconds per lead at up to 100 manual DEV test leads per day.
+- Security: No credentials, integrations, real client data, or side effects in v0.1.
+- Privacy: Dummy data only; DEV execution logs retained for seven days.
+- Recovery: Simulated RTO four hours and simulated RPO 24 hours.
+- Ownership: Project Owner and Automation Engineer approve and operationally review v0.1.
 
 ## Error and Exception Requirements
 
-- Missing or invalid input: Return `invalid` with explicit errors; do not prepare a sendable sales alert.
-- Empty input: Return a controlled invalid result rather than crashing.
-- Duplicate input: Flag for review or suppress side effects according to the approved duplicate policy.
-- Unsupported enum: Preserve the sanitized raw value only if approved; otherwise return an error code.
-- Storage failure: Do not report success; retain safe recovery context and alert the operations role.
-- Notification failure after storage: Mark partial failure and allow a notification-only retry without duplicating storage.
-- Routing failure: Set `UNASSIGNED_REVIEW_REQUIRED`.
+- Missing or invalid input: Return a complete final object with `invalid`, `score: null`, validation errors, General Sales Queue where routing is unavailable, and human review.
+- Empty input: Return controlled `REQUIRED_FIELD` errors for all required fields.
+- Transformation exception: Stop the manual DEV execution and record a sanitized issue; v0.1 has no automatic retry.
+- Potential spreadsheet formula or channel markup: Preserve the normalized value as data, emit a normalization warning, and set the relevant payload escape flag.
+- Historical duplicate lookup, storage failure, delivery failure, retries, concurrency, and reconciliation are deferred to v0.2.
 
 ## Success and Acceptance Criteria
 
-- [ ] Demo Sales Company approves required fields, scoring rules, thresholds, statuses, and routing logic.
-- [ ] All critical DEV cases in [[Test Plan]] pass with evidence.
-- [ ] Invalid leads never receive `qualified`.
-- [ ] Every score includes a correct breakdown and approved rule version.
-- [ ] No duplicate storage or notification side effect occurs during retry testing.
-- [ ] DEV uses only dummy or sanitized data and separate non-production credentials.
-- [ ] Storage and notification integrations remain disabled or absent until explicitly authorized.
-- [ ] Security, backup, rollback, monitoring, and ownership are documented before PROD approval.
+- [ ] Every executable v0.1 case in [[Test Plan]] passes with recorded evidence.
+- [ ] Exact scoring fixtures return the documented totals and reason codes.
+- [ ] Invalid fixtures return `score: null`, machine-readable errors, and human review.
+- [ ] Every final output contains all required top-level fields and correct types.
+- [ ] Every prepared storage payload has `write_requested: false`.
+- [ ] Every prepared notification payload has `send_requested: false`.
+- [ ] No credentials, persistent lookup, external calls, STAGING, or PROD resources exist in v0.1.
+- [ ] Measured DEV processing time is under two seconds per lead.
+- [ ] Project Owner and Automation Engineer record their review decision.
 
-## Open Questions
+## Deferred to v0.2
 
-- What are the approved product, region, title, budget, timeframe, and lead-source values?
-- Should a free-email domain reduce points, earn zero, or disqualify?
-- Should phone be required for qualified leads?
-- How should duplicate leads be merged, updated, ignored, or alerted?
-- Should invalid leads be stored for audit, and for how long?
-- What assignment rule and fallback owner should apply?
-- Which system and channel will be selected for future integrations?
+- Select Airtable or Google Sheets and define schemas, escaping, upsert, and historical duplicate behavior.
+- Select Email or Telegram and define channel escaping, recipients, delivery evidence, and retries.
+- Add persistent duplicate lookup, concurrency control, side effects, external API retry policy, reconciliation, and integration-specific error handling.
+- Decide whether v0.2 needs STAGING and PROD.
 
 ## Related Notes
 
@@ -147,4 +179,3 @@ The business-domain list, title categories, budget bands, timeframe bands, and n
 - [[Test Plan]]
 - [[Credentials Checklist]]
 - [[Known Limitations]]
-

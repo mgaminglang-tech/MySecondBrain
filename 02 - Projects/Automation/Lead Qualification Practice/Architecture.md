@@ -18,11 +18,11 @@ Define the proposed n8n workflow, data contracts, environment boundaries, reliab
 
 ## Environment Design
 
-| Environment | Proposed workflow name | Data | Credentials | Activation |
+| Environment | v0.1 status | Workflow name | Data | Credentials |
 |---|---|---|---|---|
-| DEV | `DEV - Demo Sales Company - Lead Qualification Practice` | Dummy or sanitized | Test-only, least privilege | Inactive except controlled manual tests |
-| STAGING | `STAGING - Demo Sales Company - Lead Qualification Practice` | Optional; dummy/sanitized by default | Separate non-production | Only if approved and justified |
-| PROD | `PROD - Demo Sales Company - Lead Qualification` | Approved minimum necessary data | Separate production credentials | Explicit approval and authorized operator only |
+| DEV | Planned, inactive | `DEV - Demo Sales Company - Lead Qualification Practice` | Dummy only | None |
+| STAGING | Not used | Not applicable | None | None |
+| PROD | Not used | Not applicable | None | None |
 
 ## Proposed Workflow Architecture
 
@@ -38,14 +38,13 @@ flowchart LR
     H --> I["Final Output"]
 ```
 
-Future integrations would be added after the preparation nodes:
+The following is explicitly deferred to v0.2 and is not part of the v0.1 graph:
 
 ```mermaid
 flowchart LR
-    A["Prepare Storage Record"] -. "future approved integration" .-> B["Airtable or Google Sheets"]
-    C["Prepare Internal Notification"] -. "future approved integration" .-> D["Email or Telegram"]
-    B --> E["Final Output"]
-    D --> E
+    A["Prepared Storage Payload"] -. "v0.2" .-> B["Airtable or Google Sheets"]
+    C["Prepared Notification Payload"] -. "v0.2" .-> D["Email or Telegram"]
+    E["Normalized Email Key"] -. "v0.2" .-> F["Persistent Duplicate Lookup"]
 ```
 
 ## Node Responsibilities
@@ -53,97 +52,151 @@ flowchart LR
 | Order | Node | Proposed type | Responsibility | Failure behavior |
 |---|---|---|---|---|
 | 1 | Manual Trigger | Manual Trigger | Start controlled DEV execution. | No automatic retry. |
-| 2 | Set Sample Lead | Edit Fields (Set) | Supply one dummy fixture. | Stop if fixture is structurally unusable. |
-| 3 | Normalize Input | Code or Edit Fields | Normalize strings, enums, booleans, email, phone, and timestamps. | Return safe normalization errors. |
-| 4 | Validate Required Fields | Code | Produce validity, missing fields, and validation errors. | Continue with `invalid` context. |
-| 5 | Calculate Lead Score | Code | Apply approved `rule_version` and emit breakdown. | Score defaults must not hide rule errors; route to failure handling. |
-| 6 | Assign Qualification Status | Code or Edit Fields | Apply validation-first status thresholds and proposed routing. | Use `UNASSIGNED_REVIEW_REQUIRED` if routing is unresolved. |
-| 7 | Prepare Storage Record | Edit Fields | Create destination-neutral record payload; do not write. | Return payload validation errors. |
-| 8 | Prepare Internal Notification | Edit Fields | Create destination-neutral message payload; do not send. | Mark `notification_required: false` where appropriate. |
+| 2 | Set Sample Lead | Edit Fields (Set) | Supply one complete dummy fixture using the approved input contract. | Stop only for an unexpected node exception. |
+| 3 | Normalize Input | Code | Normalize approved strings, enums, email, and UTC timestamp; generate warnings, `lead_id`, and `idempotency_key`. | Preserve invalid values for validation; do not coerce types. |
+| 4 | Validate Required Fields | Code | Apply every required-field, type, format, enum, range, consent, and timestamp rule. | Continue with complete invalid context. |
+| 5 | Calculate Lead Score | Code | Score valid leads and emit exact reason codes; invalid leads receive `null`. | Unexpected exception stops the DEV execution. |
+| 6 | Assign Qualification Status | Code | Assign status, queue, assignment reason, and human-review flag. | Unsupported routing uses General Sales Queue and human review. |
+| 7 | Prepare Storage Record | Edit Fields or Code | Create a destination-neutral `prepare_only` payload. | `write_requested` is always `false`. |
+| 8 | Prepare Internal Notification | Edit Fields or Code | Create a plain-text `prepare_only` payload. | `send_requested` is always `false`. |
 | 9 | Final Output | Edit Fields | Return one consolidated audit object. | Do not claim downstream success. |
 
 ## Data Flow
 
 | Stage | Key output |
 |---|---|
-| Normalized | Canonical lead fields and `normalization_warnings` |
-| Validated | `is_valid`, `missing_fields`, `validation_errors` |
-| Scored | `score_total`, `score_breakdown`, `rule_version`, `score_reasons` |
-| Classified | `lead_status`, `assignment_target`, `assignment_reason` |
-| Storage-ready | Destination-neutral field map and idempotency key |
-| Notification-ready | Channel-neutral subject/title, message, priority, recipient role |
-| Final | All above plus `processed_at`, environment, and workflow version |
+| Normalized | Canonical input fields, `lead_id`, `idempotency_key`, and `normalization_warnings` |
+| Validated | `validation_status` and `validation_errors` |
+| Scored | `score` and five reason codes, or `null` plus invalid-input reason |
+| Classified | `qualification_status`, `assigned_queue`, `assignment_reason`, and `needs_human_review` |
+| Storage-ready | Destination-neutral record with `operation: prepare_only` and `write_requested: false` |
+| Notification-ready | Plain-text object with `operation: prepare_only` and `send_requested: false` |
+| Final | The exact final output contract below |
 
-## Proposed Final Output Shape
+## Final Output Contract
+
+Required top-level keys and types:
+
+| Key | Type |
+|---|---|
+| `lead_id` | string |
+| `idempotency_key` | string |
+| `normalized_lead` | object containing every approved input field |
+| `validation_status` | `valid` or `invalid` |
+| `validation_errors` | array of `{field, code, message}` |
+| `normalization_warnings` | array of `{field, code}` |
+| `score` | number from 0–100 for valid leads; `null` for invalid |
+| `score_reasons` | array of machine-readable strings |
+| `qualification_status` | `qualified`, `nurture`, `unqualified`, or `invalid` |
+| `assigned_queue` | approved queue string |
+| `assignment_reason` | machine-readable string |
+| `needs_human_review` | Boolean |
+| `storage_payload` | object |
+| `notification_payload` | object |
+| `processed_at` | canonical ISO-8601 UTC string |
+| `workflow_version` | `v0.1.0` |
 
 ```json
 {
-  "environment": "DEV",
-  "workflow_version": "v0.1.0",
-  "rule_version": "score-v0.1-draft",
-  "lead": {
-    "lead_id": "TEST-LEAD-001",
-    "full_name": "Jordan Test",
-    "email": "jordan@example.test",
-    "company": "Example Demo Co"
+  "lead_id": "DEV-alex.rivera@acme.example-20260723T120000Z",
+  "idempotency_key": "email:alex.rivera@acme.example",
+  "normalized_lead": {
+    "full_name": "Alex Rivera",
+    "email": "alex.rivera@acme.example",
+    "company": "Acme Demo Company",
+    "role": "owner",
+    "budget_usd": 5000,
+    "timeframe_days": 30,
+    "product_interest": "automation",
+    "region": "APAC",
+    "message": "We need workflow automation for sales reporting operations.",
+    "consent": true,
+    "source": "referral",
+    "submitted_at": "2026-07-23T12:00:00.000Z"
   },
-  "validation": {
-    "is_valid": true,
-    "missing_fields": [],
-    "validation_errors": []
+  "validation_status": "valid",
+  "validation_errors": [],
+  "normalization_warnings": [],
+  "score": 100,
+  "score_reasons": ["ROLE_SENIOR_25","BUDGET_5000_PLUS_25","TIMEFRAME_1_30_20","NEED_CLEAR_20","BUSINESS_EMAIL_10"],
+  "qualification_status": "qualified",
+  "assigned_queue": "APAC Sales Queue",
+  "assignment_reason": "REGION_APAC",
+  "needs_human_review": false,
+  "storage_payload": {
+    "operation": "prepare_only",
+    "write_requested": false,
+    "requires_destination_escaping": false
   },
-  "qualification": {
-    "score_total": 0,
-    "score_breakdown": {},
-    "lead_status": "planned-rule-not-executed"
+  "notification_payload": {
+    "operation": "prepare_only",
+    "send_requested": false,
+    "content_type": "text/plain",
+    "recipient_queue": "APAC Sales Queue",
+    "requires_channel_escaping": false
   },
-  "routing": {
-    "assignment_target": "UNASSIGNED_REVIEW_REQUIRED"
-  },
-  "storage_record": {},
-  "internal_notification": {},
-  "processed_at": "YYYY-MM-DDTHH:mm:ss.sssZ"
+  "processed_at": "YYYY-MM-DDTHH:mm:ss.sssZ",
+  "workflow_version": "v0.1.0"
 }
 ```
 
-This example is a schema illustration, not an execution result.
+This is an exact planned fixture expectation except for runtime-generated `processed_at`; it is not an execution result.
+
+`lead_id` uses `DEV-<normalized_email>-<submitted_at compact UTC>`. The dummy-only v0.1 format is deterministic and is not approved for production identity.
+
+## Prepared Payload Contracts
+
+`storage_payload` contains:
+
+- `operation: prepare_only`
+- `write_requested: false`
+- `destination: null`
+- `requires_destination_escaping`: Boolean
+- `record`: lead ID, idempotency key, normalized lead, validation status/errors, score/reasons, qualification status, queue/reason, review flag, processed timestamp, and workflow version
+
+`notification_payload` contains:
+
+- `operation: prepare_only`
+- `send_requested: false`
+- `channel: null`
+- `content_type: text/plain`
+- `notification_required`: `true` only for qualified leads or leads needing human review
+- `recipient_queue`: the assigned queue
+- `priority`: `high` for qualified or human-review leads, `normal` for nurture, and `low` for unqualified
+- `subject`: `Lead <qualification_status>: <company> [<lead_id>]`
+- `message`: generated summary of lead ID, company, product interest, score or `not-scored`, status, queue, and review flag
+- `requires_channel_escaping`: Boolean
+
+The raw lead `message` is excluded from the notification payload. Formula-risk detection applies when a trimmed string begins with `=`, `+`, `-`, or `@`. Channel-markup detection applies to `<`, `>`, `&`, backticks, square brackets, asterisks, and underscores. v0.1 emits warnings and escape flags but performs no destination-specific rendering.
 
 ## Reliability Design
 
-- Validation occurs before classification.
-- Use a stable lead identifier or normalized-email-based idempotency key only after business approval.
-- Future storage should use an upsert or duplicate check.
-- Future notification retries must not repeat storage writes.
-- Retries must be bounded and limited to transient integration failures.
-- Invalid input should produce a controlled final result.
-- Partial failures must record which side effect succeeded.
-- A separate error workflow or equivalent alert path is recommended before production.
+- Validation occurs before scoring and classification.
+- Invalid input returns a controlled object and skips scoring.
+- `idempotency_key` is generated but never looked up in v0.1.
+- Unexpected Code-node exceptions stop the manual execution; v0.1 has no automatic retries.
+- Destination and channel escape flags identify dangerous leading spreadsheet characters or markup.
+- Historical lookup, side-effect idempotency, retries, concurrency, partial-failure recovery, and error workflows are v0.2 concerns.
 
 ## Security and Privacy
 
-- Use minimum necessary fields.
-- Keep secrets only in n8n credentials; documentation contains names and placeholders only.
-- Mask or omit personal data from alerts and long-lived logs.
-- Configure execution-data retention by environment.
-- Restrict PROD access and keep credentials separate from DEV and STAGING.
+- Dummy data only and no credentials.
+- The notification payload omits the raw lead message.
+- DEV execution logs are retained for seven days.
+- No STAGING, PROD, external destination, or real client data is used.
 
 ## Observability
 
-- Proposed metadata: correlation ID, lead ID, workflow version, rule version, environment, status, processing timestamp, and safe error code.
-- Monitor invalid-rate spikes, qualification distribution changes, failures, duplicates, unassigned leads, and notification/storage divergence.
-- Owners and alert thresholds remain to be confirmed.
+- Record manual execution ID, lead ID, workflow version, status, processing duration, and safe error codes.
+- Review invalid results, fallback routing, warning flags, and executions over two seconds.
+- Project Owner and Automation Engineer perform the operational review.
 
-## Architecture Decisions Pending
+## Deferred v0.2 Architecture
 
-| Decision | Status |
-|---|---|
-| Airtable versus Google Sheets | pending |
-| Email versus Telegram | pending |
-| Scoring weights and thresholds | pending approval |
-| Routing method and fallback owner | pending |
-| Duplicate key and merge behavior | pending |
-| Optional STAGING requirement | pending |
-| Retention and execution logging | pending |
+- Airtable or Google Sheets adapter and historical duplicate lookup.
+- Email or Telegram adapter.
+- Persistent idempotency, upsert, concurrency, external retries, timeouts, partial-failure recovery, reconciliation, and error alerts.
+- Any STAGING or PROD topology and production-safe lead identifier.
 
 ## Related Notes
 
@@ -152,4 +205,3 @@ This example is a schema illustration, not an execution result.
 - [[Test Plan]]
 - [[Credentials Checklist]]
 - [[Backup and Restore]]
-

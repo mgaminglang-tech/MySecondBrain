@@ -19,67 +19,60 @@ Define proposed operational ownership and safe change control. No live service c
 
 | Responsibility | Primary owner | Backup owner |
 |---|---|---|
-| Workflow operations | to be confirmed | to be confirmed |
-| Scoring and status policy | Demo Sales Company sales owner | to be confirmed |
-| Sales routing table | Sales operations | to be confirmed |
-| Credentials | Service account owner | to be confirmed |
-| Data privacy and retention | Data owner | to be confirmed |
-| Incident response | Automation operations owner | to be confirmed |
+| Scope and business-rule approval | Project Owner | Automation Engineer |
+| Workflow build and manual DEV tests | Automation Engineer | Project Owner |
+| Scoring, status, and routing review | Project Owner | Automation Engineer |
+| Execution-log retention review | Automation Engineer | Project Owner |
+| Backup and simulated recovery review | Automation Engineer | Project Owner |
+| Issue acceptance | Project Owner | Automation Engineer |
 
 ## DEV Maintenance
 
-- Use dummy or sanitized data only.
+- Use dummy data only.
 - Make changes in an inactive DEV workflow.
 - Version scoring and routing changes.
 - Re-run affected and regression cases in [[Test Plan]].
 - Preserve a secret-free known-good export.
+- Keep credential and external-node counts at zero.
+- Retain DEV execution logs for seven days.
+- Review results against the under-two-second target.
 
-## Optional STAGING Maintenance
+## STAGING and PROD
 
-- Use only when adopted and documented.
-- Keep resources and credentials separate.
-- Rehearse material integration or recovery changes before production.
-
-## PROD Maintenance
-
-- Record the change request, impact, owner, and version.
-- Reproduce and verify in DEV first.
-- Update tests, issues, limitations, backup, and rollback notes.
-- Obtain explicit approval before modifying or activating PROD.
-- Deploy in a controlled window, smoke test, reconcile, and monitor.
+Not used in v0.1. Any future environment requires a separately approved v0.2 design.
 
 ## Proposed Monitoring
 
-- Failed and partial executions.
-- Invalid-rate spikes.
-- Qualification distribution changes after rule updates.
-- Duplicate detections and duplicate side-effect prevention.
-- Unassigned qualified leads.
-- Storage and notification delivery divergence.
-- Credential expiry and vendor/API changes.
+- Unexpected manual execution failures.
+- Validation results and fallback-routing cases.
+- Score and status distribution across dummy fixtures.
+- Normalization injection warnings.
+- Executions taking two seconds or more.
+- Retention configuration drift.
+- Any credential, external node, or activation drift.
 
 ## Suggested Routine
 
 | Activity | Suggested frequency | Evidence |
 |---|---|---|
-| Review failures and unassigned leads | daily on business days | Sanitized execution references |
-| Reconcile accepted leads with storage | daily | Count and exception report |
-| Review credential expiry | monthly | Access review record |
-| Verify backup freshness | before each release and monthly | Backup inventory |
-| Review scoring and routing performance | monthly initially | Approved aggregate report |
-| Test restore and alert path | quarterly or per policy | Test evidence |
-| Review retention and access | quarterly | Owner approval |
-
-Frequencies are recommendations pending service-volume and policy decisions.
+| Review manual DEV failures and fallback routes | After each test session | Dummy execution references |
+| Verify inactivity and zero credentials/external nodes | Before each test session | Review checklist |
+| Verify seven-day retention | Before first test and monthly while in use | Settings evidence |
+| Verify backup freshness | Before material change and at least every 24 hours during active development | Backup inventory |
+| Review scoring and routing results | After each rule change | Test evidence |
+| Simulate restore | Before v0.1 completion review | Restore evidence |
 
 ## Incident Response
 
-1. Contain harmful processing if authorized.
-2. Preserve sanitized evidence and note affected versions.
-3. Identify whether storage, notification, or both were affected.
-4. Prevent duplicate replay using the approved idempotency policy.
-5. Restore or fix in DEV, verify, then obtain PROD approval.
-6. Reconcile records and notifications after recovery.
+1. Stop manual testing and keep the workflow inactive.
+2. Preserve dummy-data evidence and note the affected version.
+3. Confirm no credential, external node, write, or send was introduced.
+4. Fix or restore in DEV and run affected regression cases.
+5. Project Owner and Automation Engineer review before testing resumes.
+
+## Deferred v0.2 Operations
+
+Credential rotation, vendor monitoring, persistent duplicate review, external retries, delivery/storage reconciliation, live incident response, STAGING, and PROD operations are deferred.
 
 ## Related Notes
 
@@ -87,4 +80,3 @@ Frequencies are recommendations pending service-volume and policy decisions.
 - [[Backup and Restore]]
 - [[Known Limitations]]
 - [[Client Handover]]
-

@@ -18,17 +18,18 @@ No workflow exists to back up or restore. This is a proposed procedure.
 
 ## Recovery Objectives
 
-- DEV: Preserve known-good development versions; targets to be defined.
-- STAGING: Optional and only if the environment is adopted.
-- PROD: Acceptable data loss and recovery time must be approved before deployment.
-- Recovery owner and backup storage location: To be assigned.
+- Scope: Inactive DEV v0.1 workflow and its secret-free documentation/export only.
+- Simulated RTO: Four hours.
+- Simulated RPO: 24 hours.
+- Recovery reviewers: Project Owner and Automation Engineer.
+- STAGING and PROD: Not used in v0.1.
+- External data recovery: Not applicable because v0.1 performs no writes or sends.
 
 ## Version Standard
 
 - `v0.1.0` — initial DEV version.
-- `v0.2.0` — DEV feature update.
-- `v0.2.1` — DEV bug fix.
-- `v1.0.0` — first approved production release.
+- `v0.1.x` — v0.1 DEV documentation or bug-fix revision.
+- `v0.2.0` — separately approved integration-development version.
 
 ## Backup Contents
 
@@ -38,6 +39,7 @@ No workflow exists to back up or restore. This is a proposed procedure.
 - [ ] Environment-specific resource references.
 - [ ] Approved requirements, scoring rule version, and routing version.
 - [ ] Test evidence, issues, limitations, deployment, and rollback notes.
+- [ ] Evidence that the workflow is inactive and has no credentials or external nodes.
 
 ## DEV Backup Procedure
 
@@ -47,41 +49,35 @@ No workflow exists to back up or restore. This is a proposed procedure.
 4. Store it in the approved backup location.
 5. Validate restore into a separate inactive DEV draft with dummy data.
 
-## Optional STAGING Backup Procedure
+## v0.1 Restore Procedure
 
-Follow the DEV procedure using separate STAGING references. Do not restore STAGING credentials from DEV exports.
+1. Stop manual testing and keep all copies inactive.
+2. Select the reviewed secret-free v0.1 export from no more than 24 hours before the last material change where available.
+3. Import as a separate inactive DEV draft.
+4. Confirm Manual Trigger is the only trigger.
+5. Confirm credential count and external-node count are both zero.
+6. Confirm workflow version, nodes, connections, score rules, routing rules, payload flags, and seven-day retention.
+7. Run the approved dummy smoke fixture.
+8. Record whether restoration completed within the simulated four-hour RTO.
 
-## PROD Backup and Restore Procedure
-
-1. Obtain explicit authorization.
-2. Export and verify the current PROD version before change.
-3. Preserve current scoring/routing configurations and resource mappings.
-4. Restore the selected backup as a separate inactive draft when possible.
-5. Reassign approved PROD credentials by name; never copy secret values into documentation.
-6. Review triggers, settings, retention, nodes, connections, resource IDs, and recipients.
-7. Validate with the approved sanitized smoke-test record.
-8. Activate only after explicit approval and monitor.
-
-## Data Reconciliation
-
-Workflow restoration does not automatically repair Airtable/Sheets records or resend notifications. A separate approved reconciliation must identify:
-
-- Leads accepted during the incident window.
-- Storage records created or missing.
-- Notifications sent, missing, or duplicated.
-- Safe replay candidates using the approved idempotency key.
+No storage or notification reconciliation is needed in v0.1 because there are no side effects.
 
 ## Restore Test Record
 
 - Result: not-tested
 - Evidence: none
-- Environment: not-applicable
+- Environment: DEV
+- Simulated RTO target: four hours
+- Simulated RPO target: 24 hours
 
 Do not change the result without execution evidence.
+
+## Deferred v0.2 Recovery
+
+External records, notifications, credentials, duplicate state, reconciliation, replay, STAGING, and PROD recovery require a separate v0.2 procedure.
 
 ## Related Notes
 
 - [[Deployment Checklist]]
 - [[Maintenance Guide]]
 - [[Issues and Fixes]]
-

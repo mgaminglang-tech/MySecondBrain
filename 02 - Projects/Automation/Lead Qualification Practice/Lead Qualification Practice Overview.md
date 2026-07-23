@@ -19,7 +19,7 @@ tags:
 
 ## Objective
 
-Plan an n8n practice automation that accepts a lead, checks completeness, calculates a transparent qualification score, assigns a status, prepares a storage-ready record, prepares an internal sales notification, and returns a final audit-friendly output.
+Plan an inactive DEV-only n8n practice automation that accepts one dummy lead, normalizes and validates it, calculates an approved qualification score, assigns a status and sales queue, prepares storage and notification payloads without side effects, and returns an audit-friendly final output.
 
 ## Business Problem
 
@@ -33,13 +33,13 @@ A documented, client-style automation design that can later be built and tested 
 
 ### Included
 
-- Manual test input for the initial workflow.
-- Input normalization and required-field validation.
-- Rule-based lead scoring and qualification status.
-- Proposed salesperson assignment fields.
-- Storage-ready and notification-ready payloads.
-- DEV, optional STAGING, and PROD planning.
-- Testing, credentials, deployment, backup, maintenance, limitations, and handover documentation.
+- Manual Trigger and one dummy lead per execution.
+- Exact input normalization and validation rules from [[Requirements]].
+- Deterministic scoring, qualification status, routing, and human-review flags.
+- `idempotency_key` generation from normalized email without a historical lookup.
+- Destination-neutral storage and notification payload preparation.
+- Final output conforming to the approved schema in [[Architecture]].
+- Inactive DEV workflow planning, testing, backup, and operational review.
 
 ### Not Included
 
@@ -48,6 +48,9 @@ A documented, client-style automation design that can later be built and tested 
 - Live lead-capture forms or webhooks.
 - Writing records to Airtable or Google Sheets.
 - Sending Email or Telegram notifications.
+- Historical duplicate lookup or persistent state.
+- External API retries, concurrency control, and side effects.
+- STAGING or PROD configuration for v0.1.
 - Real credentials, client data, or production access.
 - AI-based qualification or enrichment.
 
@@ -69,13 +72,14 @@ See [[Architecture]] for node responsibilities and data flow.
 
 ## Success Criteria
 
-- Required fields are validated consistently.
-- The score is deterministic, explainable, and limited to 0–100.
-- Invalid submissions cannot be marked qualified.
-- Status rules match the approved thresholds.
-- Output contains a normalized lead, validation result, score breakdown, status, assignment recommendation, storage payload, notification payload, and processing metadata.
-- Dummy DEV fixtures produce the expected results once testing is authorized and performed.
-- No live storage write or notification occurs in the initial workflow.
+- Every required field is validated against its approved type, enum, format, length, range, consent, or UTC timestamp rule.
+- Every valid lead receives the exact score and reason codes defined in [[Requirements]].
+- Invalid leads receive `score: null`, machine-readable errors, and `needs_human_review: true`.
+- Routing follows the approved regional queue table; fallback uses General Sales Queue and human review.
+- The final output contains every field defined in [[Architecture]].
+- Each prepared payload explicitly states that no write or send was requested.
+- Each executable v0.1 case in [[Test Plan]] produces its exact expected result in under two seconds per lead.
+- The inactive DEV workflow uses dummy data, no credentials, and no external side effects.
 
 ## Project Workflow
 
@@ -91,37 +95,35 @@ See [[Architecture]] for node responsibilities and data flow.
 
 ## Assumptions
 
-- The first development version will use Manual Trigger and dummy leads.
-- Email is the primary unique identifier unless the owner selects another ID.
-- Score inputs will be supplied directly; no enrichment service is planned.
-- “Appropriate salesperson” requires an approved routing table that is not yet defined.
-- Optional STAGING will be used only if approval, integration risk, or client process justifies it.
+- v0.1 is DEV-only, inactive, manual, and limited to dummy data.
+- `idempotency_key` is `email:` plus the normalized email; it supports deterministic payloads but does not detect stored duplicates.
+- `lead_id` is deterministically generated from normalized email and `submitted_at` for the dummy execution.
+- Expected DEV volume is no more than 100 test leads per day.
+- Target processing time is under two seconds per lead.
+- DEV execution logs are retained for seven days.
+- Simulated recovery targets are RTO four hours and RPO 24 hours.
+- Project Owner and Automation Engineer approve and review v0.1.
 
 ## Key Risks
 
-- Unapproved scoring rules could classify leads unfairly or inaccurately.
-- Free-text fields can be inconsistent or misleading.
-- Duplicate leads may generate duplicate records or notifications.
-- Incorrect routing data could assign a qualified lead to the wrong salesperson.
-- Future storage or notification outages could cause partial processing.
-- Execution logs could retain more lead data than necessary if not configured carefully.
+- Keyword scoring can miss valid needs expressed with unapproved synonyms.
+- The five-entry free-email list is intentionally limited and may require later maintenance.
+- The email-derived idempotency key is not persistent duplicate detection.
+- Unsupported regions fall back safely but require human review.
+- Destination escaping must be implemented in v0.2 before storage or notification side effects.
+- DEV logs contain dummy lead payloads and must still follow the seven-day retention rule.
 
-## Decisions Needed Before Development
+## Approved v0.1 Decisions
 
-- Which fields are mandatory?
-- Are the proposed score weights and thresholds approved?
-- What statuses and reason codes should sales use?
-- How should salesperson assignment work by region, product, industry, or round robin?
-- Which storage system will be used: Airtable or Google Sheets?
-- Which notification channel will be used: Email or Telegram?
-- What duplicate key and duplicate window should apply?
-- What volumes, response-time target, retention period, and support window are expected?
-- Is STAGING required?
-- Who approves DEV testing and any future PROD deployment?
+- Required inputs, normalization, validation codes, score rules, statuses, and queues are defined in [[Requirements]].
+- v0.1 performs no external lookup, write, send, retry, or concurrency control.
+- Airtable, Google Sheets, Email, Telegram, persistent duplicate detection, external retries, and side effects are v0.2 work.
+- There is no STAGING or PROD workflow for v0.1.
+- Project Owner and Automation Engineer are the approval and operational-review roles.
 
 ## Next Action
 
-- [ ] Demo Sales Company reviews and approves [[Requirements]] and [[Architecture]] before development begins.
+- [ ] Project Owner and Automation Engineer review the resolved v0.1 specification before authorizing development.
 
 ## Related Notes
 
@@ -129,4 +131,3 @@ See [[Architecture]] for node responsibilities and data flow.
 - [[Test Plan]]
 - [[Known Limitations]]
 - [[Credentials Checklist]]
-

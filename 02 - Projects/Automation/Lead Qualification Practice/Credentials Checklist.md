@@ -26,65 +26,39 @@ YOUR_DATABASE_URL
 
 ## Required Integrations
 
-The initial nine-node practice workflow requires no external integration credentials. Future persistence and delivery require one storage choice and one notification choice.
+v0.1 requires no credentials. It is an inactive DEV workflow with Manual Trigger, dummy data, local transformations, and prepared payloads only.
 
-| Environment | Proposed credential name | Service | Purpose | Status |
-|---|---|---|---|---|
-| DEV | `DEV - Airtable - Lead Storage` | Airtable, optional choice | Test-base record storage | planned |
-| DEV | `DEV - Google Sheets - Lead Storage` | Google Sheets, optional choice | Test-sheet record storage | planned |
-| DEV | `DEV - Email - Sales Notification` | Email provider, optional choice | Test inbox notification | planned |
-| DEV | `DEV - Telegram - Sales Notification` | Telegram, optional choice | Test chat notification | planned |
-| STAGING | `STAGING - Service - Purpose` | Chosen services | Optional integration acceptance | optional |
-| PROD | `PROD - Service - Purpose` | Chosen services | Approved live storage or notification | planned |
+| Version | Environment | Credential requirement | Status |
+|---|---|---|---|
+| v0.1 | DEV | None | approved design |
+| v0.1 | STAGING | Not used | not-applicable |
+| v0.1 | PROD | Not used | not-applicable |
+| v0.2 | To be designed | Airtable or Google Sheets, plus Email or Telegram | deferred |
 
-Only the selected storage and notification credentials should be created.
+No v0.2 credential may be created or assigned under the v0.1 plan.
 
-## Required Resource References
+## v0.1 Access
 
-- n8n DEV project or instance access.
-- Optional STAGING and PROD n8n access with separated roles.
-- Airtable base/table/view IDs or Google spreadsheet/sheet IDs.
-- Email sender identity and approved recipient role, or Telegram bot and chat reference.
-- Approved routing table and fallback owner.
+- Automation Engineer: May build and manually test the inactive DEV workflow after approval.
+- Project Owner: Reviews requirements, architecture, results, and operational readiness.
+- No Airtable, Google Sheets, Email, Telegram, STAGING, or PROD access is required.
 
-Record identifiers only where policy permits. Never record secret values.
+## v0.1 DEV Checklist
 
-## DEV Checklist
+- [ ] Workflow credential count is zero.
+- [ ] Workflow node inventory has no credential-backed or external request node.
+- [ ] Manual Trigger is the only trigger.
+- [ ] Dummy data is confirmed.
+- [ ] Workflow remains inactive.
+- [ ] No secret or credential placeholder is placed in workflow fields.
 
-- [ ] Credential owner identified.
-- [ ] Least-privilege test credential stored in n8n credentials.
-- [ ] Non-production resource and test destination confirmed.
-- [ ] Dummy/sanitized data confirmed.
-- [ ] Credential value absent from notes, workflow fields, exports, logs, and screenshots.
+## Deferred v0.2 Credential Decisions
 
-## Optional STAGING Checklist
-
-- [ ] STAGING is justified and approved.
-- [ ] Credentials are separate from DEV and PROD.
-- [ ] Resources and recipients are non-production or explicitly controlled.
-- [ ] Expiry and cleanup owner is assigned.
-
-## PROD Checklist
-
-- [ ] Credential owner approves use.
-- [ ] Separate PROD credentials use least privilege.
-- [ ] Backup, rollback, smoke test, monitoring, and affected workflows are documented.
-- [ ] Explicit approval to assign each PROD credential is recorded.
-- [ ] Rotation and revocation procedures are assigned.
-
-## Permissions Guidance
-
-- Storage: Limit to the selected base/table or spreadsheet where supported.
-- Email: Send-only from an approved sender to approved internal recipients.
-- Telegram: Send-message access to the approved internal chat only.
-- n8n: Separate build, review, and activation responsibilities where practical.
-
-## Open Questions
-
-- Which storage and notification options will be selected?
-- Who owns each account and credential?
-- What permissions, rotation schedule, and access-review cadence are required?
-- What sender identity or Telegram chat is approved?
+- Select Airtable or Google Sheets and assign a least-privilege credential owner.
+- Select Email or Telegram and approve sender/chat and recipient ownership.
+- Define DEV, optional STAGING, and PROD separation for v0.2.
+- Define permissions, rotation, revocation, expiry, access review, and temporary-access cleanup.
+- Record credential names and owners only; never record secret values.
 
 ## Related Notes
 
@@ -92,4 +66,3 @@ Record identifiers only where policy permits. Never record secret values.
 - [[Architecture]]
 - [[Deployment Checklist]]
 - [[Maintenance Guide]]
-

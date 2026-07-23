@@ -19,25 +19,25 @@ Record current design constraints and unapproved decisions. None are accepted by
 
 | ID | Limitation | Potential impact | Proposed mitigation | Status |
 |---|---|---|---|---|
-| LIM-001 | Initial trigger is manual. | No automatic lead capture. | Add an approved form/webhook trigger later. | planned |
-| LIM-002 | Storage is preparation-only. | No persistent lead record. | Select Airtable or Google Sheets and add a controlled integration. | planned |
-| LIM-003 | Notification is preparation-only. | Sales receives no message. | Select Email or Telegram and add a controlled integration. | planned |
-| LIM-004 | Scoring rules are draft. | Results may not reflect sales priorities. | Obtain business approval and version the rules. | pending approval |
-| LIM-005 | Sales routing is undefined. | Qualified leads may remain unassigned. | Approve routing table and fallback owner. | pending |
-| LIM-006 | Duplicate policy is undefined. | Duplicate records or alerts may occur later. | Approve unique key, window, and merge/replay behavior. | pending |
-| LIM-007 | Free-text need quality is difficult to score reliably. | Inconsistent points. | Use a simple approved rule or structured field. | pending |
-| LIM-008 | No enrichment is planned. | Missing firmographic data cannot be inferred. | Require fields or add a separately approved enrichment service. | accepted scope assumption |
-| LIM-009 | Volume and performance targets are unknown. | Capacity and timeout settings cannot be validated. | Confirm expected load and service targets. | pending |
-| LIM-010 | Retention, privacy, and monitoring owners are unknown. | Operational and compliance gaps. | Assign owners before live use. | pending |
+| LIM-001 | Manual Trigger and dummy data only. | No automatic lead capture or real lead processing. | Deferred to a separately approved version. | planned |
+| LIM-002 | Storage payload is preparation-only. | No record is persisted. | Airtable or Google Sheets adapter deferred to v0.2. | planned |
+| LIM-003 | Notification payload is preparation-only. | No internal message is delivered. | Email or Telegram adapter deferred to v0.2. | planned |
+| LIM-004 | Email key has no persistent lookup. | Repeated normalized emails are not detected historically. | Persistent duplicate lookup and policy deferred to v0.2. | planned |
+| LIM-005 | No external retries or concurrency control. | v0.1 cannot validate side-effect reliability. | External API and concurrency tests deferred to v0.2. | planned |
+| LIM-006 | Need clarity uses a fixed keyword list. | Valid needs using synonyms may receive only five points. | Review aggregate results before changing the versioned keyword list. | planned |
+| LIM-007 | Free-email classification uses five exact domains. | Other consumer domains may receive business-email points. | Expand only through an approved scoring-rule revision. | planned |
+| LIM-008 | Unsupported region is invalid and falls back to General Sales Queue. | Human review is required. | Preserve explicit fallback reason and review flag. | planned |
+| LIM-009 | Dummy `lead_id` exposes the dummy normalized email. | Not suitable as a production identifier. | Design a production-safe identifier in v0.2. | planned |
+| LIM-010 | Valid score increments are multiples of five. | Scores 69 and 39, among others, are unattainable. | Test attainable boundary representatives 70, 65, 40, and 35. | planned |
 
 ## Excluded Scope
 
-- AI scoring, web research, data enrichment, CRM synchronization, marketing sequences, analytics dashboards, and automatic production activation.
+- Airtable, Google Sheets, Email, Telegram, historical duplicate lookup, external retries, concurrency, side effects, STAGING, PROD, AI scoring, enrichment, CRM synchronization, and dashboards.
 
 ## Review Rules
 
-- Limitations require an owner before production.
-- Accepted risks require explicit approver, rationale, and review date.
+- Project Owner and Automation Engineer review v0.1 limitations before development completion.
+- Any v0.2 risk acceptance requires an explicit approver, rationale, and review date.
 - Update [[Client Handover]] and [[Maintenance Guide]] when a limitation changes.
 
 ## Related Notes
@@ -46,4 +46,3 @@ Record current design constraints and unapproved decisions. None are accepted by
 - [[Issues and Fixes]]
 - [[Maintenance Guide]]
 - [[Client Handover]]
-
