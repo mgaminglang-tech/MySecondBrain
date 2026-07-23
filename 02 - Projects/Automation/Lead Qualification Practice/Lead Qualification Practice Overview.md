@@ -27,7 +27,7 @@ The sales team manually reviews incoming leads, checks whether information is co
 
 ## Desired Result
 
-A documented, client-style automation design that can later be built and tested in DEV using dummy or sanitized data. Nothing is currently represented as built, tested, deployed, activated, or approved.
+A documented, client-style automation design that can later be built and tested in DEV using dummy data only. Nothing is currently represented as built, tested, deployed, activated, or approved.
 
 ## Scope
 
@@ -96,8 +96,9 @@ See [[Architecture]] for node responsibilities and data flow.
 ## Assumptions
 
 - v0.1 is DEV-only, inactive, manual, and limited to dummy data.
-- `idempotency_key` is `email:` plus the normalized email; it supports deterministic payloads but does not detect stored duplicates.
-- `lead_id` is deterministically generated from normalized email and `submitted_at` for the dummy execution.
+- Valid identity inputs use the approved SHA-256 of normalized email and normalized `submitted_at`.
+- Missing or invalid identity inputs use the approved canonical raw-input fallback hash.
+- These deterministic identifiers do not detect stored duplicates or protect concurrent processing.
 - Expected DEV volume is no more than 100 test leads per day.
 - Target processing time is under two seconds per lead.
 - DEV execution logs are retained for seven days.

@@ -34,8 +34,8 @@ v0.1 is an inactive DEV artifact only. No STAGING or PROD deployment is permitte
 - [ ] Confirm name `DEV - Demo Sales Company - Lead Qualification Practice`.
 - [ ] Confirm workflow remains inactive before and after each manual test.
 - [ ] Confirm final output includes all 16 required top-level keys.
-- [ ] Confirm storage payload has `write_requested: false`.
-- [ ] Confirm notification payload has `send_requested: false`.
+- [ ] Confirm storage payload uses `destination: deferred-v0.2`, `operation: none`, and the complete prepared record.
+- [ ] Confirm notification payload uses `channel: internal-preview` and the approved status-based preview rules.
 - [ ] Confirm invalid and fallback-routing cases require human review.
 - [ ] Record review date, workflow version, execution IDs, and reviewer decisions.
 
@@ -44,7 +44,7 @@ v0.1 is an inactive DEV artifact only. No STAGING or PROD deployment is permitte
 Restore the last reviewed inactive DEV export if validation, scoring, routing, schema, performance, or retention differs from the approved specification.
 
 - [ ] Stop manual testing.
-- [ ] Preserve sanitized evidence.
+- [ ] Preserve dummy-data evidence.
 - [ ] Restore following [[Backup and Restore]].
 - [ ] Re-test before review continues.
 

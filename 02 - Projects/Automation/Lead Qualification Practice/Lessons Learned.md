@@ -1,6 +1,7 @@
 ---
 type: project-note
-status: incomplete
+status: draft
+completion: incomplete
 client: Demo Sales Company
 created: 2026-07-23
 updated: 2026-07-23
@@ -22,14 +23,18 @@ Incomplete. The project is planned, and no workflow has been built or tested. Ev
 - Which normalization and validation rules prevented ambiguity?
 - Did the score distribution match the sales team’s expectations?
 - Which edge cases caused defects or changed requirements?
-- Did the routing and duplicate controls work as intended?
-- Were DEV, optional STAGING, and PROD boundaries effective?
+- Did the regional routing and deterministic v0.1 identity rules work as intended?
+- Did the inactive DEV-only boundary remain effective?
 - Were backup, rollback, monitoring, and handover procedures usable?
+
+## Future v0.2 Retrospective
+
+Persistent duplicate controls, integrations, retries, concurrency, STAGING, PROD, and reconciliation are future-work topics and are not evaluated by v0.1.
 
 ## Evidence Required
 
 - Approved requirements and design decisions.
-- Sanitized test results and issue records.
+- Dummy-data test results and issue records.
 - Version history and review decisions.
 - Approved production metrics, if a deployment occurs.
 
@@ -39,4 +44,3 @@ Incomplete. The project is planned, and no workflow has been built or tested. Ev
 - [[Issues and Fixes]]
 - [[Known Limitations]]
 - [[Case Study]]
-

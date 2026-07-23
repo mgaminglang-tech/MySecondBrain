@@ -53,12 +53,12 @@ flowchart LR
 |---|---|---|---|---|
 | 1 | Manual Trigger | Manual Trigger | Start controlled DEV execution. | No automatic retry. |
 | 2 | Set Sample Lead | Edit Fields (Set) | Supply one complete dummy fixture using the approved input contract. | Stop only for an unexpected node exception. |
-| 3 | Normalize Input | Code | Normalize approved strings, enums, email, and UTC timestamp; generate warnings, `lead_id`, and `idempotency_key`. | Preserve invalid values for validation; do not coerce types. |
+| 3 | Normalize Input | Code | Build the 12-key normalized object, canonical raw-input representation, warnings, `lead_id`, and `idempotency_key`. | Invalid normalized fields become `null`; raw invalid values remain available only for fallback hashing and safe validation evidence. |
 | 4 | Validate Required Fields | Code | Apply every required-field, type, format, enum, range, consent, and timestamp rule. | Continue with complete invalid context. |
 | 5 | Calculate Lead Score | Code | Score valid leads and emit exact reason codes; invalid leads receive `null`. | Unexpected exception stops the DEV execution. |
 | 6 | Assign Qualification Status | Code | Assign status, queue, assignment reason, and human-review flag. | Unsupported routing uses General Sales Queue and human review. |
-| 7 | Prepare Storage Record | Edit Fields or Code | Create a destination-neutral `prepare_only` payload. | `write_requested` is always `false`. |
-| 8 | Prepare Internal Notification | Edit Fields or Code | Create a plain-text `prepare_only` payload. | `send_requested` is always `false`. |
+| 7 | Prepare Storage Record | Edit Fields or Code | Create the `deferred-v0.2` / `none` payload and complete prepared record. | No write node or external destination exists. |
+| 8 | Prepare Internal Notification | Edit Fields or Code | Create the status-based `internal-preview` payload. | No send node or channel credential exists. |
 | 9 | Final Output | Edit Fields | Return one consolidated audit object. | Do not claim downstream success. |
 
 ## Data Flow
@@ -69,8 +69,8 @@ flowchart LR
 | Validated | `validation_status` and `validation_errors` |
 | Scored | `score` and five reason codes, or `null` plus invalid-input reason |
 | Classified | `qualification_status`, `assigned_queue`, `assignment_reason`, and `needs_human_review` |
-| Storage-ready | Destination-neutral record with `operation: prepare_only` and `write_requested: false` |
-| Notification-ready | Plain-text object with `operation: prepare_only` and `send_requested: false` |
+| Storage-ready | `destination: deferred-v0.2`, `operation: none`, and the complete prepared record |
+| Notification-ready | `channel: internal-preview` plus the exact status-based preview fields |
 | Final | The exact final output contract below |
 
 ## Final Output Contract
@@ -81,7 +81,7 @@ Required top-level keys and types:
 |---|---|
 | `lead_id` | string |
 | `idempotency_key` | string |
-| `normalized_lead` | object containing every approved input field |
+| `normalized_lead` | object containing all 12 input keys; invalid or missing values are `null` |
 | `validation_status` | `valid` or `invalid` |
 | `validation_errors` | array of `{field, code, message}` |
 | `normalization_warnings` | array of `{field, code}` |
@@ -96,10 +96,12 @@ Required top-level keys and types:
 | `processed_at` | canonical ISO-8601 UTC string |
 | `workflow_version` | `v0.1.0` |
 
+The following is the authoritative qualified-output example. It assumes an injected fixed clock of `2026-07-23T12:00:01.000Z` for documentation and testing:
+
 ```json
 {
-  "lead_id": "DEV-alex.rivera@acme.example-20260723T120000Z",
-  "idempotency_key": "email:alex.rivera@acme.example",
+  "lead_id": "lead_9d496fb34cf92660",
+  "idempotency_key": "9d496fb34cf92660ac93d1de30328c4bef2417dc3cabc7c7ba54eddfc160956c",
   "normalized_lead": {
     "full_name": "Alex Rivera",
     "email": "alex.rivera@acme.example",
@@ -124,55 +126,81 @@ Required top-level keys and types:
   "assignment_reason": "REGION_APAC",
   "needs_human_review": false,
   "storage_payload": {
-    "operation": "prepare_only",
-    "write_requested": false,
-    "requires_destination_escaping": false
+    "destination": "deferred-v0.2",
+    "operation": "none",
+    "record": {
+      "lead_id": "lead_9d496fb34cf92660",
+      "idempotency_key": "9d496fb34cf92660ac93d1de30328c4bef2417dc3cabc7c7ba54eddfc160956c",
+      "normalized_lead": {
+        "full_name": "Alex Rivera",
+        "email": "alex.rivera@acme.example",
+        "company": "Acme Demo Company",
+        "role": "owner",
+        "budget_usd": 5000,
+        "timeframe_days": 30,
+        "product_interest": "automation",
+        "region": "APAC",
+        "message": "We need workflow automation for sales reporting operations.",
+        "consent": true,
+        "source": "referral",
+        "submitted_at": "2026-07-23T12:00:00.000Z"
+      },
+      "validation_status": "valid",
+      "validation_errors": [],
+      "normalization_warnings": [],
+      "score": 100,
+      "score_reasons": ["ROLE_SENIOR_25","BUDGET_5000_PLUS_25","TIMEFRAME_1_30_20","NEED_CLEAR_20","BUSINESS_EMAIL_10"],
+      "qualification_status": "qualified",
+      "assigned_queue": "APAC Sales Queue",
+      "assignment_reason": "REGION_APAC",
+      "needs_human_review": false,
+      "processed_at": "2026-07-23T12:00:01.000Z",
+      "workflow_version": "v0.1.0"
+    }
   },
   "notification_payload": {
-    "operation": "prepare_only",
-    "send_requested": false,
-    "content_type": "text/plain",
-    "recipient_queue": "APAC Sales Queue",
-    "requires_channel_escaping": false
+    "channel": "internal-preview",
+    "notification_required": true,
+    "priority": "high",
+    "subject": "Lead qualified: Acme Demo Company [lead_9d496fb34cf92660]",
+    "message": "Lead lead_9d496fb34cf92660 from Acme Demo Company is qualified for automation. Score: 100. Queue: APAC Sales Queue. Human review: false."
   },
-  "processed_at": "YYYY-MM-DDTHH:mm:ss.sssZ",
+  "processed_at": "2026-07-23T12:00:01.000Z",
   "workflow_version": "v0.1.0"
 }
 ```
 
-This is an exact planned fixture expectation except for runtime-generated `processed_at`; it is not an execution result.
-
-`lead_id` uses `DEV-<normalized_email>-<submitted_at compact UTC>`. The dummy-only v0.1 format is deterministic and is not approved for production identity.
+Without an injected fixed clock, tests validate `processed_at` as a valid canonical ISO-8601 UTC value rather than an exact timestamp. This example is a planned contract, not an execution result.
 
 ## Prepared Payload Contracts
 
-`storage_payload` contains:
+`storage_payload` always contains exactly:
 
-- `operation: prepare_only`
-- `write_requested: false`
-- `destination: null`
-- `requires_destination_escaping`: Boolean
-- `record`: lead ID, idempotency key, normalized lead, validation status/errors, score/reasons, qualification status, queue/reason, review flag, processed timestamp, and workflow version
+- `destination: deferred-v0.2`
+- `operation: none`
+- `record`: lead ID, idempotency key, the complete 12-key normalized lead, validation status/errors, normalization warnings, score/reasons, qualification status, queue/reason, review flag, processed timestamp, and workflow version
 
 `notification_payload` contains:
 
-- `operation: prepare_only`
-- `send_requested: false`
-- `channel: null`
-- `content_type: text/plain`
+- `channel: internal-preview`
 - `notification_required`: `true` only for qualified leads or leads needing human review
-- `recipient_queue`: the assigned queue
-- `priority`: `high` for qualified or human-review leads, `normal` for nurture, and `low` for unqualified
-- `subject`: `Lead <qualification_status>: <company> [<lead_id>]`
-- `message`: generated summary of lead ID, company, product interest, score or `not-scored`, status, queue, and review flag
-- `requires_channel_escaping`: Boolean
+- `priority`: `high` for qualified or invalid; `none` for nurture or unqualified
+- `subject` and `message`: non-empty strings for qualified and invalid; `null` for nurture and unqualified
 
-The raw lead `message` is excluded from the notification payload. Formula-risk detection applies when a trimmed string begins with `=`, `+`, `-`, or `@`. Channel-markup detection applies to `<`, `>`, `&`, backticks, square brackets, asterisks, and underscores. v0.1 emits warnings and escape flags but performs no destination-specific rendering.
+Qualified and invalid previews use:
+
+```text
+subject = "Lead <qualification_status>: <company_or_Unknown Company> [<lead_id>]"
+message = "Lead <lead_id> from <company_or_Unknown Company> is <qualification_status> for <product_or_unknown>. Score: <score_or_not-scored>. Queue: <assigned_queue>. Human review: <true_or_false>."
+```
+
+The raw lead `message` is excluded from the notification payload. Formula-risk detection applies when a trimmed string begins with `=`, `+`, `-`, or `@`. Channel-markup detection applies to `<`, `>`, `&`, backticks, square brackets, asterisks, and underscores. v0.1 emits warnings but performs no destination-specific rendering.
 
 ## Reliability Design
 
 - Validation occurs before scoring and classification.
 - Invalid input returns a controlled object and skips scoring.
+- Valid identity inputs hash normalized email plus normalized timestamp. Missing or invalid identity inputs hash the approved canonical raw-input representation.
 - `idempotency_key` is generated but never looked up in v0.1.
 - Unexpected Code-node exceptions stop the manual execution; v0.1 has no automatic retries.
 - Destination and channel escape flags identify dangerous leading spreadsheet characters or markup.

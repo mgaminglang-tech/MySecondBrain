@@ -21,31 +21,33 @@ Draft and incomplete. There is no workflow, test evidence, deployment, or approv
 
 - [ ] Approved [[Requirements]] and [[Architecture]].
 - [ ] Workflow inventory, IDs, versions, and environment status.
-- [ ] Credential names and ownership without secret values.
+- [ ] Evidence that v0.1 uses zero credentials and no external resources.
 - [ ] [[Test Results]] and accepted [[Known Limitations]].
 - [ ] [[Issues and Fixes]] and release history.
 - [ ] [[Backup and Restore]] procedure and verified evidence.
 - [ ] [[Maintenance Guide]] and support/escalation ownership.
-- [ ] Scoring rule version, routing table version, and change procedure.
+- [ ] Scoring rule version, routing table version, deterministic identity rules, and change procedure.
 
 ## Planned Operations Walkthrough
 
 - [ ] Explain trigger, inputs, normalization, validation, scoring, statuses, and routing.
-- [ ] Demonstrate monitoring and failure handling with sanitized data.
-- [ ] Demonstrate safe replay and duplicate prevention.
-- [ ] Review storage/notification reconciliation.
-- [ ] Review backup, restore, rollback, credentials, and retention.
+- [ ] Demonstrate monitoring and failure handling with dummy data only.
+- [ ] Demonstrate deterministic v0.1 identity generation and explain that it performs no persistent duplicate lookup.
+- [ ] Review prepared storage and internal-preview notification payloads.
+- [ ] Review backup, restore, rollback, zero-credential evidence, and retention.
 
 ## Ownership Matrix
 
 | Responsibility | Receiving owner | Backup owner | Status |
 |---|---|---|---|
-| Workflow operations | to be confirmed | to be confirmed | incomplete |
-| Scoring policy | to be confirmed | to be confirmed | incomplete |
-| Sales routing | to be confirmed | to be confirmed | incomplete |
-| Credentials | to be confirmed | to be confirmed | incomplete |
-| Data and retention | to be confirmed | to be confirmed | incomplete |
-| Incident response | to be confirmed | to be confirmed | incomplete |
+| v0.1 workflow build and manual testing | Automation Engineer | Project Owner | incomplete |
+| Scoring and routing approval | Project Owner | Automation Engineer | incomplete |
+| DEV retention and recovery review | Automation Engineer | Project Owner | incomplete |
+| Issue acceptance | Project Owner | Automation Engineer | incomplete |
+
+## Future v0.2 Handover
+
+Persistent duplicate controls, credentials, external storage, notification delivery, reconciliation, retries, concurrency, STAGING, and PROD ownership belong to a separately approved v0.2 handover.
 
 ## Acceptance
 
@@ -61,4 +63,3 @@ Draft and incomplete. There is no workflow, test evidence, deployment, or approv
 - [[Maintenance Guide]]
 - [[Known Limitations]]
 - [[Deployment Checklist]]
-
