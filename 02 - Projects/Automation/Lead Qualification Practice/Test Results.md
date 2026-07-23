@@ -20,7 +20,7 @@ No workflow has been created and no tests have been executed. All executable v0.
 ## Planned Test Run
 
 - Environment: DEV
-- Workflow name: `DEV - Demo Sales Company - Lead Qualification Practice`
+- Workflow name: `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`
 - Workflow ID: not-created
 - Version: `v0.1.0` planned
 - Tester: to be assigned

@@ -20,7 +20,7 @@ Define the proposed n8n workflow, data contracts, environment boundaries, reliab
 
 | Environment | v0.1 status | Workflow name | Data | Credentials |
 |---|---|---|---|---|
-| DEV | Planned, inactive | `DEV - Demo Sales Company - Lead Qualification Practice` | Dummy only | None |
+| DEV | Planned, inactive | `DEV - Demo Sales Company - Lead Qualification Practice - v0.1` | Dummy only | None |
 | STAGING | Not used | Not applicable | None | None |
 | PROD | Not used | Not applicable | None | None |
 
@@ -31,12 +31,15 @@ flowchart LR
     A["Manual Trigger"] --> B["Set Sample Lead"]
     B --> C["Normalize Input"]
     C --> D["Validate Required Fields"]
-    D --> E["Calculate Lead Score"]
-    E --> F["Assign Qualification Status"]
-    F --> G["Prepare Storage Record"]
-    G --> H["Prepare Internal Notification"]
-    H --> I["Final Output"]
+    D --> E["Generate Identity Hash — Crypto v2"]
+    E --> F["Calculate Lead Score"]
+    F --> G["Assign Qualification Status and Routing"]
+    G --> H["Prepare Storage Record"]
+    H --> I["Prepare Internal Notification"]
+    I --> J["Final Output"]
 ```
+
+The v0.1 graph is linear and contains exactly ten nodes. IF, Switch, and Merge are not used.
 
 The following is explicitly deferred to v0.2 and is not part of the v0.1 graph:
 
@@ -53,20 +56,22 @@ flowchart LR
 |---|---|---|---|---|
 | 1 | Manual Trigger | Manual Trigger | Start controlled DEV execution. | No automatic retry. |
 | 2 | Set Sample Lead | Edit Fields (Set) | Supply one complete dummy fixture using the approved input contract. | Stop only for an unexpected node exception. |
-| 3 | Normalize Input | Code | Build the 12-key normalized object, canonical raw-input representation, warnings, `lead_id`, and `idempotency_key`. | Invalid normalized fields become `null`; raw invalid values remain available only for fallback hashing and safe validation evidence. |
-| 4 | Validate Required Fields | Code | Apply every required-field, type, format, enum, range, consent, and timestamp rule. | Continue with complete invalid context. |
-| 5 | Calculate Lead Score | Code | Score valid leads and emit exact reason codes; invalid leads receive `null`. | Unexpected exception stops the DEV execution. |
-| 6 | Assign Qualification Status | Code | Assign status, queue, assignment reason, and human-review flag. | Unsupported routing uses General Sales Queue and human review. |
-| 7 | Prepare Storage Record | Edit Fields or Code | Create the `deferred-v0.2` / `none` payload and complete prepared record. | No write node or external destination exists. |
-| 8 | Prepare Internal Notification | Edit Fields or Code | Create the status-based `internal-preview` payload. | No send node or channel credential exists. |
-| 9 | Final Output | Edit Fields | Return one consolidated audit object. | Do not claim downstream success. |
+| 3 | Normalize Input | Code | Build the 12-key normalized object, canonical raw-input representation, and ordered normalization warnings. | Invalid normalized fields become `null`; raw invalid values remain available only for fallback hashing and safe validation evidence. |
+| 4 | Validate Required Fields | Code | Apply every required-field, type, format, enum, range, consent, and timestamp rule, then prepare the approved valid or fallback hash input. | Continue with complete invalid context. |
+| 5 | Generate Identity Hash | Crypto v2 | Generate the SHA-256 `idempotency_key` as a lowercase 64-character hexadecimal value, without credentials or network requests. | An unexpected hashing exception stops the manual DEV execution. |
+| 6 | Calculate Lead Score | Code | Derive `lead_id` from the hash, score valid leads, and emit exact reason codes; invalid leads receive `null`. | Unexpected exception stops the DEV execution. |
+| 7 | Assign Qualification Status and Routing | Code | Assign status, queue, assignment reason, and human-review flag. | Unsupported routing uses General Sales Queue and human review. |
+| 8 | Prepare Storage Record | Edit Fields or Code | Create the inert `deferred-v0.2` / `none` payload and complete prepared record. | No write node or external destination exists. |
+| 9 | Prepare Internal Notification | Edit Fields or Code | Create the inert status-based `internal-preview` payload. | No send node or channel credential exists. |
+| 10 | Final Output | Edit Fields | Return one consolidated audit object. | Do not claim downstream success. |
 
 ## Data Flow
 
 | Stage | Key output |
 |---|---|
-| Normalized | Canonical input fields, `lead_id`, `idempotency_key`, and `normalization_warnings` |
-| Validated | `validation_status` and `validation_errors` |
+| Normalized | Canonical input fields, canonical raw-input representation, and `normalization_warnings` |
+| Validated | `validation_status`, `validation_errors`, and the approved valid or fallback hash input |
+| Identity-ready | Lowercase hexadecimal `idempotency_key` plus the derived `lead_id` |
 | Scored | `score` and five reason codes, or `null` plus invalid-input reason |
 | Classified | `qualification_status`, `assigned_queue`, `assignment_reason`, and `needs_human_review` |
 | Storage-ready | `destination: deferred-v0.2`, `operation: none`, and the complete prepared record |
@@ -200,8 +205,10 @@ The raw lead `message` is excluded from the notification payload. Formula-risk d
 
 - Validation occurs before scoring and classification.
 - Invalid input returns a controlled object and skips scoring.
-- Valid identity inputs hash normalized email plus normalized timestamp. Missing or invalid identity inputs hash the approved canonical raw-input representation.
+- Crypto v2 hashes normalized email plus normalized timestamp for valid identity inputs and the approved canonical raw-input representation for missing or invalid identity inputs.
+- Crypto v2 uses SHA-256 with lowercase hexadecimal output, requires no credentials, and performs no network requests.
 - `idempotency_key` is generated but never looked up in v0.1.
+- The graph remains linear; IF, Switch, and Merge are excluded from v0.1.
 - Unexpected Code-node exceptions stop the manual execution; v0.1 has no automatic retries.
 - Destination and channel escape flags identify dangerous leading spreadsheet characters or markup.
 - Historical lookup, side-effect idempotency, retries, concurrency, partial-failure recovery, and error workflows are v0.2 concerns.

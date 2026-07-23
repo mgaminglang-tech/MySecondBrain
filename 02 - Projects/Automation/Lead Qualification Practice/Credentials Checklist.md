@@ -26,7 +26,7 @@ YOUR_DATABASE_URL
 
 ## Required Integrations
 
-v0.1 requires no credentials. It is an inactive DEV workflow with Manual Trigger, dummy data, local transformations, and prepared payloads only.
+v0.1 requires no credentials. It is an inactive DEV workflow with Manual Trigger, dummy data, local transformations, credential-free Crypto v2 SHA-256 hashing, and prepared payloads only. Crypto performs no network requests.
 
 | Version | Environment | Credential requirement | Status |
 |---|---|---|---|
@@ -47,6 +47,7 @@ No v0.2 credential may be created or assigned under the v0.1 plan.
 
 - [ ] Workflow credential count is zero.
 - [ ] Workflow node inventory has no credential-backed or external request node.
+- [ ] Crypto v2 is configured for SHA-256 lowercase hexadecimal output with no credential.
 - [ ] Manual Trigger is the only trigger.
 - [ ] Dummy data is confirmed.
 - [ ] Workflow remains inactive.

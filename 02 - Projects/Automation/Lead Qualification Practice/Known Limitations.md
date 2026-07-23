@@ -27,7 +27,7 @@ Record finalized v0.1 scope constraints and risks that remain intentionally defe
 | LIM-006 | Need clarity uses a fixed keyword list.                              | Valid needs using synonyms may receive only five points.  | Review aggregate results before changing the versioned keyword list. | planned |
 | LIM-007 | Free-email classification uses five exact domains.                   | Other consumer domains may receive business-email points. | Expand only through an approved scoring-rule revision.               | planned |
 | LIM-008 | Unsupported region is invalid and falls back to General Sales Queue. | Human review is required.                                 | Preserve explicit fallback reason and review flag.                   | planned |
-| LIM-009 | Deterministic v0.1 hashes are test identifiers only.                 | They do not provide historical duplicate or concurrency protection. | Design persistent identity and duplicate controls in v0.2.          | planned |
+| LIM-009 | Credential-free Crypto v2 SHA-256 hashes are deterministic test identifiers only. | They do not provide historical duplicate or concurrency protection. | Design persistent identity and duplicate controls in v0.2.          | planned |
 | LIM-010 | Valid score increments are multiples of five.                        | Scores 69 and 39, among others, are unattainable.         | Test attainable boundary representatives 70, 65, 40, and 35.         | planned |
 
 ## Excluded Scope

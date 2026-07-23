@@ -21,6 +21,9 @@ v0.1 is an inactive DEV artifact only. No STAGING or PROD deployment is permitte
 - [ ] Project Owner and Automation Engineer approve [[Requirements]] and [[Architecture]].
 - [ ] Inactive DEV workflow created with the approved name.
 - [ ] Manual Trigger and dummy fixtures confirmed.
+- [ ] Exact ten-node linear order matches [[Architecture]].
+- [ ] Crypto v2 uses SHA-256 lowercase hexadecimal output with no credential or network request.
+- [ ] IF, Switch, and Merge are absent.
 - [ ] Credential inventory confirms zero credentials.
 - [ ] Node inventory confirms zero external lookup, write, send, or API nodes.
 - [ ] All executable v0.1 tests pass with evidence in [[Test Results]].
@@ -31,7 +34,7 @@ v0.1 is an inactive DEV artifact only. No STAGING or PROD deployment is permitte
 
 ## Controlled v0.1 Review
 
-- [ ] Confirm name `DEV - Demo Sales Company - Lead Qualification Practice`.
+- [ ] Confirm name `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`.
 - [ ] Confirm workflow remains inactive before and after each manual test.
 - [ ] Confirm final output includes all 16 required top-level keys.
 - [ ] Confirm storage payload uses `destination: deferred-v0.2`, `operation: none`, and the complete prepared record.

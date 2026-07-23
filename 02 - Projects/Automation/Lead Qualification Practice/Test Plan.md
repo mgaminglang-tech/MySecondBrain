@@ -19,6 +19,7 @@ Define exact, repeatable v0.1 DEV tests and keep all v0.2 integration tests visi
 ## v0.1 Test Environment
 
 - Environment: DEV only.
+- Workflow name: `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`.
 - Workflow state: Inactive; manual execution only.
 - Workflow version: `v0.1.0`.
 - Data: Dummy only.
@@ -244,7 +245,7 @@ Canonical raw-input strings use the alphabetical key order documented in [[Requi
 | TC-141 | Object containing all 12 keys with explicit `null` | All 12 normalized keys are null; 12 ordered `INVALID_TYPE` errors except consent also uses `INVALID_TYPE`; same key and ID as TC-140; invalid; score null; General Sales Queue; review true |
 | TC-142 | Unfixed runtime clock with base fixture | Top-level `processed_at` matches `YYYY-MM-DDTHH:mm:ss.sssZ`, parses as a real UTC instant, and exactly equals `storage_payload.record.processed_at` |
 | TC-143 | One base-fixture manual execution | End-to-end duration is strictly less than 2.000 seconds |
-| TC-144 | Workflow inspection | Workflow is inactive; Manual Trigger is the only trigger; credential count, external lookup count, write-node count, send-node count, and external API node count are all zero |
+| TC-144 | Workflow inspection | Name is exactly `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`; workflow is inactive; the exact ten-node order matches [[Architecture]]; Manual Trigger is the only trigger; Crypto is v2 with SHA-256 lowercase hexadecimal output and no credential; IF, Switch, and Merge are absent; credential count, external lookup count, write-node count, send-node count, and external API node count are all zero |
 
 ## Deferred v0.2 Integration Tests
 

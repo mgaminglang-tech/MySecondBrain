@@ -56,19 +56,22 @@ A documented, client-style automation design that can later be built and tested 
 
 ## Proposed Workflow
 
+Canonical inactive DEV workflow name: `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`
+
 ```text
 Manual Trigger
 → Set Sample Lead
 → Normalize Input
 → Validate Required Fields
+→ Generate Identity Hash — Crypto v2
 → Calculate Lead Score
-→ Assign Qualification Status
+→ Assign Qualification Status and Routing
 → Prepare Storage Record
 → Prepare Internal Notification
 → Final Output
 ```
 
-See [[Architecture]] for node responsibilities and data flow.
+This is a linear ten-node workflow. IF, Switch, and Merge are not used in v0.1. See [[Architecture]] for node responsibilities and data flow.
 
 ## Success Criteria
 

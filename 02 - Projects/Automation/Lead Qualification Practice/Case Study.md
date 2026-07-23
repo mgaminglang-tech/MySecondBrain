@@ -38,12 +38,15 @@ Manual Trigger
 → Set Sample Lead
 → Normalize Input
 → Validate Required Fields
+→ Generate Identity Hash — Crypto v2
 → Calculate Lead Score
-→ Assign Qualification Status
+→ Assign Qualification Status and Routing
 → Prepare Storage Record
 → Prepare Internal Notification
 → Final Output
 ```
+
+The proposed v0.1 design is a linear ten-node workflow with no IF, Switch, Merge, credentials, external integrations, or side effects.
 
 ## Verified Results
 
