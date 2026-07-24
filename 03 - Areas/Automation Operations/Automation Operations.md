@@ -32,6 +32,14 @@ Provide a reusable operating system for designing, testing, deploying, supportin
 - [[03 - Areas/Automation Operations/Backup Policy|Backup Policy]]
 - [[03 - Areas/Automation Operations/Client Data Handling Policy|Client Data Handling Policy]]
 
+## Core Project Workflow
+
+- [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]] — Use as the permanent lifecycle, safety-gate, and evidence reference for every automation project.
+- [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]] — Duplicate into each project folder and use the copy to track actual phase status, approvals, evidence, and blockers.
+- [[Templates/Client Automation/Client Discovery Checklist|Client Discovery Checklist]] — Duplicate and complete during intake to capture the business process, scope, stakeholders, data, risks, and open questions.
+- [[06 - SOPs/n8n/Start a New Client Automation|Start a New Client Automation]] — Use before development to establish ownership, scope, requirements, architecture, and authorization.
+- [[06 - SOPs/n8n/Build and Test a DEV Workflow|Build and Test a DEV Workflow]] — Use after development approval to build and test safely within the defined DEV boundary.
+
 ## n8n SOPs
 
 - [[06 - SOPs/n8n/Start a New Client Automation|Start a New Client Automation]]
@@ -56,7 +64,7 @@ Provide a reusable operating system for designing, testing, deploying, supportin
 
 ## Lifecycle
 
-Discovery → Scope → Requirements → Architecture → Credential planning → DEV build → Testing → Approval → Backup → PROD deployment → Smoke test → Maintenance → Handover → Case study
+Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]] as the authoritative lifecycle. Project copies of the checklist and discovery template hold the actual project evidence.
 
 ## Review Cadence
 
