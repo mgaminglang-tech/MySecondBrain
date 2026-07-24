@@ -56,7 +56,7 @@ SORT updated DESC
 
 ## Project Next Actions
 
-- [[02 - Projects/Obsidian Second Brain/Obsidian Second Brain Setup#Next Action|Obsidian Second Brain — complete the approved optimization phases and final vault audit]]
+- [[02 - Projects/Obsidian Second Brain/Obsidian Second Brain Setup#Next Action|Obsidian Second Brain — review and approve closure of the vault optimization project, then begin the first real automation project]]
 - [[02 - Projects/Automation/Lead Qualification Practice/Automation Project Checklist#Next Action|Lead Qualification Practice — decide whether to archive the demo or continue with v0.2]]
 - [[02 - Projects/Automation/MCP Customer Request Classifier/Automation Project Checklist#Next Action|MCP Customer Request Classifier — decide whether to archive the demo or continue with a future version]]
 

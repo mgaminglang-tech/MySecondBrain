@@ -1,6 +1,9 @@
 ---
 type: test-results
-status: active
+status: demo-complete
+phase: demo-closure
+owner: Mervin
+production_ready: false
 completion: incomplete
 client: Demo Sales Company
 created: 2026-07-23
@@ -172,6 +175,10 @@ Executable v0.1 tests use only `passed`, `failed`, `blocked`, or `not-run`. Futu
 - Do not include credentials, secret values, real client data, or unnecessary personal data.
 - Link any defect to [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]].
 - Do not convert deferred v0.2 tests into v0.1 failures or passes.
+
+## Next Action
+
+Decide whether to archive the demo project or continue with v0.2.
 
 ## Related Notes
 

@@ -24,4 +24,4 @@ Build a professional Second Brain connected to GitHub and Codex.
 
 ## Next Action
 
-Complete the approved vault optimization phases and perform a final vault audit.
+Review and approve closure of the vault optimization project, then begin the first real automation project.
