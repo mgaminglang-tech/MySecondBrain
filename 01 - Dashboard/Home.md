@@ -25,6 +25,52 @@ WHERE type = "project" AND status = "active"
 SORT priority ASC
 ```
 
+## Planned Projects
+
+```dataview
+TABLE phase AS Phase, owner AS Owner, updated AS Updated
+FROM "02 - Projects"
+WHERE type = "project" AND status = "planned"
+SORT updated DESC
+```
+
+## Blocked Projects
+
+```dataview
+TABLE phase AS Phase, owner AS Owner, updated AS Updated
+FROM "02 - Projects"
+WHERE type = "project" AND status = "blocked"
+SORT updated DESC
+```
+
+## Demo-Complete, Not Production-Ready
+
+```dataview
+TABLE phase AS Phase, owner AS Owner, updated AS Updated
+FROM "02 - Projects"
+WHERE type = "project-checklist"
+AND status = "demo-complete"
+AND production_ready = false
+SORT updated DESC
+```
+
+## Project Next Actions
+
+- [[02 - Projects/Obsidian Second Brain/Obsidian Second Brain Setup#Next Action|Obsidian Second Brain — complete the approved optimization phases and final vault audit]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Automation Project Checklist#Next Action|Lead Qualification Practice — decide whether to archive the demo or continue with v0.2]]
+- [[02 - Projects/Automation/MCP Customer Request Classifier/Automation Project Checklist#Next Action|MCP Customer Request Classifier — decide whether to archive the demo or continue with a future version]]
+
+## Recently Updated Project Evidence
+
+```dataview
+TABLE type AS Type, status AS Status, updated AS Updated
+FROM "02 - Projects"
+WHERE contains(["project-checklist", "test-results", "case-study"], type)
+AND updated
+SORT updated DESC
+LIMIT 8
+```
+
 ## Open Tasks
 
 ```tasks
@@ -71,3 +117,12 @@ LIMIT 7
 - [[05 - Resources/Resources|Resources]]
 - [[06 - SOPs/SOPs|Standard Operating Procedures]]
 - [[07 - AI/AI Hub|AI Knowledge and Prompts]]
+
+## Start a Project
+
+- [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]
+- [[Templates/Client Automation/Client Discovery Checklist|Client Discovery Checklist]]
+- [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]]
+- [[Templates/Client Automation/Client Automation Project|Client Automation Project]]
+- [[02 - Projects/Projects|Projects]]
+- [[03 - Areas/Automation Operations/Automation Operations|Automation Operations]]
