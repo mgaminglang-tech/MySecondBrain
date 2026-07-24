@@ -80,6 +80,9 @@ not done
 path does not include Templates/
 path does not include 09 - Archive/
 filename does not include Automation Project Checklist.md
+path does not include 06 - SOPs/
+path does not include 03 - Areas/Automation Operations/Backup Policy.md
+path does not include 03 - Areas/Automation Operations/Development and Production Policy.md
 sort by due
 ```
 
