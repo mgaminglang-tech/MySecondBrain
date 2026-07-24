@@ -23,7 +23,9 @@ Preserve template placeholders and avoid adding real credentials or sensitive in
 
 ### Intake and Planning
 
-- [[Templates/Client Automation/Client Discovery Checklist|Client Discovery Checklist]]
+- [[Templates/Client Automation/Client Discovery Checklist|Client Discovery Checklist]] — Core discovery checklist used for every automation project.
+- [[Templates/Client Automation/Client Discovery - Integrations and Security Module|Client Discovery - Integrations and Security Module]] — Use when external tools, credentials, APIs, webhooks, multiple environments, or sensitive information are involved.
+- [[Templates/Client Automation/Client Discovery - Operations and Support Module|Client Discovery - Operations and Support Module]] — Use for production, performance, maintenance, monitoring, recovery, training, or ongoing support.
 - [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]]
 - [[Templates/Client Automation/Client Automation Project|Client Automation Project]]
 - [[Templates/Client Automation/Requirements|Requirements]]
