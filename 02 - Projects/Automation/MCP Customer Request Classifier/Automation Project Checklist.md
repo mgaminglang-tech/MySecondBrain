@@ -84,7 +84,7 @@ tags:
 
 ## 4. Architecture and Documentation
 
-- [ ] DEV, optional STAGING, and PROD responsibilities are fully separated.
+- [x] DEV, optional STAGING, and PROD responsibilities are fully separated. ✅ 2026-07-24
 - [ ] Workflow name, trigger, nodes, connections, and node versions are all documented.
 - [ ] Data flow, storage, notifications, identity, duplicate handling, and side effects are comprehensively documented.
 - [x] The absence of credentials and external services is documented.
