@@ -49,7 +49,7 @@ A controlled demo can have a complete, evidence-backed acceptance gate without i
 
 ### Retain evidence boundaries
 
-TC-001 is recorded as passed from the result supplied for its documentation update; its successful execution ID was not supplied and must not be invented. The other 24 Core Release Suite tests have direct execution evidence recorded in [[Test Results]]. No Extended Regression Suite test is treated as passed.
+TC-001 is recorded as passed from the result supplied for its documentation update; its successful execution ID was not supplied and must not be invented. The other 24 Core Release Suite tests have direct execution evidence recorded in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]]. No Extended Regression Suite test is treated as passed.
 
 ## Questions for the Retrospective
 
@@ -74,7 +74,7 @@ Persistent duplicate controls, integrations, retries, concurrency, STAGING, PROD
 
 ## Related Notes
 
-- [[Test Results]]
-- [[Issues and Fixes]]
-- [[Known Limitations]]
-- [[Case Study]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Case Study|Case Study]]

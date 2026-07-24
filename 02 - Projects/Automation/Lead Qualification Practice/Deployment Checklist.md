@@ -18,15 +18,15 @@ The controlled inactive DEV demo is accepted. This is not a deployment approval:
 
 ## v0.1 DEV Readiness
 
-- [x] Demo [[Requirements]] and [[Architecture]] are approved.
+- [x] Demo [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]] and [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]] are approved.
 - [x] Inactive DEV workflow created with the approved name.
 - [x] Manual Trigger and dummy fixtures confirmed.
-- [x] Exact ten-node linear order matches [[Architecture]].
+- [x] Exact ten-node linear order matches [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]].
 - [x] Crypto v2 uses SHA-256 lowercase hexadecimal output with no credential or network request.
 - [x] IF, Switch, and Merge are absent.
 - [x] Credential inventory confirms zero credentials.
 - [x] Node inventory confirms zero external lookup, write, send, or API nodes.
-- [x] All 25 Core Release Suite tests pass with evidence in [[Test Results]].
+- [x] All 25 Core Release Suite tests pass with evidence in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
 - [ ] Processing time is under two seconds per lead.
 - [ ] Seven-day DEV execution-log retention is configured and reviewed.
 - [x] Open issues and limitations reviewed for the demo.
@@ -40,7 +40,7 @@ The controlled inactive DEV demo is accepted. This is not a deployment approval:
 - [x] Confirm storage payload uses `destination: deferred-v0.2`, `operation: none`, and the complete prepared record.
 - [x] Confirm notification payload uses `channel: internal-preview` and the approved status-based preview rules.
 - [x] Confirm invalid and fallback-routing cases require human review.
-- [x] Record demo review date, workflow version, and available execution IDs in [[Test Results]].
+- [x] Record demo review date, workflow version, and available execution IDs in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
 
 ## v0.1 Rollback Gate
 
@@ -48,7 +48,7 @@ Restore the last reviewed inactive DEV export if validation, scoring, routing, s
 
 - [ ] Stop manual testing.
 - [ ] Preserve dummy-data evidence.
-- [ ] Restore following [[Backup and Restore]].
+- [ ] Restore following [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]].
 - [ ] Re-test before review continues.
 
 ## Demo Release Record
@@ -56,10 +56,10 @@ Restore the last reviewed inactive DEV export if validation, scoring, routing, s
 - Outcome: controlled inactive DEV demo accepted
 - Date: 2026-07-24
 - Core results: 25 passed; 0 failed; 0 blocked
-- Execution IDs: recorded in [[Test Results]]
+- Execution IDs: recorded in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]]
 - Workflow state: inactive
 - Production approval: not granted
-- Remaining risks: see [[Known Limitations]]
+- Remaining risks: see [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]
 
 ## Production Blockers
 
@@ -74,7 +74,7 @@ STAGING, PROD, credentials, integrations, side-effect smoke tests, external retr
 
 ## Related Notes
 
-- [[Development Plan]]
-- [[Test Results]]
-- [[Credentials Checklist]]
-- [[Backup and Restore]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Development Plan|Development Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Credentials Checklist|Credentials Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]]

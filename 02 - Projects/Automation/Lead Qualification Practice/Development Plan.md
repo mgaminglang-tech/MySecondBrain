@@ -30,10 +30,10 @@ Record how the inactive DEV practice automation was built and what remains outsi
 
 ### Demo Build Record
 
-- [x] Obtain approval for the v0.1 [[Requirements]] and [[Architecture]].
+- [x] Obtain approval for the v0.1 [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]] and [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]].
 - [x] Create an inactive DEV workflow.
 - [x] Add the ten nodes in the approved linear order.
-- [x] Define exact dummy fixtures in [[Test Plan]].
+- [x] Define exact dummy fixtures in [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]].
 - [x] Implement normalization without type coercion or invented data.
 - [x] Implement the approved validation and warning codes exercised by the Core Release Suite.
 - [x] Configure Crypto v2 to generate deterministic SHA-256 `idempotency_key` values as lowercase hexadecimal output without credentials or network requests.
@@ -45,8 +45,8 @@ Record how the inactive DEV practice automation was built and what remains outsi
 - [x] Add processing metadata and the complete final output contract.
 - [x] Review node settings and connections.
 - [x] Confirm IF, Switch, and Merge are absent.
-- [x] Execute the 25-test Core Release Suite and record evidence in [[Test Results]].
-- [x] Record and resolve observed DEV defects in [[Issues and Fixes]].
+- [x] Execute the 25-test Core Release Suite and record evidence in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
+- [x] Record and resolve observed DEV defects in [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]].
 - [ ] Export the validated inactive DEV workflow without secrets.
 
 ## STAGING and PROD
@@ -97,7 +97,7 @@ STAGING and PROD do not exist in v0.1. No procedure may promote v0.1 outside DEV
 ## Related Notes
 
 - [[Lead Qualification Practice Overview]]
-- [[Architecture]]
-- [[Test Plan]]
-- [[Issues and Fixes]]
-- [[Deployment Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Deployment Checklist|Deployment Checklist]]

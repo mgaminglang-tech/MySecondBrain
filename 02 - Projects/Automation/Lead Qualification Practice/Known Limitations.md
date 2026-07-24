@@ -42,11 +42,11 @@ The 25-test Core Release Suite passed and is the accepted demo gate. The remaini
 
 - Approved v0.1 scope decisions are finalized; Project Owner and Automation Engineer review implementation evidence before development completion.
 - Any v0.2 risk acceptance requires an explicit approver, rationale, and review date.
-- Update [[Client Handover]] and [[Maintenance Guide]] when a limitation changes.
+- Update [[02 - Projects/Automation/Lead Qualification Practice/Client Handover|Client Handover]] and [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]] when a limitation changes.
 
 ## Related Notes
 
-- [[Requirements]]
-- [[Issues and Fixes]]
-- [[Maintenance Guide]]
-- [[Client Handover]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Client Handover|Client Handover]]

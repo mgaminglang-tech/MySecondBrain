@@ -21,7 +21,7 @@ Draft and incomplete for publication. The controlled inactive DEV demo is comple
 
 - [ ] Publication or anonymization is approved.
 - [x] No secrets, private identifiers, or unredacted data are included.
-- [x] Reported demo outcomes are supported by [[Test Results]].
+- [x] Reported demo outcomes are supported by [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
 - [x] Limitations and assumptions are disclosed.
 - [x] Planned work is clearly separated from completed demo work.
 
@@ -60,9 +60,9 @@ The v0.1 demo is a linear ten-node workflow with no IF, Switch, Merge, credentia
 | Metric | Baseline | Observed result | Evidence |
 |---|---|---|---|
 | Manual review time | not measured | not available | none |
-| Core Release Suite | 25 selected demo tests | 25 passed; 0 failed; 0 blocked | [[Test Results]] |
-| Output contract | Approved v0.1 contract | Demonstrated by Core Release Suite | [[Test Results]] |
-| Workflow safety boundary | Inactive, dummy-only, no credentials or side effects | Preserved during controlled testing | [[Test Results]] |
+| Core Release Suite | 25 selected demo tests | 25 passed; 0 failed; 0 blocked | [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]] |
+| Output contract | Approved v0.1 contract | Demonstrated by Core Release Suite | [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]] |
+| Workflow safety boundary | Inactive, dummy-only, no credentials or side effects | Preserved during controlled testing | [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]] |
 | Duplicate rate | not measured | not available | none |
 
 These results support a controlled practice demo only. They do not establish production performance, business savings, live routing accuracy, operational recovery, or client satisfaction.
@@ -79,7 +79,7 @@ These results support a controlled practice demo only. They do not establish pro
 ## Related Notes
 
 - [[Lead Qualification Practice Overview]]
-- [[Test Results]]
-- [[Known Limitations]]
-- [[Lessons Learned]]
-- [[Client Handover]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Lessons Learned|Lessons Learned]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Client Handover|Client Handover]]

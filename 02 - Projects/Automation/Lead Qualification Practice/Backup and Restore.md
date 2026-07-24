@@ -82,6 +82,6 @@ External records, notifications, credentials, duplicate state, reconciliation, r
 
 ## Related Notes
 
-- [[Deployment Checklist]]
-- [[Maintenance Guide]]
-- [[Issues and Fixes]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Deployment Checklist|Deployment Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]]

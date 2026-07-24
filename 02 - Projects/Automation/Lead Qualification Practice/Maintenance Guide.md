@@ -31,7 +31,7 @@ Define operational ownership and safe change control for the accepted inactive D
 - Use dummy data only.
 - Make changes in an inactive DEV workflow.
 - Version scoring and routing changes.
-- Re-run affected and regression cases in [[Test Plan]].
+- Re-run affected and regression cases in [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]].
 - Preserve a secret-free known-good export.
 - Keep credential and external-node counts at zero.
 - Retain DEV execution logs for seven days.
@@ -82,7 +82,7 @@ Credential rotation, vendor monitoring, persistent duplicate review, external re
 
 ## Related Notes
 
-- [[Credentials Checklist]]
-- [[Backup and Restore]]
-- [[Known Limitations]]
-- [[Client Handover]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Credentials Checklist|Credentials Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Client Handover|Client Handover]]

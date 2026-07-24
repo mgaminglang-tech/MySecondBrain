@@ -65,7 +65,7 @@ These checks support the controlled demo only. No production credential design, 
 
 ## Related Notes
 
-- [[Requirements]]
-- [[Architecture]]
-- [[Deployment Checklist]]
-- [[Maintenance Guide]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Deployment Checklist|Deployment Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]]

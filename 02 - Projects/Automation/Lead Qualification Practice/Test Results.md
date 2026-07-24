@@ -170,12 +170,12 @@ Executable v0.1 tests use only `passed`, `failed`, `blocked`, or `not-run`. Futu
 
 - Record dummy inputs, expected output, observed output, execution ID, workflow version, and reviewer.
 - Do not include credentials, secret values, real client data, or unnecessary personal data.
-- Link any defect to [[Issues and Fixes]].
+- Link any defect to [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]].
 - Do not convert deferred v0.2 tests into v0.1 failures or passes.
 
 ## Related Notes
 
-- [[Test Plan]]
-- [[Issues and Fixes]]
-- [[Deployment Checklist]]
-- [[Lessons Learned]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Deployment Checklist|Deployment Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Lessons Learned|Lessons Learned]]

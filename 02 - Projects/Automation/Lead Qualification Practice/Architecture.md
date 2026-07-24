@@ -175,7 +175,7 @@ The following is the authoritative qualified-output example. It assumes an injec
 }
 ```
 
-Without an injected fixed clock, tests validate `processed_at` as a valid canonical ISO-8601 UTC value rather than an exact timestamp. This example is the approved contract; actual Core Release Suite evidence is recorded in [[Test Results]].
+Without an injected fixed clock, tests validate `processed_at` as a valid canonical ISO-8601 UTC value rather than an exact timestamp. This example is the approved contract; actual Core Release Suite evidence is recorded in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
 
 ## Prepared Payload Contracts
 
@@ -239,8 +239,8 @@ The ten-node architecture and complete output contract are ready for an inactive
 
 ## Related Notes
 
-- [[Requirements]]
-- [[Development Plan]]
-- [[Test Plan]]
-- [[Credentials Checklist]]
-- [[Backup and Restore]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Development Plan|Development Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Credentials Checklist|Credentials Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]]

@@ -71,10 +71,10 @@ Two DEV runtime defects were identified and resolved before the user-confirmed T
 - Use sanitized evidence only.
 - Verify every fix in DEV before any release proposal.
 - Do not change PROD or assign PROD credentials without explicit approval.
-- Update [[Known Limitations]] when a defect is accepted rather than fixed.
+- Update [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]] when a defect is accepted rather than fixed.
 
 ## Related Notes
 
-- [[Test Results]]
-- [[Known Limitations]]
-- [[Backup and Restore]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]]

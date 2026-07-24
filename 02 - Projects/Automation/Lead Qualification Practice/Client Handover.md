@@ -19,13 +19,13 @@ Draft and incomplete. An inactive DEV practice workflow and 25/25 passing Core R
 
 ## Planned Handover Package
 
-- [x] Approved demo [[Requirements]] and [[Architecture]].
+- [x] Approved demo [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]] and [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]].
 - [x] Workflow inventory, IDs, versions, and inactive DEV status.
 - [x] Evidence that v0.1 uses zero credentials and no external resources.
-- [x] [[Test Results]] and disclosed [[Known Limitations]].
-- [x] [[Issues and Fixes]] and demo release history.
-- [ ] [[Backup and Restore]] procedure and verified evidence.
-- [ ] [[Maintenance Guide]] and support/escalation ownership.
+- [x] [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]] and disclosed [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]].
+- [x] [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]] and demo release history.
+- [ ] [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]] procedure and verified evidence.
+- [ ] [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]] and support/escalation ownership.
 - [x] Scoring rule version, routing table version, deterministic identity rules, and change procedure.
 
 ## Planned Operations Walkthrough
@@ -63,6 +63,6 @@ Demo completion does not constitute production handover or full project closure.
 ## Related Notes
 
 - [[Lead Qualification Practice Overview]]
-- [[Maintenance Guide]]
-- [[Known Limitations]]
-- [[Deployment Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Deployment Checklist|Deployment Checklist]]

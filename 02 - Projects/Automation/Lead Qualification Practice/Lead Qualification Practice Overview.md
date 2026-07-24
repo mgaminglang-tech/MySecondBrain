@@ -45,11 +45,11 @@ An evidence-backed, client-style practice automation that is safe to demonstrate
 ### Included
 
 - Manual Trigger and one dummy lead per execution.
-- Exact input normalization and validation rules from [[Requirements]].
+- Exact input normalization and validation rules from [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]].
 - Deterministic scoring, qualification status, routing, and human-review flags.
 - `idempotency_key` generation from normalized email without a historical lookup.
 - Destination-neutral storage and notification payload preparation.
-- Final output conforming to the approved schema in [[Architecture]].
+- Final output conforming to the approved schema in [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]].
 - Inactive DEV workflow planning, testing, backup, and operational review.
 
 ### Not Included
@@ -80,17 +80,17 @@ Manual Trigger
 → Final Output
 ```
 
-This is a linear ten-node workflow. IF, Switch, and Merge are not used in v0.1. See [[Architecture]] for node responsibilities and data flow.
+This is a linear ten-node workflow. IF, Switch, and Merge are not used in v0.1. See [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]] for node responsibilities and data flow.
 
 ## Success Criteria
 
 - Every required field is validated against its approved type, enum, format, length, range, consent, or UTC timestamp rule.
-- Every valid lead receives the exact score and reason codes defined in [[Requirements]].
+- Every valid lead receives the exact score and reason codes defined in [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]].
 - Invalid leads receive `score: null`, machine-readable errors, and `needs_human_review: true`.
 - Routing follows the approved regional queue table; fallback uses General Sales Queue and human review.
-- The final output contains every field defined in [[Architecture]].
+- The final output contains every field defined in [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]].
 - Each prepared payload explicitly states that no write or send was requested.
-- The 25-test Core Release Suite in [[Test Plan]] produces its exact expected results.
+- The 25-test Core Release Suite in [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]] produces its exact expected results.
 - The inactive DEV workflow uses dummy data, no credentials, and no external side effects.
 - Known limitations and v0.2 deferrals are disclosed.
 
@@ -98,15 +98,15 @@ The demo criteria above are satisfied. The 88-test Extended Regression Suite, pe
 
 ## Project Workflow
 
-1. Confirm scope and rules in [[Requirements]].
-2. Approve the proposed design in [[Architecture]].
-3. Confirm access planning in [[Credentials Checklist]].
-4. Build only after authorization using [[Development Plan]].
-5. Execute the cases in [[Test Plan]] and record evidence in [[Test Results]].
-6. Track defects in [[Issues and Fixes]] and constraints in [[Known Limitations]].
-7. Prepare recovery and release controls in [[Backup and Restore]] and [[Deployment Checklist]].
-8. Define ongoing ownership in [[Maintenance Guide]].
-9. Complete [[Lessons Learned]], [[Client Handover]], and [[Case Study]] only after evidence and approval exist.
+1. Confirm scope and rules in [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]].
+2. Approve the proposed design in [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]].
+3. Confirm access planning in [[02 - Projects/Automation/Lead Qualification Practice/Credentials Checklist|Credentials Checklist]].
+4. Build only after authorization using [[02 - Projects/Automation/Lead Qualification Practice/Development Plan|Development Plan]].
+5. Execute the cases in [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]] and record evidence in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
+6. Track defects in [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]] and constraints in [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]].
+7. Prepare recovery and release controls in [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]] and [[02 - Projects/Automation/Lead Qualification Practice/Deployment Checklist|Deployment Checklist]].
+8. Define ongoing ownership in [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]].
+9. Complete [[02 - Projects/Automation/Lead Qualification Practice/Lessons Learned|Lessons Learned]], [[02 - Projects/Automation/Lead Qualification Practice/Client Handover|Client Handover]], and [[02 - Projects/Automation/Lead Qualification Practice/Case Study|Case Study]] only after evidence and approval exist.
 
 ## Assumptions
 
@@ -131,7 +131,7 @@ The demo criteria above are satisfied. The 88-test Extended Regression Suite, pe
 
 ## Approved v0.1 Decisions
 
-- Required inputs, normalization, validation codes, score rules, statuses, and queues are defined in [[Requirements]].
+- Required inputs, normalization, validation codes, score rules, statuses, and queues are defined in [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]].
 - v0.1 performs no external lookup, write, send, retry, or concurrency control.
 - Airtable, Google Sheets, Email, Telegram, persistent duplicate detection, external retries, and side effects are v0.2 work.
 - There is no STAGING or PROD workflow for v0.1.
@@ -143,7 +143,7 @@ Decide whether to archive the demo project or continue with v0.2.
 
 ## Related Notes
 
-- [[Development Plan]]
-- [[Test Plan]]
-- [[Known Limitations]]
-- [[Credentials Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Development Plan|Development Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Credentials Checklist|Credentials Checklist]]

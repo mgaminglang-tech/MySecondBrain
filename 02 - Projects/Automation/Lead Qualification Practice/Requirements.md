@@ -52,7 +52,7 @@ tags:
 | FR-007 | Route by normalized region. | high | Approved regions map to the exact queue; unsupported or missing regions use General Sales Queue and human review. | Project Owner |
 | FR-008 | Prepare a destination-neutral storage payload without writing it. | high | Payload uses `destination: deferred-v0.2`, `operation: none`, and the complete prepared record. | Automation Engineer |
 | FR-009 | Prepare an internal notification preview without sending it. | high | Payload uses `channel: internal-preview` and the exact status-based required, priority, subject, and message rules. | Automation Engineer |
-| FR-010 | Return the complete final output contract. | high | All required top-level fields in [[Architecture]] are present with approved types. | Automation Engineer |
+| FR-010 | Return the complete final output contract. | high | All required top-level fields in [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]] are present with approved types. | Automation Engineer |
 | FR-011 | Remain inactive and side-effect free. | high | Execution uses dummy data, no credentials, no persistent lookup, no write, and no send. | Project Owner |
 
 ## Required Input Contract
@@ -178,7 +178,7 @@ Missing or unsupported routing is also invalid under the input contract and sets
 
 - `destination: "deferred-v0.2"`
 - `operation: "none"`
-- `record`: the complete prepared storage record defined in [[Architecture]]
+- `record`: the complete prepared storage record defined in [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]]
 
 `notification_payload` always contains `channel: "internal-preview"`, `notification_required`, `priority`, `subject`, and `message`.
 
@@ -191,7 +191,7 @@ Missing or unsupported routing is also invalid under the input contract and sets
 
 Every invalid result has `needs_human_review: true`. The notification preview never includes the raw lead `message`.
 
-For qualified and invalid previews, use `Unknown Company` when normalized company is `null` and `unknown` when normalized product interest is `null`. The deterministic subject and message templates are defined in [[Architecture]].
+For qualified and invalid previews, use `Unknown Company` when normalized company is `null` and `unknown` when normalized product interest is `null`. The deterministic subject and message templates are defined in [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]].
 
 ## Non-Functional Requirements
 
@@ -214,14 +214,14 @@ For qualified and invalid previews, use `Unknown Company` when normalized compan
 
 ### Controlled Demo Acceptance
 
-- [x] The 25-test Core Release Suite in [[Test Plan]] passed with recorded evidence.
+- [x] The 25-test Core Release Suite in [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]] passed with recorded evidence.
 - [x] Core results are 25 passed, 0 failed, and 0 blocked.
 - [x] Exact demonstrated scoring fixtures returned the documented totals and reason codes.
 - [x] Demonstrated invalid fixtures returned `score: null`, machine-readable errors, and human review.
 - [x] The complete 16-key final-output contract and nested payload contracts were demonstrated.
 - [x] Storage and notification payloads remained inert.
 - [x] The workflow remained inactive and used dummy data, zero credentials, and no external integrations or side effects.
-- [x] [[Known Limitations]] and deferred features are disclosed.
+- [x] [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]] and deferred features are disclosed.
 
 The 88-test Extended Regression Suite is not part of the controlled demo acceptance gate. It remains required before production deployment or after a major workflow change. The ten v0.2 integration tests remain deferred.
 
@@ -244,7 +244,7 @@ The 88-test Extended Regression Suite is not part of the controlled demo accepta
 ## Related Notes
 
 - [[Lead Qualification Practice Overview]]
-- [[Architecture]]
-- [[Test Plan]]
-- [[Credentials Checklist]]
-- [[Known Limitations]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Plan|Test Plan]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Credentials Checklist|Credentials Checklist]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]]

@@ -37,7 +37,7 @@ The optimized Core Release Suite contains exactly 25 existing test IDs:
 
 This suite covers the approved happy path, budget thresholds, role tiers through owner/manager/other fixtures, timeframe boundaries, qualified and unqualified status boundaries, all regional routes and fallback, valid and invalid deterministic identity, null handling, complete output contracts, qualified and invalid notifications, timestamp rejection, and suspicious-text handling.
 
-For TC-002 in an unfixed-clock execution, apply the documented [[Architecture]] runtime rule: `processed_at` must be canonical UTC and must exactly equal `storage_payload.record.processed_at`; every other top-level and nested value remains exact.
+For TC-002 in an unfixed-clock execution, apply the documented [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]] runtime rule: `processed_at` must be canonical UTC and must exactly equal `storage_payload.record.processed_at`; every other top-level and nested value remains exact.
 
 ## v0.1 Extended Regression Suite
 
@@ -74,12 +74,12 @@ This base fixture scores 40: role 5 + budget 0 + timeframe 5 + clear need 20 + b
 
 | ID | Override or scenario | Exact expected result |
 |---|---|---|
-| TC-001 | Base plus `role: owner`, `budget_usd: 5000`, `timeframe_days: 30`; fixed clock `2026-07-23T12:00:01.000Z` | Exact authoritative JSON in [[Architecture]]; score 100; qualified; APAC Sales Queue; review false |
-| TC-002 | TC-001 fixture and fixed clock | Exactly 16 top-level keys; storage keys exactly `destination`, `operation`, `record`; notification keys exactly `channel`, `notification_required`, `priority`, `subject`, `message`; nested values exactly match [[Architecture]] |
+| TC-001 | Base plus `role: owner`, `budget_usd: 5000`, `timeframe_days: 30`; fixed clock `2026-07-23T12:00:01.000Z` | Exact authoritative JSON in [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]]; score 100; qualified; APAC Sales Queue; review false |
+| TC-002 | TC-001 fixture and fixed clock | Exactly 16 top-level keys; storage keys exactly `destination`, `operation`, `record`; notification keys exactly `channel`, `notification_required`, `priority`, `subject`, `message`; nested values exactly match [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]] |
 | TC-003 | Base plus `full_name: "  Alex   Rivera  "`, `email: "  ALEX.RIVERA@ACME.EXAMPLE  "`, `company: "  Acme   Demo Company  "`, `role: " OWNER "`, `product_interest: " AUTOMATION "`, `region: " apac "`, `source: " REFERRAL "`, `submitted_at: " 2026-07-23T12:00:00Z "` | Normalized values equal the base fixture; warnings in order: `full_name/TRIMMED_WHITESPACE`, `full_name/COLLAPSED_WHITESPACE`, `email/TRIMMED_WHITESPACE`, `email/LOWERCASED_VALUE`, `company/TRIMMED_WHITESPACE`, `company/COLLAPSED_WHITESPACE`, `role/TRIMMED_WHITESPACE`, `role/LOWERCASED_VALUE`, `role/CANONICALIZED_ENUM`, `product_interest/TRIMMED_WHITESPACE`, `product_interest/LOWERCASED_VALUE`, `product_interest/CANONICALIZED_ENUM`, `region/TRIMMED_WHITESPACE`, `region/CANONICALIZED_ENUM`, `source/TRIMMED_WHITESPACE`, `source/LOWERCASED_VALUE`, `source/CANONICALIZED_ENUM`, `submitted_at/TRIMMED_WHITESPACE`, `submitted_at/CANONICALIZED_TIMESTAMP` |
 | TC-004 | Base fixture | `idempotency_key: 9d496fb34cf92660ac93d1de30328c4bef2417dc3cabc7c7ba54eddfc160956c`; `lead_id: lead_9d496fb34cf92660` |
 | TC-005 | Base plus `role: "intern"` | `normalized_lead.role: null`; one `role/INVALID_ENUM` error; invalid; score null; only `SCORING_SKIPPED_INVALID_INPUT`; APAC Sales Queue; review true |
-| TC-006 | TC-001 qualified fixture | Notification: `internal-preview`, required true, priority high, non-empty subject/message exactly matching [[Architecture]] |
+| TC-006 | TC-001 qualified fixture | Notification: `internal-preview`, required true, priority high, non-empty subject/message exactly matching [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]] |
 | TC-007 | Base plus `role: owner`, `budget_usd: 2000`, `timeframe_days: 61`, `message: "Need sales workflow."` | Score 65; nurture; notification required false, priority none, subject null, message null |
 | TC-008 | Base plus `role: manager`, `message: "Need sales workflow."`, `email: "alex.rivera@gmail.com"` | Score 25; unqualified; notification required false, priority none, subject null, message null |
 | TC-009 | Base plus `role: "intern"` | Invalid; review true; notification required true, priority high, subject `Lead invalid: Acme Demo Company [lead_9d496fb34cf92660]`; non-empty message uses `not-scored` and excludes raw lead message |
@@ -244,7 +244,7 @@ Each case removes exactly one field. Expected for every case: `invalid`, `score:
 
 ## Identity Fallback and Determinism Tests
 
-Canonical raw-input strings use the alphabetical key order documented in [[Requirements]].
+Canonical raw-input strings use the alphabetical key order documented in [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]].
 
 | ID | Exact fixture | Exact expected identity and normalized values |
 |---|---|---|
@@ -263,7 +263,7 @@ Canonical raw-input strings use the alphabetical key order documented in [[Requi
 | TC-141 | Object containing all 12 keys with explicit `null` | All 12 normalized keys are null; 12 ordered `INVALID_TYPE` errors except consent also uses `INVALID_TYPE`; same key and ID as TC-140; invalid; score null; General Sales Queue; review true |
 | TC-142 | Unfixed runtime clock with base fixture | Top-level `processed_at` matches `YYYY-MM-DDTHH:mm:ss.sssZ`, parses as a real UTC instant, and exactly equals `storage_payload.record.processed_at` |
 | TC-143 | One base-fixture manual execution | End-to-end duration is strictly less than 2.000 seconds |
-| TC-144 | Workflow inspection | Name is exactly `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`; workflow is inactive; the exact ten-node order matches [[Architecture]]; Manual Trigger is the only trigger; Crypto is v2 with SHA-256 lowercase hexadecimal output and no credential; IF, Switch, and Merge are absent; credential count, external lookup count, write-node count, send-node count, and external API node count are all zero |
+| TC-144 | Workflow inspection | Name is exactly `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`; workflow is inactive; the exact ten-node order matches [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]]; Manual Trigger is the only trigger; Crypto is v2 with SHA-256 lowercase hexadecimal output and no credential; IF, Switch, and Merge are absent; credential count, external lookup count, write-node count, send-node count, and external API node count are all zero |
 
 ## Deferred v0.2 Integration Tests
 
@@ -293,7 +293,7 @@ These are not executable v0.1 exit criteria and remain `deferred`.
 
 ## Entry Criteria
 
-- [x] [[Requirements]] and [[Architecture]] approved for the controlled demo.
+- [x] [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]] and [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]] approved for the controlled demo.
 - [x] Inactive DEV workflow is ready.
 - [x] Fixtures reviewed as dummy data.
 - [x] Expected values are calculated independently.
@@ -303,8 +303,8 @@ These are not executable v0.1 exit criteria and remain `deferred`.
 
 - [x] All 25 Core Release Suite cases pass with evidence.
 - [x] Core results are 25 passed, 0 failed, and 0 blocked.
-- [x] Results are recorded in [[Test Results]].
-- [x] [[Known Limitations]] and [[Issues and Fixes]] are current for the demo.
+- [x] Results are recorded in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
+- [x] [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]] and [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]] are current for the demo.
 - [x] Workflow remained inactive with dummy data, zero credentials, and no external integrations or side effects.
 - [x] DTC cases remain deferred and do not block the controlled demo.
 
@@ -317,7 +317,7 @@ These are not executable v0.1 exit criteria and remain `deferred`.
 
 ## Related Notes
 
-- [[Requirements]]
-- [[Architecture]]
-- [[Test Results]]
-- [[Issues and Fixes]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Requirements|Requirements]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Architecture|Architecture]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]]
+- [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]]
