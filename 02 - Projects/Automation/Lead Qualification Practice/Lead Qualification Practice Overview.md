@@ -1,10 +1,12 @@
 ---
 type: project
 project_type: automation
-status: active
+status: demo-complete
+phase: demo-closure
 priority: medium
 client: Demo Sales Company
-owner: Demo Sales Company
+owner: Mervin
+production_ready: false
 version: v0.1.0
 created: 2026-07-23
 updated: 2026-07-24
@@ -26,6 +28,7 @@ Maintain an inactive DEV-only n8n practice automation that accepts one dummy lea
 - Demo phase: complete.
 - Demo acceptance gate: 25 of 25 Core Release Suite tests passed; 0 failed; 0 blocked.
 - Extended Regression Suite: 88 tests not run; required before production deployment or after a major workflow change.
+- v0.2 integration tests: 10 deferred.
 - Production readiness: not approved.
 - Full project closure: not applicable while operational review, recovery evidence, owner approval, integrations, and production validation remain outstanding.
 
@@ -136,9 +139,7 @@ The demo criteria above are satisfied. The 88-test Extended Regression Suite, pe
 
 ## Next Action
 
-- [ ] Complete operational review, recovery evidence, and client/owner approval before considering any live deployment.
-- [ ] Run the 88-test Extended Regression Suite before production deployment or after a major workflow change.
-- [ ] Design and approve v0.2 integrations separately.
+Decide whether to archive the demo project or continue with v0.2.
 
 ## Related Notes
 
