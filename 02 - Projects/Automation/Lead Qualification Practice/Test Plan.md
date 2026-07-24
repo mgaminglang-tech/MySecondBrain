@@ -310,10 +310,10 @@ These are not executable v0.1 exit criteria and remain `deferred`.
 
 ## Production and Major-Change Gate
 
-- [ ] Run all 88 Extended Regression Suite tests.
-- [ ] Complete operational review, recovery evidence, and client/owner approval.
-- [ ] Complete integration testing and production smoke testing for the approved live design.
-- [ ] Record a separate production-readiness decision.
+- **Deferred:** Run all 88 Extended Regression Suite tests.
+- **Future production gate:** Complete operational review, recovery evidence, and client/owner approval.
+- **Deferred:** Complete integration testing and production smoke testing for the approved live design.
+- **Future production gate:** Record a separate production-readiness decision.
 
 ## Related Notes
 

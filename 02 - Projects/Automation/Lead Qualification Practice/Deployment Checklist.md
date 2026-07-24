@@ -27,10 +27,10 @@ The controlled inactive DEV demo is accepted. This is not a deployment approval:
 - [x] Credential inventory confirms zero credentials.
 - [x] Node inventory confirms zero external lookup, write, send, or API nodes.
 - [x] All 25 Core Release Suite tests pass with evidence in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
-- [ ] Processing time is under two seconds per lead.
-- [ ] Seven-day DEV execution-log retention is configured and reviewed.
+- **Future production gate:** Processing time is under two seconds per lead.
+- **Future production gate:** Seven-day DEV execution-log retention is configured and reviewed.
 - [x] Open issues and limitations reviewed for the demo.
-- [ ] Secret-free DEV export created and verified.
+- **Deferred:** Secret-free DEV export created and verified.
 
 ## Controlled v0.1 Review
 
@@ -46,10 +46,10 @@ The controlled inactive DEV demo is accepted. This is not a deployment approval:
 
 Restore the last reviewed inactive DEV export if validation, scoring, routing, schema, performance, or retention differs from the approved specification.
 
-- [ ] Stop manual testing.
-- [ ] Preserve dummy-data evidence.
-- [ ] Restore following [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]].
-- [ ] Re-test before review continues.
+- **Procedural rollback step:** Stop manual testing.
+- **Procedural rollback step:** Preserve dummy-data evidence.
+- **Procedural rollback step:** Restore following [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]].
+- **Procedural rollback step:** Re-test before review continues.
 
 ## Demo Release Record
 
@@ -63,10 +63,10 @@ Restore the last reviewed inactive DEV export if validation, scoring, routing, s
 
 ## Production Blockers
 
-- [ ] Run the 88-test Extended Regression Suite before production deployment or after a major workflow change.
-- [ ] Complete operational review, recovery evidence, and client/owner approval.
-- [ ] Complete integration testing and production smoke testing.
-- [ ] Approve STAGING/PROD architecture, credentials, rollback, and activation separately.
+- **Deferred:** Run the 88-test Extended Regression Suite before production deployment or after a major workflow change.
+- **Future production gate:** Complete operational review, recovery evidence, and client/owner approval.
+- **Deferred:** Complete integration testing and production smoke testing.
+- **Future production gate:** Approve STAGING/PROD architecture, credentials, rollback, and activation separately.
 
 ## Deferred v0.2 Deployment
 

@@ -227,12 +227,12 @@ The 88-test Extended Regression Suite is not part of the controlled demo accepta
 
 ### Production and Project-Closure Requirements
 
-- [ ] Complete the Extended Regression Suite when required by the production or major-change gate.
-- [ ] Verify the under-two-second target and seven-day log-retention configuration.
-- [ ] Complete operational review and recovery evidence.
-- [ ] Obtain client/owner approval.
-- [ ] Complete integration testing and production smoke testing for any future live design.
-- [ ] Approve a separate production architecture, credentials plan, and deployment decision.
+- **Deferred:** Complete the Extended Regression Suite when required by the production or major-change gate.
+- **Future production gate:** Verify the under-two-second target and seven-day log-retention configuration.
+- **Future production gate:** Complete operational review and recovery evidence.
+- **Future production gate:** Obtain client/owner approval.
+- **Deferred:** Complete integration testing and production smoke testing for any future live design.
+- **Future production gate:** Approve a separate production architecture, credentials plan, and deployment decision.
 
 ## Deferred to v0.2
 

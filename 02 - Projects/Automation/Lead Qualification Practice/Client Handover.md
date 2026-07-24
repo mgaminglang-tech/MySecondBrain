@@ -24,17 +24,17 @@ Draft and incomplete. An inactive DEV practice workflow and 25/25 passing Core R
 - [x] Evidence that v0.1 uses zero credentials and no external resources.
 - [x] [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]] and disclosed [[02 - Projects/Automation/Lead Qualification Practice/Known Limitations|Known Limitations]].
 - [x] [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]] and demo release history.
-- [ ] [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]] procedure and verified evidence.
-- [ ] [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]] and support/escalation ownership.
+- **Not applicable for this demo:** [[02 - Projects/Automation/Lead Qualification Practice/Backup and Restore|Backup and Restore]] procedure and verified evidence.
+- **Not applicable for this demo:** [[02 - Projects/Automation/Lead Qualification Practice/Maintenance Guide|Maintenance Guide]] and support/escalation ownership.
 - [x] Scoring rule version, routing table version, deterministic identity rules, and change procedure.
 
 ## Planned Operations Walkthrough
 
-- [ ] Explain trigger, inputs, normalization, validation, scoring, statuses, and routing.
-- [ ] Demonstrate monitoring and failure handling with dummy data only.
-- [ ] Demonstrate deterministic v0.1 identity generation and explain that it performs no persistent duplicate lookup.
-- [ ] Review prepared storage and internal-preview notification payloads.
-- [ ] Review backup, restore, rollback, zero-credential evidence, and retention.
+- **Not applicable for this demo:** Explain trigger, inputs, normalization, validation, scoring, statuses, and routing.
+- **Not applicable for this demo:** Demonstrate monitoring and failure handling with dummy data only.
+- **Not applicable for this demo:** Demonstrate deterministic v0.1 identity generation and explain that it performs no persistent duplicate lookup.
+- **Not applicable for this demo:** Review prepared storage and internal-preview notification payloads.
+- **Not applicable for this demo:** Review backup, restore, rollback, zero-credential evidence, and retention.
 
 ## Ownership Matrix
 
@@ -52,11 +52,11 @@ Persistent duplicate controls, credentials, external storage, notification deliv
 ## Acceptance
 
 - [x] Controlled demo scope, evidence, limitations, and deferrals are documented.
-- [ ] Receiving owner confirms operational understanding.
-- [ ] Required access is transferred safely.
-- [ ] Temporary access is removed.
-- [ ] Limitations and open actions are accepted.
-- [ ] Client approver signs off with evidence.
+- **Not applicable for this demo:** Receiving owner confirms operational understanding.
+- **Not applicable for this demo:** Required access is transferred safely.
+- **Not applicable for this demo:** Temporary access is removed.
+- **Not applicable for this demo:** Limitations and open actions are accepted.
+- **Not applicable for this demo:** Client approver signs off with evidence.
 
 Demo completion does not constitute production handover or full project closure.
 

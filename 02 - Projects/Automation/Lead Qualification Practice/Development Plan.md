@@ -47,7 +47,7 @@ Record how the inactive DEV practice automation was built and what remains outsi
 - [x] Confirm IF, Switch, and Merge are absent.
 - [x] Execute the 25-test Core Release Suite and record evidence in [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
 - [x] Record and resolve observed DEV defects in [[02 - Projects/Automation/Lead Qualification Practice/Issues and Fixes|Issues and Fixes]].
-- [ ] Export the validated inactive DEV workflow without secrets.
+- **Deferred:** Export the validated inactive DEV workflow without secrets.
 
 ## STAGING and PROD
 
@@ -80,11 +80,11 @@ STAGING and PROD do not exist in v0.1. No procedure may promote v0.1 outside DEV
 
 ## Remaining Before Live Deployment
 
-- [ ] Run the 88-test Extended Regression Suite before production deployment or after a major workflow change.
-- [ ] Verify processing performance and seven-day execution-log retention.
-- [ ] Create and verify a secret-free backup export and recovery evidence.
-- [ ] Complete operational review and obtain client/owner approval.
-- [ ] Design and test integrations, production controls, and production smoke tests separately.
+- **Deferred:** Run the 88-test Extended Regression Suite before production deployment or after a major workflow change.
+- **Future production gate:** Verify processing performance and seven-day execution-log retention.
+- **Deferred:** Create and verify a secret-free backup export and recovery evidence.
+- **Future production gate:** Complete operational review and obtain client/owner approval.
+- **Deferred:** Design and test integrations, production controls, and production smoke tests separately.
 
 ## Deferred v0.2 Build
 

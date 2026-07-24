@@ -19,7 +19,7 @@ Draft and incomplete for publication. The controlled inactive DEV demo is comple
 
 ## Publication Safety
 
-- [ ] Publication or anonymization is approved.
+- **Deferred:** Publication or anonymization is approved.
 - [x] No secrets, private identifiers, or unredacted data are included.
 - [x] Reported demo outcomes are supported by [[02 - Projects/Automation/Lead Qualification Practice/Test Results|Test Results]].
 - [x] Limitations and assumptions are disclosed.

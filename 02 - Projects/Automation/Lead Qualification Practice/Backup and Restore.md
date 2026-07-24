@@ -33,13 +33,13 @@ An inactive DEV demo workflow exists. The demo acceptance gate does not require 
 
 ## Backup Contents
 
-- [ ] Secret-free n8n workflow export.
-- [ ] Node and connection inventory.
-- [ ] Credential names and owners without values.
-- [ ] Environment-specific resource references.
-- [ ] Approved requirements, scoring rule version, and routing version.
-- [ ] Test evidence, issues, limitations, deployment, and rollback notes.
-- [ ] Evidence that the workflow is inactive and has no credentials or external nodes.
+- **Deferred:** Secret-free n8n workflow export.
+- **Deferred:** Node and connection inventory.
+- **Not applicable for this demo:** Credential names and owners without values.
+- **Not applicable for this demo:** Environment-specific resource references.
+- **Deferred:** Approved requirements, scoring rule version, and routing version.
+- **Deferred:** Test evidence, issues, limitations, deployment, and rollback notes.
+- **Deferred:** Evidence that the workflow is inactive and has no credentials or external nodes.
 
 ## DEV Backup Procedure
 
