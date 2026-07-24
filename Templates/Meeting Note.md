@@ -1,4 +1,4 @@
-\---
+---
 
 type: meeting
 
@@ -6,57 +6,56 @@ date: {{date:YYYY-MM-DD}}
 
 status: completed
 
-\---
+---
 
 
 
-\# Meeting Title
+# Meeting Title
 
 
 
-\## Participants
+## Participants
 
 
 
-\- 
+- 
 
 
 
-\## Agenda
+## Agenda
 
 
 
-\- 
+- 
 
 
 
-\## Discussion
+## Discussion
 
 
 
-\- 
+- 
 
 
 
-\## Decisions
+## Decisions
 
 
 
-\- 
+- 
 
 
 
-\## Action Items
+## Action Items
 
 
 
-\- \[ ] Task — Owner — Due date
+- [ ] Task — Owner — Due date
 
 
 
-\## Follow-up
+## Follow-up
 
 
 
-\- 
-
+- 

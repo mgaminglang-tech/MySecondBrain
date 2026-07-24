@@ -1,4 +1,4 @@
-\---
+---
 
 type: knowledge
 
@@ -8,15 +8,15 @@ topic:
 
 source:
 
-\---
+---
 
 
 
-\# Topic
+# Topic
 
 
 
-\## Summary
+## Summary
 
 
 
@@ -24,31 +24,31 @@ Explain the topic in your own words.
 
 
 
-\## Key Concepts
+## Key Concepts
 
 
 
-\- 
+- 
 
 
 
-\## Example
+## Example
 
 
 
 ```text
 
 
+```
 
-When to Use
+## When to Use
 
-\- 
+- 
 
-Common Mistakes
+## Common Mistakes
 
-\- 
+- 
 
-Related Notes
+## Related Notes
 
-\-
-
+- 

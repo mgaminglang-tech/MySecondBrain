@@ -1,4 +1,4 @@
-\---
+---
 
 type: sop
 
@@ -8,15 +8,15 @@ created: {{date:YYYY-MM-DD}}
 
 updated: {{date:YYYY-MM-DD}}
 
-\---
+---
 
 
 
-\# SOP Title
+# SOP Title
 
 
 
-\## Purpose
+## Purpose
 
 
 
@@ -24,65 +24,64 @@ Explain why this process exists.
 
 
 
-\## When to Use
+## When to Use
 
 
 
-\- 
+- 
 
 
 
-\## Requirements
+## Requirements
 
 
 
-\- 
+- 
 
 
 
-\## Procedure
+## Procedure
 
 
 
-1\. 
+1. 
 
-2\. 
+2. 
 
-3\. 
-
-
-
-\## Verification
+3. 
 
 
 
-\- \[ ] Confirm expected result
-
-\- \[ ] Check for errors
-
-\- \[ ] Document changes
+## Verification
 
 
 
-\## Troubleshooting
+- [ ] Confirm expected result
+
+- [ ] Check for errors
+
+- [ ] Document changes
 
 
 
-\### Problem
+## Troubleshooting
 
 
 
-\*\*Cause:\*\*
+### Problem
 
 
 
-\*\*Solution:\*\*
+**Cause:**
 
 
 
-\## Related Notes
+**Solution:**
 
 
 
-\- 
+## Related Notes
 
+
+
+- 

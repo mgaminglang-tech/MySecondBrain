@@ -1,4 +1,4 @@
-\---
+---
 
 type: daily
 
@@ -6,65 +6,64 @@ date: {{date:YYYY-MM-DD}}
 
 status: active
 
-\---
+---
 
 
 
-\# {{date:dddd, MMMM DD, YYYY}}
+# {{date:dddd, MMMM DD, YYYY}}
 
 
 
-\## Main Goal
+## Main Goal
 
 
 
-\- 
+- 
 
 
 
-\## Tasks
+## Tasks
 
 
 
-\- \[ ] 
+- [ ] 
 
 
 
-\## Notes
+## Notes
 
 
 
-\- 
+- 
 
 
 
-\## What I Learned
+## What I Learned
 
 
 
-\- 
+- 
 
 
 
-\## Problems Encountered
+## Problems Encountered
 
 
 
-\- 
+- 
 
 
 
-\## Ideas
+## Ideas
 
 
 
-\- 
+- 
 
 
 
-\## Tomorrow
+## Tomorrow
 
 
 
-\- \[ ] 
-
+- [ ] 

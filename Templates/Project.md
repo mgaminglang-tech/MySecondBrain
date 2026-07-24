@@ -1,4 +1,4 @@
-\---
+---
 
 type: project
 
@@ -10,15 +10,15 @@ updated: {{date:YYYY-MM-DD}}
 
 priority: medium
 
-\---
+---
 
 
 
-\# Project Name
+# Project Name
 
 
 
-\## Objective
+## Objective
 
 
 
@@ -26,7 +26,7 @@ Describe the desired outcome.
 
 
 
-\## Problem
+## Problem
 
 
 
@@ -34,43 +34,43 @@ What problem does this project solve?
 
 
 
-\## Scope
+## Scope
 
 
 
-\### Included
+### Included
 
 
 
-\- 
+- 
 
 
 
-\### Not Included
+### Not Included
 
 
 
-\- 
+- 
 
 
 
-\## Requirements
+## Requirements
 
 
 
-\- \[ ] 
+- [ ] 
 
 
 
-\## Tasks
+## Tasks
 
 
 
-\- \[ ] 
+- [ ] 
 
 
 
-\## Architecture
+## Architecture
 
 
 
@@ -78,41 +78,40 @@ Describe the systems, tools, and integrations.
 
 
 
-\## Decisions
+## Decisions
 
 
 
-\- 
+- 
 
 
 
-\## Issues
+## Issues
 
 
 
-\- 
+- 
 
 
 
-\## Next Action
+## Next Action
 
 
 
-\- \[ ] 
+- [ ] 
 
 
 
-\## Resources
+## Resources
 
 
 
-\- 
+- 
 
 
 
-\## Lessons Learned
+## Lessons Learned
 
 
 
-\- 
-
+- 

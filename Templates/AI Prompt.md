@@ -1,4 +1,4 @@
-\---
+---
 
 type: ai-prompt
 
@@ -8,15 +8,15 @@ model:
 
 status: testing
 
-\---
+---
 
 
 
-\# Prompt Name
+# Prompt Name
 
 
 
-\## Purpose
+## Purpose
 
 
 
@@ -24,7 +24,7 @@ What should the AI accomplish?
 
 
 
-\## Context
+## Context
 
 
 
@@ -32,7 +32,7 @@ Provide the necessary background.
 
 
 
-\## Prompt
+## Prompt
 
 
 
@@ -44,7 +44,7 @@ Paste the full prompt here.
 
 
 
-\## Expected Output
+## Expected Output
 
 
 
@@ -52,15 +52,15 @@ Describe the required output structure.
 
 
 
-\## Test Cases
+## Test Cases
 
 
 
-\### Test 1
+### Test 1
 
 
 
-\*\*Input:\*\*
+**Input:**
 
 
 
@@ -72,7 +72,7 @@ Place the test input here.
 
 
 
-\*\*Result:\*\*
+**Result:**
 
 
 
@@ -84,15 +84,15 @@ Place the AI result here.
 
 
 
-\## Improvements
+## Improvements
 
 
 
-\- 
+- 
 
 
 
-\## Final Version
+## Final Version
 
 
 
@@ -101,4 +101,3 @@ Place the AI result here.
 Place the final improved prompt here.
 
 ```
-
