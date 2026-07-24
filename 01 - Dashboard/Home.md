@@ -73,10 +73,13 @@ LIMIT 8
 
 ## Open Tasks
 
+Detailed lifecycle checklists are excluded. Project-level work is shown under Project Next Actions and Blocked Projects.
+
 ```tasks
 not done
-path does not include Templates
-path does not include Archive
+path does not include Templates/
+path does not include 09 - Archive/
+filename does not include Automation Project Checklist.md
 sort by due
 ```
 
