@@ -1,1320 +1,155 @@
-\# Merv's Second Brain — Codex Instructions
+# Merv's Second Brain — Codex Instructions
 
+## Purpose
 
+This repository is a private Obsidian knowledge base for projects, SOPs, AI automation, technical learning, resources, and personal documentation. Treat it as a documentation and knowledge-management system, not as a normal software-code repository.
 
-\## Purpose
+## Instruction Precedence
 
+Use this order when instructions overlap:
 
+1. `AGENTS.md` — global safety, repository rules, and protected operations.
+2. [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]] — standard lifecycle, gates, and project process.
+3. The project-specific `Automation Project Checklist.md` — current phase, approvals, blockers, and next action.
+4. The project `Requirements.md` and `Architecture.md` — approved behavior and technical source of truth.
+5. The project `Test Plan.md` and `Test Results.md` — executable expectations and evidence.
 
-This repository is a private Obsidian knowledge base for projects, SOPs, AI automation, technical learning, resources, and personal documentation.
+When instructions conflict, the higher item takes precedence. Direct user instructions may narrow the current task but do not override safety or authorization boundaries. Missing project decisions must not be invented.
 
+## Universal Vault Rules
 
+- Preserve valid Obsidian Markdown, YAML frontmatter, properties, wikilinks, embeds, Dataview queries, Tasks queries, and template placeholders.
+- Preserve existing valid content and prefer focused edits over rewrites.
+- Search for an existing relevant note before creating a new one.
+- Do not delete, rename, move, archive, or overwrite notes unless explicitly requested.
+- Do not modify unrelated files.
+- Keep project status, phase, owner, approvals, next action, and evidence accurate.
+- Mark work complete only when supported by verified evidence.
+- Do not invent facts, decisions, approvals, credentials, test results, execution IDs, deployment outcomes, client feedback, or business results.
+- Label assumptions and recommendations clearly.
+- Use descriptive filenames and avoid cross-platform-invalid characters.
+- Use `YYYY-MM-DD` dates and lowercase property values where applicable.
 
-Codex should treat this repository as a documentation and knowledge-management system, not as a normal software-code repository.
+## Protected Paths and Operations
 
+Do not modify these paths unless the user explicitly includes them in scope:
 
+- `.git/`
+- `.obsidian/`
+- `.gitignore`
+- `.gitattributes`
+- `AGENTS.md`
+- `Assets/`
+- `Templates/`
+- `08 - Journal/`
+- `09 - Archive/`
 
-\## General Rules
+Additional restrictions:
 
+- Never modify generated plugin files, caches, or Obsidian workspace/UI-state files unless explicitly requested.
+- Never modify binary assets, rename attachments, or break embeds unless explicitly requested.
+- Never analyze, summarize, move, or edit journal content unless explicitly requested.
+- Never permanently delete archived evidence.
 
+## Security and Privacy
 
-1\. Preserve valid Obsidian Markdown, properties, internal links, embeds, and wikilinks.
+Never create, store, expose, or commit:
 
-2\. Do not delete, rename, or move existing notes unless explicitly requested.
+- passwords
+- API keys
+- access or authentication tokens
+- private keys
+- webhook secrets
+- environment secrets
+- personal or client credentials
+- unredacted sensitive client or personal data
 
-3\. Do not modify anything inside `.obsidian/` unless explicitly requested.
-
-4\. Never add passwords, API keys, access tokens, credentials, secrets, or sensitive personal information.
-
-5\. Do not modify journal entries unless explicitly requested.
-
-6\. Prefer improving an existing relevant note instead of creating a duplicate.
-
-7\. Use clear note titles and descriptive filenames.
-
-8\. Preserve existing YAML frontmatter when editing notes.
-
-9\. Before making broad or structural changes, explain the proposed plan.
-
-10\. Keep changes focused, minimal, and easy to review.
-
-11\. Do not modify generated plugin files, caches, workspace files, or Git configuration.
-
-12\. Do not commit, push, pull, merge, rebase, or change branches unless explicitly requested.
-
-13\. Do not mark a task as completed unless the task was actually completed and the result can be verified.
-
-14\. Do not invent project facts, decisions, credentials, test results, or completed work.
-
-15\. When information is uncertain, clearly label it as an assumption or recommendation.
-
-
-
-\## Repository Safety
-
-
-
-Codex must not modify these paths unless explicitly requested:
-
-
-
-\- `.git/`
-
-\- `.obsidian/`
-
-\- `.gitignore`
-
-\- `Assets/`
-
-\- `08 - Journal/`
-
-\- `09 - Archive/`
-
-
-
-Codex must never create or store:
-
-
-
-\- API keys
-
-\- Passwords
-
-\- Authentication tokens
-
-\- Private keys
-
-\- Environment secrets
-
-\- Personal account credentials
-
-\- Client credentials
-
-\- Unredacted sensitive data
-
-
-
-Use placeholders when documentation requires credential examples:
-
-
+Use placeholders such as:
 
 ```text
-
-YOUR\_API\_KEY
-
-YOUR\_ACCESS\_TOKEN
-
-YOUR\_EMAIL\_ADDRESS
-
-YOUR\_DATABASE\_URL
-
+YOUR_API_KEY
+YOUR_ACCESS_TOKEN
+YOUR_EMAIL_ADDRESS
+YOUR_DATABASE_URL
 ```
 
-
-
-\## Folder Responsibilities
-
-
-
-\### `00 - Inbox`
-
-
-
-Contains temporary and unprocessed notes.
-
-
-
-Codex may:
-
-
-
-\- Organize inbox notes when explicitly requested.
-
-\- Suggest appropriate destination folders.
-
-\- Improve unclear note titles.
-
-\- Add links to related notes.
-
-
-
-Codex must not:
-
-
-
-\- Automatically delete inbox notes.
-
-\- Move notes without approval.
-
-\- Treat inbox information as verified knowledge.
-
-
-
-\### `01 - Dashboard`
-
-
-
-Contains dashboards, navigation notes, and vault entry points.
-
-
-
-Codex may:
-
-
-
-\- Update navigation links.
-
-\- Improve dashboard organization.
-
-\- Create or improve Dataview queries.
-
-\- Create or improve Tasks queries.
-
-\- Fix broken dashboard links.
-
-
-
-Codex must:
-
-
-
-\- Preserve valid Dataview and Tasks syntax.
-
-\- Avoid adding complex JavaScript queries unless explicitly requested.
-
-
-
-\### `02 - Projects`
-
-
-
-Contains active and planned project documentation.
-
-
-
-Codex may:
-
-
-
-\- Create project documentation.
-
-\- Update objectives, requirements, scope, tasks, decisions, architecture, issues, progress, and lessons learned.
-
-\- Add links to related SOPs, knowledge notes, resources, and AI prompts.
-
-\- Create supporting project notes when necessary.
-
-
-
-Codex must:
-
-
-
-\- Mark tasks completed only when supported by actual project results.
-
-\- Preserve the distinction between planned, active, blocked, completed, and archived projects.
-
-\- Avoid claiming that a system was tested, deployed, or verified without evidence.
-
-
-
-\### `03 - Areas`
-
-
-
-Contains long-term responsibilities and ongoing areas of focus.
-
-
-
-Examples include:
-
-
-
-\- Career
-
-\- Business
-
-\- Learning
-
-\- Finance
-
-\- Health
-
-\- Personal development
-
-
-
-Codex may:
-
-
-
-\- Add summaries and supporting notes when requested.
-
-\- Link related projects and knowledge notes.
-
-\- Organize recurring responsibilities.
-
-
-
-Codex must not:
-
-
-
-\- Turn temporary projects into permanent areas without approval.
-
-\- Add private personal details unless explicitly provided for that purpose.
-
-
-
-\### `04 - Knowledge`
-
-
-
-Contains reusable technical knowledge, concepts, explanations, troubleshooting notes, and lessons learned.
-
-
-
-Codex may:
-
-
-
-\- Create concise technical notes.
-
-\- Add practical examples.
-
-\- Add troubleshooting steps.
-
-\- Link related concepts.
-
-\- Improve explanations.
-
-\- Convert verified project lessons into reusable knowledge.
-
-
-
-Codex must:
-
-
-
-\- Separate confirmed facts from assumptions.
-
-\- Prefer official documentation and primary sources when research is requested.
-
-\- Avoid duplicating an existing knowledge note.
-
-
-
-\### `05 - Resources`
-
-
-
-Contains references, tools, books, courses, websites, documentation links, and useful materials.
-
-
-
-Codex may:
-
-
-
-\- Add or organize resources when requested.
-
-\- Add short descriptions explaining why a resource is useful.
-
-\- Group related resources by topic.
-
-
-
-Codex must:
-
-
-
-\- Avoid adding unverified or low-quality sources without explanation.
-
-\- Avoid copying large copyrighted passages.
-
-\- Clearly label outdated or archived resources.
-
-
-
-\### `06 - SOPs`
-
-
-
-Contains repeatable procedures and operational documentation.
-
-
-
-Codex may:
-
-
-
-\- Create or improve SOPs.
-
-\- Add prerequisites.
-
-\- Add numbered procedures.
-
-\- Add validation steps.
-
-\- Add rollback procedures.
-
-\- Add troubleshooting sections.
-
-\- Add expected results.
-
-\- Link relevant project and knowledge notes.
-
-
-
-Every SOP should include, when applicable:
-
-
-
-\- Purpose
-
-\- When to use
-
-\- Requirements
-
-\- Safety considerations
-
-\- Procedure
-
-\- Verification
-
-\- Rollback
-
-\- Troubleshooting
-
-\- Related notes
-
-
-
-Codex must not:
-
-
-
-\- Claim that an SOP is tested unless evidence is available.
-
-\- Remove safety checks to shorten a procedure.
-
-
-
-\### `07 - AI`
-
-
-
-Contains AI prompts, agent designs, Codex instructions, skills, automation patterns, test cases, and model-related documentation.
-
-
-
-Codex may:
-
-
-
-\- Create and improve prompts.
-
-\- Document model purpose, inputs, outputs, constraints, tools, and test cases.
-
-\- Add prompt versions and improvements.
-
-\- Document agent workflows.
-
-\- Create reusable AI automation patterns.
-
-
-
-Codex must:
-
-
-
-\- Preserve prompt code blocks.
-
-\- Clearly distinguish draft prompts from tested prompts.
-
-\- Avoid placing real credentials inside prompts.
-
-\- Avoid claiming that a prompt is production-ready without testing.
-
-
-
-\### `08 - Journal`
-
-
-
-Contains personal daily notes and reflections.
-
-
-
-Codex must not:
-
-
-
-\- Modify journal entries unless explicitly requested.
-
-\- Summarize or analyze journal entries unless explicitly requested.
-
-\- Move journal content into other folders without approval.
-
-
-
-\### `09 - Archive`
-
-
-
-Contains completed, inactive, deprecated, or historical material.
-
-
-
-Codex may:
-
-
-
-\- Read archived notes when relevant.
-
-\- Suggest archiving completed material.
-
-
-
-Codex must not:
-
-
-
-\- Permanently delete archived notes.
-
-\- Restore archived items to active folders without approval.
-
-\- Treat archived information as current without verification.
-
-
-
-\### `Templates`
-
-
-
-Contains reusable Obsidian templates.
-
-
-
-Codex may:
-
-
-
-\- Improve templates when explicitly requested.
-
-\- Add useful fields and sections.
-
-\- Standardize template structure.
-
-
-
-Codex must:
-
-
-
-\- Preserve Obsidian template syntax.
-
-\- Preserve placeholders such as `{{date:YYYY-MM-DD}}`.
-
-\- Avoid placing real project data inside reusable templates.
-
-
-
-\### `Assets`
-
-
-
-Contains images, screenshots, PDFs, and other attachments.
-
-
-
-Codex must not:
-
-
-
-\- Rename assets unless explicitly requested.
-
-\- Move assets unless explicitly requested.
-
-\- Delete assets.
-
-\- Modify binary files.
-
-\- Break existing image or attachment links.
-
-
-
-\## Note Standards
-
-
-
-Use YAML frontmatter where applicable.
-
-
-
-General note structure:
-
-
-
-```yaml
-
-\---
-
-type:
-
-status:
-
-created:
-
-updated:
-
-tags:
-
-\---
-
-```
-
-
-
-Do not add empty properties unless they are useful for the note.
-
-
-
-Use dates in this format:
-
-
-
-```text
-
-YYYY-MM-DD
-
-```
-
-
-
-Use lowercase values for properties such as:
-
-
-
-```yaml
-
-status: active
-
-priority: high
-
-type: project
-
-```
-
-
-
-Recommended project statuses:
-
-
-
-```text
-
-planned
-
-active
-
-blocked
-
-on-hold
-
-completed
-
-archived
-
-```
-
-
-
-Recommended priorities:
-
-
-
-```text
-
-low
-
-medium
-
-high
-
-critical
-
-```
-
-
-
-\## Project Note Standard
-
-
-
-Use this structure for project notes:
-
-
-
-```yaml
-
-\---
-
-type: project
-
-status: active
-
-priority: medium
-
-created: YYYY-MM-DD
-
-updated: YYYY-MM-DD
-
-tags:
-
-&#x20; - project
-
-\---
-
-```
-
-
-
-Recommended project sections:
-
-
-
-```markdown
-
-\# Project Name
-
-
-
-\## Objective
-
-
-
-\## Problem
-
-
-
-\## Scope
-
-
-
-\### Included
-
-
-
-\### Not Included
-
-
-
-\## Requirements
-
-
-
-\## Tasks
-
-
-
-\## Architecture
-
-
-
-\## Decisions
-
-
-
-\## Issues
-
-
-
-\## Next Action
-
-
-
-\## Resources
-
-
-
-\## Lessons Learned
-
-```
-
-
-
-\## Knowledge Note Standard
-
-
-
-Use this structure for reusable knowledge notes:
-
-
-
-```yaml
-
-\---
-
-type: knowledge
-
-status: evergreen
-
-created: YYYY-MM-DD
-
-updated: YYYY-MM-DD
-
-tags:
-
-&#x20; - topic
-
-\---
-
-```
-
-
-
-Recommended knowledge-note sections:
-
-
-
-```markdown
-
-\# Topic
-
-
-
-\## Summary
-
-
-
-\## Key Concepts
-
-
-
-\## How It Works
-
-
-
-\## Example
-
-
-
-\## When to Use
-
-
-
-\## Common Mistakes
-
-
-
-\## Troubleshooting
-
-
-
-\## Related Notes
-
-
-
-\## Sources
-
-```
-
-
-
-\## SOP Note Standard
-
-
-
-Use this structure for SOP notes:
-
-
-
-```yaml
-
-\---
-
-type: sop
-
-status: draft
-
-created: YYYY-MM-DD
-
-updated: YYYY-MM-DD
-
-tags:
-
-&#x20; - sop
-
-\---
-
-```
-
-
-
-Recommended SOP sections:
-
-
-
-```markdown
-
-\# SOP Title
-
-
-
-\## Purpose
-
-
-
-\## When to Use
-
-
-
-\## Requirements
-
-
-
-\## Safety Considerations
-
-
-
-\## Procedure
-
-
-
-\## Verification
-
-
-
-\## Rollback
-
-
-
-\## Troubleshooting
-
-
-
-\## Related Notes
-
-```
-
-
-
-\## AI Prompt Note Standard
-
-
-
-Use this structure for AI prompt notes:
-
-
-
-```yaml
-
-\---
-
-type: ai-prompt
-
-status: testing
-
-model:
-
-created: YYYY-MM-DD
-
-updated: YYYY-MM-DD
-
-tags:
-
-&#x20; - ai-prompt
-
-\---
-
-```
-
-
-
-Recommended AI prompt sections:
-
-
-
-```markdown
-
-\# Prompt Name
-
-
-
-\## Purpose
-
-
-
-\## Context
-
-
-
-\## Inputs
-
-
-
-\## Prompt
-
-
-
-\## Expected Output
-
-
-
-\## Constraints
-
-
-
-\## Test Cases
-
-
-
-\## Results
-
-
-
-\## Improvements
-
-
-
-\## Final Version
-
-```
-
-
-
-\## Naming Standards
-
-
-
-Use descriptive filenames.
-
-
-
-Good examples:
-
-
-
-```text
-
-n8n Error Handling Patterns.md
-
-Solar Monitoring Architecture.md
-
-Deploying Next.js to Vercel.md
-
-Customer Request Classification Prompt.md
-
-```
-
-
-
-Avoid filenames such as:
-
-
-
-```text
-
-Note.md
-
-Untitled.md
-
-Test 1.md
-
-New Document.md
-
-Final Final Version.md
-
-```
-
-
-
-Do not include characters that cause cross-platform filename problems:
-
-
-
-```text
-
-< > : " / \\ | ? \*
-
-```
-
-
-
-\## Obsidian Link Standards
-
-
-
-Prefer Obsidian wikilinks for internal notes:
-
-
-
-```markdown
-
-\[\[Knowledge]]
-
-\[\[Obsidian Second Brain Setup]]
-
-\[\[06 - SOPs/SOPs|SOP Hub]]
-
-```
-
-
-
-Before creating a new wikilink:
-
-
-
-1\. Check whether the target note already exists.
-
-2\. Use the exact existing note title.
-
-3\. Avoid creating multiple links that refer to the same concept under different names.
-
-
-
-Preserve embeds:
-
-
-
-```markdown
-
-!\[\[image.png]]
-
-!\[\[Document.pdf]]
-
-```
-
-
-
-\## Task Standards
-
-
-
-Use standard Markdown tasks:
-
-
-
-```markdown
-
-\- \[ ] Open task
-
-\- \[x] Completed task
-
-```
-
-
-
-For important tasks, include context where useful:
-
-
-
-```markdown
-
-\- \[ ] Connect the vault to Codex
-
-\- \[ ] Review Codex changes before committing
-
-\- \[ ] Test the dashboard after updating Dataview queries
-
-```
-
-
-
-Codex must not mark a task complete based only on an assumption.
-
-
-
-\## Source and Research Standards
-
-
-
-When research is requested:
-
-
-
-1\. Prefer official documentation, primary sources, and trusted technical references.
-
-2\. Record the source in the relevant note.
-
-3\. Include the date accessed when the information can change.
-
-4\. Clearly identify assumptions and inferences.
-
-5\. Do not present outdated information as current.
-
-6\. Avoid copying large sections from a source.
-
-7\. Summarize information in original wording.
-
-
-
-Recommended source format:
-
-
-
-```markdown
-
-\## Sources
-
-
-
-\- Source title — accessed YYYY-MM-DD
-
-```
-
-
-
-\## Required Workflow
-
-
-
-When handling a vault task:
-
-
-
-1\. Read this `AGENTS.md` file first.
-
-2\. Inspect the relevant existing folders and notes.
-
-3\. Search for an existing note before creating a new one.
-
-4\. Identify broken links, duplicates, conflicts, and relevant context.
-
-5\. Explain the proposed files to create or update when the change is broad.
-
-6\. Make only the requested changes.
-
-7\. Preserve valid Markdown, YAML, wikilinks, Dataview queries, and Tasks queries.
-
-8\. Update related links only when necessary.
-
-9\. Review the final diff for accidental or unrelated changes.
-
-10\. Summarize every created, updated, moved, or deleted file.
-
-11\. Do not commit or push unless explicitly requested.
-
-
-
-\## Broad Change Approval
-
-
-
-Codex must request approval before:
-
-
-
-\- Renaming multiple notes
-
-\- Moving multiple notes
-
-\- Reorganizing folders
-
-\- Editing templates used across the vault
-
-\- Modifying dashboard queries
-
-\- Changing YAML property standards
-
-\- Archiving multiple projects
-
-\- Removing duplicate notes
-
-\- Changing `.obsidian/`
-
-\- Performing a repository-wide formatting update
-
-
-
-\## Final Response Format
-
-
-
-After making changes, report:
-
-
-
-\### Files Created
-
-
-
-\- List each created file.
-
-\- State its purpose.
-
-
-
-\### Files Updated
-
-
-
-\- List each updated file.
-
-\- Summarize the changes.
-
-
-
-\### Files Moved or Renamed
-
-
-
-\- List the original and new paths.
-
-\- Explain why the move was necessary.
-
-
-
-\### Important Decisions
-
-
-
-\- List architecture, organization, naming, or documentation decisions.
-
-
-
-\### Tasks Completed
-
-
-
-\- List tasks that were actually completed.
-
-
-
-\### Validation
-
-
-
-\- Report whether Markdown, YAML, wikilinks, Dataview queries, and Tasks queries were checked.
-
-
-
-\### Remaining Actions
-
-
-
-\- List recommended next steps that were not completed.
-
-
-
-\## Default Behavior
-
-
-
-When the request is ambiguous:
-
-
-
-1\. Do not make broad changes.
-
-2\. Inspect the relevant notes.
-
-3\. State the safest interpretation.
-
-4\. Ask for approval when the decision could affect multiple files.
-
-
+Documentation may record a credential's name, purpose, environment, owner, minimum permission, and approved secure location—but never its value.
+
+Use dummy or sanitized data unless real data use is explicitly authorized and documented. If a secret or sensitive value is discovered, do not reproduce it; report the location safely and request direction.
+
+## Approval Requirements
+
+Obtain explicit approval before:
+
+- broad or repository-wide edits
+- renaming or moving multiple notes
+- reorganizing folders
+- editing reusable templates
+- changing dashboards or queries
+- changing YAML property standards
+- modifying protected paths
+- archiving projects
+- removing duplicates
+- destructive or difficult-to-reverse operations
+- assigning credentials
+- enabling external writes, sends, or other side effects
+- activating workflows
+- changing production systems
+- deploying to production
+
+When the request is ambiguous, inspect first, state the safest interpretation, and stop for approval if the choice could affect multiple files, live systems, credentials, data, or people.
+
+## Git Safety
+
+- Do not stage, commit, push, pull, merge, rebase, restore, reset, change branches, or modify Git configuration unless explicitly requested.
+- Inspect status and the relevant diff before reporting file changes.
+- Preserve unrelated user changes.
+- Never use destructive Git commands as a cleanup shortcut.
+- Never commit secrets, credentials, unredacted client data, generated noise, or accidental broad changes.
+- A request to edit files does not authorize a commit or push.
+
+## n8n MCP and Workflow Safety
+
+- Use n8n MCP only when explicitly requested.
+- Treat capability audits as strictly read-only: do not create, edit, import, execute, activate, deactivate, delete, publish, or change settings or credentials.
+- Before an approved workflow change, inspect the current workflow, project checklist, requirements, architecture, and test plan.
+- Modify only the approved workflow and nodes; preserve unrelated workflows and credentials.
+- Keep new or changed DEV workflows inactive until activation is explicitly approved.
+- Use dummy or sanitized DEV fixtures and approved non-production destinations.
+- Do not execute tests beyond the approved IDs or batch.
+- Validate changed nodes and the full workflow, then confirm saved state, connections, credentials, external nodes, and active status.
+- Never claim that a workflow was built, tested, deployed, or verified without evidence.
+
+## Production, Credentials, and External Side Effects
+
+- DEV, optional STAGING, and PROD are separate authorization boundaries.
+- Approval for discovery, documentation, build, testing, or demo does not authorize production.
+- Real-client projects require explicit approval before credential assignment, external side effects, workflow activation, or production deployment.
+- Do not use PROD credentials, production data, live recipients, live databases, or production endpoints in DEV.
+- Production changes require approved scope, current backup, rollback plan, required tests, operational ownership, monitoring, and explicit deployment and activation approvals.
+- If any production, credential, recipient, destination, or side-effect target is unclear, stop without acting.
+
+## Vault Task Workflow
+
+1. Read this file.
+2. Inspect the relevant notes and applicable higher-priority project sources.
+3. Search for duplicates, conflicts, broken links, and unrelated working changes.
+4. Explain the plan before broad changes.
+5. Make only the requested changes.
+6. Validate Markdown, YAML, wikilinks, queries, and task syntax as applicable.
+7. Review the final diff for accidental changes.
+8. Report every created, updated, moved, renamed, or deleted file.
 
 When no edits are requested, operate in read-only mode.
 
+## Final Reports
+
+Keep final reports concise and evidence-based. Include:
+
+- files created or updated
+- important decisions or limitations
+- validation actually performed
+- unresolved blockers or next actions
+- exact diff scope when requested
+
+State clearly when runtime, external-system, or visual validation was not performed. Do not commit or push unless explicitly requested.
