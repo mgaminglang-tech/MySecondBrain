@@ -15,7 +15,7 @@ tags:
 
 ## Current Status
 
-The inactive DEV workflow has been created. Six controlled v0.1 DEV tests have passed using dummy data: TC-001, TC-056, TC-070, TC-082, TC-086, and TC-104. No other executable v0.1 test is marked passed, and all v0.2 integration cases remain `deferred`.
+The inactive DEV workflow has been created. Eleven controlled v0.1 DEV tests have passed using dummy data: TC-001, TC-021, TC-022, TC-023, TC-024, TC-026, TC-056, TC-070, TC-082, TC-086, and TC-104. No other executable v0.1 test is marked passed, and all v0.2 integration cases remain `deferred`.
 
 ## Controlled DEV Test Run
 
@@ -67,13 +67,35 @@ The test used the approved 12-field TC-001 dummy fixture. Storage and notificati
 
 All five executions completed successfully and reached Final Output. Expected and actual values matched exactly.
 
+## Controlled DEV Budget-Boundary Batch
+
+- Date: 2026-07-24
+- Workflow state: inactive and unchanged before and after the batch
+- Workflow changes: none
+- Fixture isolation: temporary execution-scoped pin data at Set Sample Lead
+- Pin-data cleanup: completed; no pin data persisted to the saved workflow
+- Data classification: dummy only
+- Credentials: none
+- External integrations: none
+- Real data: none
+
+| Test | Execution | Expected / actual score | Expected and actual reason codes | Expected / actual status | Expected / actual queue | Assignment reason | Expected / actual review | Result |
+|---|---:|---|---|---|---|---|---|---|
+| TC-021 | `7031` | `40` / `40` | `ROLE_OTHER_5`, `BUDGET_BELOW_500_0`, `TIMEFRAME_91_365_5`, `NEED_CLEAR_20`, `BUSINESS_EMAIL_10` | `nurture` / `nurture` | `APAC Sales Queue` / `APAC Sales Queue` | `REGION_APAC` | `false` / `false` | passed |
+| TC-022 | `7032` | `45` / `45` | `ROLE_OTHER_5`, `BUDGET_500_1999_5`, `TIMEFRAME_91_365_5`, `NEED_CLEAR_20`, `BUSINESS_EMAIL_10` | `nurture` / `nurture` | `APAC Sales Queue` / `APAC Sales Queue` | `REGION_APAC` | `false` / `false` | passed |
+| TC-023 | `7033` | `45` / `45` | `ROLE_OTHER_5`, `BUDGET_500_1999_5`, `TIMEFRAME_91_365_5`, `NEED_CLEAR_20`, `BUSINESS_EMAIL_10` | `nurture` / `nurture` | `APAC Sales Queue` / `APAC Sales Queue` | `REGION_APAC` | `false` / `false` | passed |
+| TC-024 | `7034` | `55` / `55` | `ROLE_OTHER_5`, `BUDGET_2000_4999_15`, `TIMEFRAME_91_365_5`, `NEED_CLEAR_20`, `BUSINESS_EMAIL_10` | `nurture` / `nurture` | `APAC Sales Queue` / `APAC Sales Queue` | `REGION_APAC` | `false` / `false` | passed |
+| TC-026 | `7035` | `65` / `65` | `ROLE_OTHER_5`, `BUDGET_5000_PLUS_25`, `TIMEFRAME_91_365_5`, `NEED_CLEAR_20`, `BUSINESS_EMAIL_10` | `nurture` / `nurture` | `APAC Sales Queue` / `APAC Sales Queue` | `REGION_APAC` | `false` / `false` | passed |
+
+All five executions completed successfully and reached Final Output. Expected and actual scores, reason-code order, statuses, queues, assignment reasons, and human-review values matched exactly.
+
 ## Results
 
 | Test group | Cases | Status | Evidence |
 |---|---:|---|---|
 | Core and schema | 9 | 1 passed; 8 not-run | TC-001 user-confirmed controlled DEV result |
 | Role scoring | 7 | not-run | None |
-| Budget scoring | 10 | not-run | None |
+| Budget scoring | 10 | 5 passed; 5 not-run | TC-021 / 7031; TC-022 / 7032; TC-023 / 7033; TC-024 / 7034; TC-026 / 7035 |
 | Timeframe scoring | 8 | not-run | None |
 | Need clarity | 5 | not-run | None |
 | Email scoring | 6 | not-run | None |
@@ -91,10 +113,10 @@ Executable v0.1 tests use only `passed`, `failed`, `blocked`, or `not-run`. Futu
 
 ## Summary
 
-- Passed: 6
+- Passed: 11
 - Failed: 0
 - Blocked: 0
-- Not run: 107
+- Not run: 102
 - Deferred to v0.2: 10
 - Approval: further execution requires approval
 
