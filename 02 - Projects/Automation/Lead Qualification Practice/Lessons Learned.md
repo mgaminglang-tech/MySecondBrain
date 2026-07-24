@@ -15,7 +15,7 @@ tags:
 
 ## Current Status
 
-Incomplete. The inactive DEV workflow has been built, and eleven controlled v0.1 tests have passed using dummy data. The broader v0.1 test suite, operational review, and any future deployment evidence remain incomplete.
+Incomplete. The inactive DEV workflow has been built, and all 25 Core Release Suite tests have passed using dummy data. The 88-test Extended Regression Suite, operational review, and any future deployment evidence remain incomplete.
 
 ## Confirmed Lessons
 
@@ -39,9 +39,13 @@ Temporary pin data can isolate one dummy fixture per manual DEV execution withou
 
 Boundary tests should cover the value immediately below a threshold and the threshold itself. The budget executions confirmed that `499.99`, `500`, `1999.99`, `2000`, and `5000` enter the intended scoring bands and preserve the exact reason-code order.
 
+### Compress release validation by risk, not convenience
+
+A smaller release suite remains credible when every selected case has an explicit risk purpose and the omitted tests remain visible in an Extended Regression Suite. Combining boundary, routing, identity, null, contract, notification, timestamp, and suspicious-input coverage produced a 25-test release gate without renumbering or discarding any existing test.
+
 ### Retain evidence boundaries
 
-TC-001 is recorded as passed from the result supplied for its documentation update; its successful execution ID was not supplied and must not be invented. TC-021, TC-022, TC-023, TC-024, TC-026, TC-056, TC-070, TC-082, TC-086, and TC-104 have direct execution evidence. No other v0.1 test is treated as passed.
+TC-001 is recorded as passed from the result supplied for its documentation update; its successful execution ID was not supplied and must not be invented. The other 24 Core Release Suite tests have direct execution evidence recorded in [[Test Results]]. No Extended Regression Suite test is treated as passed.
 
 ## Questions for the Retrospective
 

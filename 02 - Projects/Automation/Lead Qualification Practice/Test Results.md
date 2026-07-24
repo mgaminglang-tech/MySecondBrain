@@ -15,7 +15,7 @@ tags:
 
 ## Current Status
 
-The inactive DEV workflow has been created. Eleven controlled v0.1 DEV tests have passed using dummy data: TC-001, TC-021, TC-022, TC-023, TC-024, TC-026, TC-056, TC-070, TC-082, TC-086, and TC-104. No other executable v0.1 test is marked passed, and all v0.2 integration cases remain `deferred`.
+The inactive DEV workflow has been created. All 25 Core Release Suite tests have passed using dummy data. The remaining 88 v0.1 tests form the not-run Extended Regression Suite, and all ten v0.2 integration cases remain `deferred`.
 
 ## Controlled DEV Test Run
 
@@ -89,35 +89,68 @@ All five executions completed successfully and reached Final Output. Expected an
 
 All five executions completed successfully and reached Final Output. Expected and actual scores, reason-code order, statuses, queues, assignment reasons, and human-review values matched exactly.
 
+## Core Release Suite Completion Batch
+
+- Date: 2026-07-24
+- New tests executed: 14
+- Executions created: 16 because TC-134 and TC-135 each require two executions
+- Result: 14 passed; 0 failed; 0 blocked
+- Workflow state: inactive and unchanged before and after the batch
+- Workflow changes: none
+- Fixture isolation: temporary execution-scoped pin data
+- Pin-data cleanup: completed; no pin data persisted
+- Credentials, integrations, network requests, and real data: none
+
+| Test | Execution evidence | Actual evidence | Result |
+|---|---|---|---|
+| TC-002 | `7037` | 16 exact top-level keys; exact storage and notification keys; nested record matched; runtime timestamp canonical and mirrored | passed |
+| TC-006 | `7038` | Score 100; qualified; exact high-priority qualified notification preview | passed |
+| TC-009 | `7039` | Invalid role; score null; review true; exact invalid notification using `not-scored`; raw lead message excluded | passed |
+| TC-035 | `7040` | Score 45; `TIMEFRAME_61_90_10`; nurture | passed |
+| TC-036 | `7041` | Score 40; `TIMEFRAME_91_365_5`; nurture | passed |
+| TC-060 | `7042` | Score 70; qualified; exact five reason codes | passed |
+| TC-063 | `7043` | Score 35; unqualified; manager role reason | passed |
+| TC-101 | `7044` | North America Sales Queue / `REGION_NORTH_AMERICA`; review false | passed |
+| TC-102 | `7045` | Europe Sales Queue / `REGION_EUROPE`; review false | passed |
+| TC-103 | `7046` | General Sales Queue / `REGION_OTHER`; review false | passed |
+| TC-134 | `7047`, `7048` | Both returned key `9d496fb34cf92660ac93d1de30328c4bef2417dc3cabc7c7ba54eddfc160956c` and ID `lead_9d496fb34cf92660` | passed |
+| TC-135 | `7049`, `7050` | Both returned key `9ea5f0ef1911efe760e15571f7bbf4a40c2305c9c292aa01d033e415f213dc7f` and ID `invalid_lead_9ea5f0ef1911efe7` | passed |
+| TC-141 | `7051` | Twelve ordered `INVALID_TYPE` errors; 12 null normalized fields; fallback identity, queue, and review matched | passed |
+| TC-127 | `7052` | `message/POTENTIAL_CHANNEL_MARKUP`; score 40; nurture; notification omitted suspicious raw text | passed |
+
+No expected-versus-actual differences were observed.
+
 ## Results
 
 | Test group | Cases | Status | Evidence |
 |---|---:|---|---|
-| Core and schema | 9 | 1 passed; 8 not-run | TC-001 user-confirmed controlled DEV result |
+| Core and schema | 9 | 4 passed; 5 not-run | TC-001, TC-002 / 7037, TC-006 / 7038, TC-009 / 7039 |
 | Role scoring | 7 | not-run | None |
 | Budget scoring | 10 | 5 passed; 5 not-run | TC-021 / 7031; TC-022 / 7032; TC-023 / 7033; TC-024 / 7034; TC-026 / 7035 |
-| Timeframe scoring | 8 | not-run | None |
+| Timeframe scoring | 8 | 2 passed; 6 not-run | TC-035 / 7040; TC-036 / 7041 |
 | Need clarity | 5 | not-run | None |
 | Email scoring | 6 | not-run | None |
 | Email validation | 4 | 1 passed; 3 not-run | TC-056 / execution 7027 |
-| Status boundaries | 4 | not-run | None |
+| Status boundaries | 4 | 2 passed; 2 not-run | TC-060 / 7042; TC-063 / 7043 |
 | Individual missing fields | 12 | 1 passed; 11 not-run | TC-070 / execution 7026 |
 | Consent, timestamp, type, and range | 13 | 2 passed; 11 not-run | TC-082 / execution 7028; TC-086 / execution 7030 |
-| Routing | 5 | 1 passed; 4 not-run | TC-104 / execution 7029 |
-| String length, enum, injection, and safety | 19 | not-run | None |
-| Identity fallback and determinism | 6 | not-run | None |
-| Output, runtime, and environment | 5 | not-run | None |
+| Routing | 5 | 4 passed; 1 not-run | TC-101 / 7044; TC-102 / 7045; TC-103 / 7046; TC-104 / 7029 |
+| String length, enum, injection, and safety | 19 | 1 passed; 18 not-run | TC-127 / 7052 |
+| Identity fallback and determinism | 6 | 2 passed; 4 not-run | TC-134 / 7047, 7048; TC-135 / 7049, 7050 |
+| Output, runtime, and environment | 5 | 1 passed; 4 not-run | TC-141 / 7051 |
 | v0.2 integration and fault tests | 10 | deferred | Not part of v0.1 |
 
 Executable v0.1 tests use only `passed`, `failed`, `blocked`, or `not-run`. Future v0.2 tests use `deferred`. Do not mark a test passed without execution evidence.
 
 ## Summary
 
-- Passed: 11
+- Passed: 25
 - Failed: 0
 - Blocked: 0
-- Not run: 102
+- Not run: 88
 - Deferred to v0.2: 10
+- Core Release Suite remaining: 0
+- Extended Regression Suite remaining: 88
 - Approval: further execution requires approval
 
 ## Evidence Rules
