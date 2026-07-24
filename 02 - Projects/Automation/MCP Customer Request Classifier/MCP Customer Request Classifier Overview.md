@@ -1,9 +1,12 @@
 ---
 type: project
-status: active
+status: demo-complete
+phase: demo-closure
+owner: Mervin
+production_ready: false
 priority: low
 created: 2026-07-22
-updated: 2026-07-22
+updated: 2026-07-24
 tags:
   - project
   - automation
@@ -36,7 +39,9 @@ The sample Access test completed successfully in manual execution `6947`. The ob
 
 Both the Access and Refund Request branches were tested successfully. The Refund Request test returned category `Refund Request`, confidence `0.95`, and `needs_human_review: true`.
 
-The workflow remains inactive and has not been published for production execution.
+The Refund execution ID was not recorded and is unavailable. The workflow remained inactive, and no credentials or production systems were used.
+
+The project is demo-complete but is not production-ready. The workflow has not been published for production execution.
 
 ## Output Fields
 
@@ -49,7 +54,7 @@ The workflow remains inactive and has not been published for production executio
 
 ## Next Action
 
-- [x] Run the Refund Request branch test and verify that `needs_human_review` is `true`.
+Decide whether to archive the demo project or continue with a future version.
 
 ## Related Notes
 

@@ -1,8 +1,11 @@
 ---
 type: project-note
-status: active
+status: demo-complete
+phase: demo-closure
+owner: Mervin
+production_ready: false
 created: 2026-07-22
-updated: 2026-07-22
+updated: 2026-07-24
 tags:
   - automation
   - n8n
@@ -25,11 +28,19 @@ No blocking issue was observed during the successful Access test.
 | The test must not depend on accounts or external services. | The workflow uses core Set nodes, fixed test data, and no credentials. |
 | Production execution must remain disabled. | The workflow was created as an inactive draft and was not published. |
 
-## Open Verification
+## Verification Completed
 
-- [ ] Run the Refund Request branch test.
-- [ ] Confirm the observed category is `Refund Request`.
-- [ ] Confirm `needs_human_review` is `true`.
+- [x] Run the Refund Request branch test.
+- [x] Confirm the observed category is `Refund Request`.
+- [x] Confirm `needs_human_review` is `true`.
+
+The Refund test passed, but its execution ID was not recorded and is unavailable. The workflow remained inactive, and no credentials or production systems were used.
+
+The project is demo-complete but is not production-ready.
+
+## Next Action
+
+Decide whether to archive the demo project or continue with a future version.
 
 ## Related Notes
 

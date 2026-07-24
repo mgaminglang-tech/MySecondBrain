@@ -1,9 +1,11 @@
-
 ---
 type: project
 status: active
+phase: optimization
+owner: Mervin
 priority: high
-updated: 2026-07-22
+updated: 2026-07-24
+---
 
 # Obsidian Second Brain Setup
 
@@ -18,6 +20,8 @@ Build a professional Second Brain connected to GitHub and Codex.
 - [x] Add templates
 - [x] Install plugins
 - [x] Build dashboard
-- [ ] Connect the vault to Codex
+- [x] Connect the vault to Codex
 
+## Next Action
 
+Complete the approved vault optimization phases and perform a final vault audit.
