@@ -1,9 +1,9 @@
 ---
 type: checklist
-status: draft
+status: active
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - credentials
@@ -30,7 +30,7 @@ v0.1 requires no credentials. It is an inactive DEV workflow with Manual Trigger
 
 | Version | Environment | Credential requirement | Status |
 |---|---|---|---|
-| v0.1 | DEV | None | approved design |
+| v0.1 | DEV | None | demo verified |
 | v0.1 | STAGING | Not used | not-applicable |
 | v0.1 | PROD | Not used | not-applicable |
 | v0.2 | To be designed | Airtable or Google Sheets, plus Email or Telegram | deferred |
@@ -45,13 +45,15 @@ No v0.2 credential may be created or assigned under the v0.1 plan.
 
 ## v0.1 DEV Checklist
 
-- [ ] Workflow credential count is zero.
-- [ ] Workflow node inventory has no credential-backed or external request node.
-- [ ] Crypto v2 is configured for SHA-256 lowercase hexadecimal output with no credential.
-- [ ] Manual Trigger is the only trigger.
-- [ ] Dummy data is confirmed.
-- [ ] Workflow remains inactive.
-- [ ] No secret or credential placeholder is placed in workflow fields.
+- [x] Workflow credential count is zero.
+- [x] Workflow node inventory has no credential-backed or external request node.
+- [x] Crypto v2 is configured for SHA-256 lowercase hexadecimal output with no credential.
+- [x] Manual Trigger is the only trigger.
+- [x] Dummy data is confirmed.
+- [x] Workflow remains inactive.
+- [x] No secret or credential placeholder is placed in workflow fields.
+
+These checks support the controlled demo only. No production credential design, access approval, or live integration approval exists.
 
 ## Deferred v0.2 Credential Decisions
 

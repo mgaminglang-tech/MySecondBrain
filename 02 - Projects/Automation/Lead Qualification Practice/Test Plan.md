@@ -1,9 +1,9 @@
 ---
 type: project-note
-status: draft
+status: active
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - testing
@@ -45,7 +45,7 @@ All remaining 88 existing v0.1 tests form the Extended Regression Suite:
 
 `TC-003`, `TC-004`, `TC-005`, `TC-007`, `TC-008`, `TC-010`, `TC-011`, `TC-012`, `TC-013`, `TC-014`, `TC-015`, `TC-016`, `TC-020`, `TC-025`, `TC-027`, `TC-028`, `TC-029`, `TC-030`, `TC-031`, `TC-032`, `TC-033`, `TC-034`, `TC-037`, `TC-040`, `TC-041`, `TC-042`, `TC-043`, `TC-044`, `TC-050`, `TC-051`, `TC-052`, `TC-053`, `TC-054`, `TC-055`, `TC-057`, `TC-058`, `TC-059`, `TC-061`, `TC-062`, `TC-071`, `TC-072`, `TC-073`, `TC-074`, `TC-075`, `TC-076`, `TC-077`, `TC-078`, `TC-079`, `TC-080`, `TC-081`, `TC-083`, `TC-084`, `TC-085`, `TC-087`, `TC-088`, `TC-089`, `TC-090`, `TC-091`, `TC-092`, `TC-093`, `TC-094`, `TC-100`, `TC-110`, `TC-111`, `TC-112`, `TC-113`, `TC-114`, `TC-115`, `TC-116`, `TC-117`, `TC-118`, `TC-119`, `TC-120`, `TC-121`, `TC-122`, `TC-123`, `TC-124`, `TC-125`, `TC-126`, `TC-128`, `TC-130`, `TC-131`, `TC-132`, `TC-133`, `TC-140`, `TC-142`, `TC-143`, `TC-144`
 
-The Extended Regression Suite remains part of v0.1 and is not deferred to v0.2. The ten DTC cases remain deferred and unchanged.
+The Extended Regression Suite remains part of v0.1 and is not deferred to v0.2. It is not required for the controlled inactive DEV demo, but it is required before production deployment or after a major workflow change. The ten DTC cases remain deferred and unchanged.
 
 ## Base Dummy Fixture
 
@@ -293,20 +293,27 @@ These are not executable v0.1 exit criteria and remain `deferred`.
 
 ## Entry Criteria
 
-- [ ] [[Requirements]] and [[Architecture]] approved.
-- [ ] Inactive DEV workflow is ready.
-- [ ] Fixtures reviewed as dummy data.
-- [ ] Expected values are calculated independently.
-- [ ] Workflow contains no credentials or external destinations.
+- [x] [[Requirements]] and [[Architecture]] approved for the controlled demo.
+- [x] Inactive DEV workflow is ready.
+- [x] Fixtures reviewed as dummy data.
+- [x] Expected values are calculated independently.
+- [x] Workflow contains no credentials or external destinations.
 
-## Exit Criteria
+## Demo Exit Criteria
 
-- [ ] All executable TC cases pass with evidence.
-- [ ] Failures are fixed or accepted explicitly.
-- [ ] Results are recorded in [[Test Results]].
-- [ ] [[Known Limitations]] and [[Issues and Fixes]] are current.
-- [ ] Project Owner and Automation Engineer decisions are recorded.
-- [ ] DTC cases remain deferred and do not block v0.1.
+- [x] All 25 Core Release Suite cases pass with evidence.
+- [x] Core results are 25 passed, 0 failed, and 0 blocked.
+- [x] Results are recorded in [[Test Results]].
+- [x] [[Known Limitations]] and [[Issues and Fixes]] are current for the demo.
+- [x] Workflow remained inactive with dummy data, zero credentials, and no external integrations or side effects.
+- [x] DTC cases remain deferred and do not block the controlled demo.
+
+## Production and Major-Change Gate
+
+- [ ] Run all 88 Extended Regression Suite tests.
+- [ ] Complete operational review, recovery evidence, and client/owner approval.
+- [ ] Complete integration testing and production smoke testing for the approved live design.
+- [ ] Record a separate production-readiness decision.
 
 ## Related Notes
 

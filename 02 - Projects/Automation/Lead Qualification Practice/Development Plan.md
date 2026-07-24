@@ -1,10 +1,10 @@
 ---
 type: project-note
-status: draft
+status: active
 client: Demo Sales Company
 version: v0.1.0
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - development
@@ -15,11 +15,11 @@ tags:
 
 ## Objective
 
-Define how the proposed automation could be built in DEV after requirements and architecture approval. No development has started.
+Record how the inactive DEV practice automation was built and what remains outside the completed demo phase.
 
 ## DEV Procedure
 
-- Proposed name: `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`
+- Workflow name: `DEV - Demo Sales Company - Lead Qualification Practice - v0.1`
 - State: Inactive.
 - Data: Dummy only.
 - Trigger: Manual Trigger.
@@ -28,32 +28,32 @@ Define how the proposed automation could be built in DEV after requirements and 
 - Historical duplicate lookup: None; generate the email-derived key only.
 - Initial version: `v0.1.0`.
 
-### Planned Build Sequence
+### Demo Build Record
 
-- [ ] Obtain approval for [[Requirements]] and [[Architecture]].
-- [ ] Create an inactive DEV workflow.
-- [ ] Add the ten nodes in the approved linear order.
-- [ ] Create the exact dummy fixtures defined in [[Test Plan]].
-- [ ] Implement normalization without type coercion or invented data.
-- [ ] Implement all approved validation and warning codes.
-- [ ] Configure Crypto v2 to generate deterministic SHA-256 `idempotency_key` values as lowercase hexadecimal output without credentials or network requests.
-- [ ] Derive the deterministic dummy `lead_id` from the generated hash.
-- [ ] Implement approved scoring and exact score reason codes.
-- [ ] Implement validation-first statuses, queues, fallback, and human-review flag.
-- [ ] Prepare storage payload with `write_requested: false`.
-- [ ] Prepare notification payload with `send_requested: false`.
-- [ ] Add processing metadata and the complete final output contract.
-- [ ] Review node settings and connections.
-- [ ] Confirm IF, Switch, and Merge are absent.
-- [ ] Execute [[Test Plan]] and record evidence in [[Test Results]].
-- [ ] Record defects in [[Issues and Fixes]].
+- [x] Obtain approval for the v0.1 [[Requirements]] and [[Architecture]].
+- [x] Create an inactive DEV workflow.
+- [x] Add the ten nodes in the approved linear order.
+- [x] Define exact dummy fixtures in [[Test Plan]].
+- [x] Implement normalization without type coercion or invented data.
+- [x] Implement the approved validation and warning codes exercised by the Core Release Suite.
+- [x] Configure Crypto v2 to generate deterministic SHA-256 `idempotency_key` values as lowercase hexadecimal output without credentials or network requests.
+- [x] Derive the deterministic dummy `lead_id` from the generated hash.
+- [x] Implement approved scoring and exact score reason codes.
+- [x] Implement validation-first statuses, queues, fallback, and human-review flag.
+- [x] Prepare the inert storage payload with `destination: deferred-v0.2` and `operation: none`.
+- [x] Prepare the inert notification payload with `channel: internal-preview`.
+- [x] Add processing metadata and the complete final output contract.
+- [x] Review node settings and connections.
+- [x] Confirm IF, Switch, and Merge are absent.
+- [x] Execute the 25-test Core Release Suite and record evidence in [[Test Results]].
+- [x] Record and resolve observed DEV defects in [[Issues and Fixes]].
 - [ ] Export the validated inactive DEV workflow without secrets.
 
 ## STAGING and PROD
 
 STAGING and PROD do not exist in v0.1. No procedure may promote v0.1 outside DEV. Environment design for v0.2 requires a separate approval and specification.
 
-## Planned Components
+## Implemented Demo Components
 
 | Component | Dependency | Done criterion |
 |---|---|---|
@@ -64,19 +64,27 @@ STAGING and PROD do not exist in v0.1. No procedure may promote v0.1 outside DEV
 | Scoring | Approved weights | Total and breakdown match expected cases |
 | Status | Approved thresholds | Validation overrides scoring |
 | Routing | Approved regional table | Exact queue, reason, and review flag are present |
-| Storage payload | Destination-neutral contract | `prepare_only`; no credential or write |
-| Notification payload | Plain-text contract | `prepare_only`; no credential or send |
+| Storage payload | Destination-neutral contract | `destination: deferred-v0.2`, `operation: none`; no credential or write |
+| Notification payload | Plain-text contract | `channel: internal-preview`; no credential or send |
 | Final output | All prior components | One auditable result is returned |
 
-## Definition of Done for DEV
+## Demo Definition of Done
 
-- [ ] Approved requirements are implemented or explicitly deferred.
-- [ ] All executable v0.1 DEV tests have evidence.
-- [ ] No credentials, integrations, external calls, or real client data were used.
-- [ ] Processing is under two seconds per lead at the approved DEV volume.
-- [ ] Seven-day log retention and simulated recovery procedures are reviewed.
-- [ ] An inactive, secret-free export and version record exist.
-- [ ] Project Owner and Automation Engineer decisions are recorded.
+- [x] Approved demo requirements are implemented or explicitly deferred.
+- [x] All 25 Core Release Suite tests have evidence.
+- [x] Core results are 25 passed, 0 failed, and 0 blocked.
+- [x] No credentials, integrations, external calls, side effects, or real client data were used.
+- [x] The workflow remained inactive.
+- [x] The complete v0.1 output contract was demonstrated.
+- [x] Known limitations and deferred features are disclosed.
+
+## Remaining Before Live Deployment
+
+- [ ] Run the 88-test Extended Regression Suite before production deployment or after a major workflow change.
+- [ ] Verify processing performance and seven-day execution-log retention.
+- [ ] Create and verify a secret-free backup export and recovery evidence.
+- [ ] Complete operational review and obtain client/owner approval.
+- [ ] Design and test integrations, production controls, and production smoke tests separately.
 
 ## Deferred v0.2 Build
 

@@ -3,7 +3,7 @@ type: project-note
 status: draft
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - backup
@@ -14,7 +14,7 @@ tags:
 
 ## Current Status
 
-No workflow exists to back up or restore. This is a proposed procedure.
+An inactive DEV demo workflow exists. The demo acceptance gate does not require restore evidence, and no secret-free export or restore test has been recorded. Recovery readiness is therefore not approved for live deployment.
 
 ## Recovery Objectives
 
@@ -71,6 +71,10 @@ No storage or notification reconciliation is needed in v0.1 because there are no
 - Simulated RPO target: 24 hours
 
 Do not change the result without execution evidence.
+
+## Demo Boundary
+
+The demo phase can close with restore evidence outstanding because the workflow is inactive, uses dummy data, and has no side effects. Before any live deployment, create and verify a secret-free export, perform the documented restore test, and record evidence against the simulated RTO and RPO.
 
 ## Deferred v0.2 Recovery
 

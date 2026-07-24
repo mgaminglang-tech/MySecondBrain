@@ -1,9 +1,9 @@
 ---
 type: project-note
-status: draft
+status: active
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - requirements
@@ -124,7 +124,7 @@ Approved reason codes are `REQUIRED_FIELD`, `INVALID_TYPE`, `STRING_LENGTH_OUT_O
 
 Normalization warnings use `{field, code}` with approved codes `TRIMMED_WHITESPACE`, `COLLAPSED_WHITESPACE`, `LOWERCASED_VALUE`, `CANONICALIZED_ENUM`, `CANONICALIZED_TIMESTAMP`, `POTENTIAL_SPREADSHEET_FORMULA`, and `POTENTIAL_CHANNEL_MARKUP`.
 
-## Proposed Scoring Rules
+## Approved Scoring Rules
 
 Scoring applies only after validation output exists. An invalid lead remains `invalid` regardless of points.
 
@@ -149,7 +149,7 @@ Approved score reason codes:
 - Email: `BUSINESS_EMAIL_10`, `FREE_EMAIL_0`
 - Invalid input: `SCORING_SKIPPED_INVALID_INPUT`
 
-Proposed statuses:
+Approved statuses:
 
 - `invalid`: A required field is missing or invalid, or consent is not explicitly true.
 - `qualified`: Valid and score is 70–100.
@@ -212,15 +212,27 @@ For qualified and invalid previews, use `Unknown Company` when normalized compan
 
 ## Success and Acceptance Criteria
 
-- [ ] Every executable v0.1 case in [[Test Plan]] passes with recorded evidence.
-- [ ] Exact scoring fixtures return the documented totals and reason codes.
-- [ ] Invalid fixtures return `score: null`, machine-readable errors, and human review.
-- [ ] Every final output contains all required top-level fields and correct types.
-- [ ] Every storage payload uses `destination: deferred-v0.2`, `operation: none`, and the complete prepared record.
-- [ ] Every notification payload uses `channel: internal-preview` and the exact status-based nullability and priority rules.
-- [ ] No credentials, persistent lookup, external calls, STAGING, or PROD resources exist in v0.1.
-- [ ] Measured DEV processing time is under two seconds per lead.
-- [ ] Project Owner and Automation Engineer record their review decision.
+### Controlled Demo Acceptance
+
+- [x] The 25-test Core Release Suite in [[Test Plan]] passed with recorded evidence.
+- [x] Core results are 25 passed, 0 failed, and 0 blocked.
+- [x] Exact demonstrated scoring fixtures returned the documented totals and reason codes.
+- [x] Demonstrated invalid fixtures returned `score: null`, machine-readable errors, and human review.
+- [x] The complete 16-key final-output contract and nested payload contracts were demonstrated.
+- [x] Storage and notification payloads remained inert.
+- [x] The workflow remained inactive and used dummy data, zero credentials, and no external integrations or side effects.
+- [x] [[Known Limitations]] and deferred features are disclosed.
+
+The 88-test Extended Regression Suite is not part of the controlled demo acceptance gate. It remains required before production deployment or after a major workflow change. The ten v0.2 integration tests remain deferred.
+
+### Production and Project-Closure Requirements
+
+- [ ] Complete the Extended Regression Suite when required by the production or major-change gate.
+- [ ] Verify the under-two-second target and seven-day log-retention configuration.
+- [ ] Complete operational review and recovery evidence.
+- [ ] Obtain client/owner approval.
+- [ ] Complete integration testing and production smoke testing for any future live design.
+- [ ] Approve a separate production architecture, credentials plan, and deployment decision.
 
 ## Deferred to v0.2
 

@@ -4,7 +4,7 @@ status: draft
 completion: incomplete
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - handover
@@ -15,18 +15,18 @@ tags:
 
 ## Current Status
 
-Draft and incomplete. There is no workflow, test evidence, deployment, or approved operating owner to hand over.
+Draft and incomplete. An inactive DEV practice workflow and 25/25 passing Core Release Suite evidence are available for a controlled demo handover. No production deployment, recovery evidence, live integration, or final client/owner operational acceptance exists.
 
 ## Planned Handover Package
 
-- [ ] Approved [[Requirements]] and [[Architecture]].
-- [ ] Workflow inventory, IDs, versions, and environment status.
-- [ ] Evidence that v0.1 uses zero credentials and no external resources.
-- [ ] [[Test Results]] and accepted [[Known Limitations]].
-- [ ] [[Issues and Fixes]] and release history.
+- [x] Approved demo [[Requirements]] and [[Architecture]].
+- [x] Workflow inventory, IDs, versions, and inactive DEV status.
+- [x] Evidence that v0.1 uses zero credentials and no external resources.
+- [x] [[Test Results]] and disclosed [[Known Limitations]].
+- [x] [[Issues and Fixes]] and demo release history.
 - [ ] [[Backup and Restore]] procedure and verified evidence.
 - [ ] [[Maintenance Guide]] and support/escalation ownership.
-- [ ] Scoring rule version, routing table version, deterministic identity rules, and change procedure.
+- [x] Scoring rule version, routing table version, deterministic identity rules, and change procedure.
 
 ## Planned Operations Walkthrough
 
@@ -40,8 +40,8 @@ Draft and incomplete. There is no workflow, test evidence, deployment, or approv
 
 | Responsibility | Receiving owner | Backup owner | Status |
 |---|---|---|---|
-| v0.1 workflow build and manual testing | Automation Engineer | Project Owner | incomplete |
-| Scoring and routing approval | Project Owner | Automation Engineer | incomplete |
+| v0.1 workflow build and Core Release Suite testing | Automation Engineer | Project Owner | demo complete |
+| Demo scoring and routing acceptance | Project Owner | Automation Engineer | demo complete |
 | DEV retention and recovery review | Automation Engineer | Project Owner | incomplete |
 | Issue acceptance | Project Owner | Automation Engineer | incomplete |
 
@@ -51,11 +51,14 @@ Persistent duplicate controls, credentials, external storage, notification deliv
 
 ## Acceptance
 
+- [x] Controlled demo scope, evidence, limitations, and deferrals are documented.
 - [ ] Receiving owner confirms operational understanding.
 - [ ] Required access is transferred safely.
 - [ ] Temporary access is removed.
 - [ ] Limitations and open actions are accepted.
 - [ ] Client approver signs off with evidence.
+
+Demo completion does not constitute production handover or full project closure.
 
 ## Related Notes
 

@@ -4,7 +4,7 @@ status: draft
 completion: incomplete
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - case-study
@@ -15,23 +15,23 @@ tags:
 
 ## Current Status
 
-Draft and incomplete. This note must not describe planned work as delivered or claim results without evidence.
+Draft and incomplete for publication. The controlled inactive DEV demo is complete and the evidence below is limited to verified workflow and test facts. No business outcome, client feedback, production result, or recovery result is claimed.
 
 ## Publication Safety
 
 - [ ] Publication or anonymization is approved.
-- [ ] No secrets, private identifiers, or unredacted data are included.
-- [ ] Outcomes are supported by evidence.
-- [ ] Limitations and assumptions are disclosed.
-- [ ] Planned work is clearly separated from completed work.
+- [x] No secrets, private identifiers, or unredacted data are included.
+- [x] Reported demo outcomes are supported by [[Test Results]].
+- [x] Limitations and assumptions are disclosed.
+- [x] Planned work is clearly separated from completed demo work.
 
-## Planned Context
+## Demo Context
 
 Demo Sales Company wants to explore a repeatable process for reviewing lead completeness, applying transparent qualification rules, and preparing qualified leads for sales follow-up.
 
-## Planned Solution
+## Implemented Demo Solution
 
-The proposed design uses n8n to normalize and validate a dummy lead, calculate an explainable score, assign a status, recommend routing, and prepare destination-neutral storage and notification payloads.
+The inactive DEV practice workflow uses n8n to normalize and validate a dummy lead, calculate an explainable score, assign a status, recommend routing, and prepare destination-neutral storage and notification payloads.
 
 ```text
 Manual Trigger
@@ -46,18 +46,26 @@ Manual Trigger
 → Final Output
 ```
 
-The proposed v0.1 design is a linear ten-node workflow with no IF, Switch, Merge, credentials, external integrations, or side effects.
+The v0.1 demo is a linear ten-node workflow with no IF, Switch, Merge, credentials, external integrations, or side effects.
 
 ## Verified Results
 
-No verified results are available. Development and testing have not started.
+- The workflow remained inactive and used dummy data only.
+- The 25-test Core Release Suite passed: 25 passed, 0 failed, and 0 blocked.
+- The complete v0.1 top-level and nested output contracts were demonstrated.
+- Validation, scoring boundaries, statuses, routing, deterministic valid and invalid identity, null handling, notification behavior, timestamp handling, and suspicious-text handling were covered by the Core Release Suite.
+- No credentials, external integrations, network requests, writes, sends, or real data were used.
+- The 88-test Extended Regression Suite remains not run, and the ten v0.2 integration tests remain deferred.
 
 | Metric | Baseline | Observed result | Evidence |
 |---|---|---|---|
 | Manual review time | not measured | not available | none |
-| Qualification consistency | not measured | not available | none |
-| Routing accuracy | not measured | not available | none |
+| Core Release Suite | 25 selected demo tests | 25 passed; 0 failed; 0 blocked | [[Test Results]] |
+| Output contract | Approved v0.1 contract | Demonstrated by Core Release Suite | [[Test Results]] |
+| Workflow safety boundary | Inactive, dummy-only, no credentials or side effects | Preserved during controlled testing | [[Test Results]] |
 | Duplicate rate | not measured | not available | none |
+
+These results support a controlled practice demo only. They do not establish production performance, business savings, live routing accuracy, operational recovery, or client satisfaction.
 
 ## Completion Requirements
 
@@ -66,6 +74,7 @@ No verified results are available. Development and testing have not started.
 - Approved baseline and outcome metrics.
 - Accurate limitations, lessons, and operational controls.
 - Client approval for any named case study.
+- Production evidence only if a future live deployment is separately approved.
 
 ## Related Notes
 

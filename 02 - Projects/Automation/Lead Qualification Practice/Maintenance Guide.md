@@ -3,7 +3,7 @@ type: project-note
 status: draft
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - maintenance
@@ -13,9 +13,9 @@ tags:
 
 ## Purpose
 
-Define proposed operational ownership and safe change control. No live service currently exists.
+Define operational ownership and safe change control for the accepted inactive DEV demo artifact. No live service currently exists, and production operations are not approved.
 
-## Ownership to Assign
+## Proposed Ownership
 
 | Responsibility | Primary owner | Backup owner |
 |---|---|---|
@@ -73,6 +73,12 @@ Not used in v0.1. Any future environment requires a separately approved v0.2 des
 ## Deferred v0.2 Operations
 
 Credential rotation, vendor monitoring, persistent duplicate review, external retries, delivery/storage reconciliation, live incident response, STAGING, and PROD operations are deferred.
+
+## Demo and Production Boundary
+
+- Demo maintenance scope: keep the workflow inactive, use dummy data only, preserve zero credentials/external nodes, and re-run relevant tests after changes.
+- Major-change gate: run the 88-test Extended Regression Suite.
+- Live-deployment gate: complete operational review, recovery evidence, client/owner approval, integration testing, production smoke testing, and production-specific monitoring and support ownership.
 
 ## Related Notes
 

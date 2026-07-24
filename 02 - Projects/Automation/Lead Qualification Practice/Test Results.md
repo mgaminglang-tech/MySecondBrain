@@ -1,6 +1,6 @@
 ---
 type: test-results
-status: draft
+status: active
 completion: incomplete
 client: Demo Sales Company
 created: 2026-07-23
@@ -15,7 +15,19 @@ tags:
 
 ## Current Status
 
-The inactive DEV workflow has been created. All 25 Core Release Suite tests have passed using dummy data. The remaining 88 v0.1 tests form the not-run Extended Regression Suite, and all ten v0.2 integration cases remain `deferred`.
+The inactive DEV workflow has been created. All 25 Core Release Suite tests passed using dummy data, with 0 failed and 0 blocked. This satisfies the approved controlled-demo acceptance gate. The remaining 88 v0.1 tests form the not-run Extended Regression Suite and are required before production deployment or after a major workflow change. All ten v0.2 integration cases remain `deferred`.
+
+## Demo Acceptance Decision
+
+- Demo phase: complete.
+- Production readiness: not approved.
+- Full project closure: not applicable.
+- Workflow state: inactive.
+- Data: dummy only.
+- Credentials, external integrations, and side effects: none.
+- Complete v0.1 output contract: demonstrated.
+- Known limitations and deferred work: disclosed.
+- Remaining before live deployment: operational review, recovery evidence, client/owner approval, Extended Regression when required, integration testing, and production smoke testing.
 
 ## Controlled DEV Test Run
 
@@ -151,7 +163,8 @@ Executable v0.1 tests use only `passed`, `failed`, `blocked`, or `not-run`. Futu
 - Deferred to v0.2: 10
 - Core Release Suite remaining: 0
 - Extended Regression Suite remaining: 88
-- Approval: further execution requires approval
+- Demo acceptance gate: satisfied
+- Production approval: not granted
 
 ## Evidence Rules
 

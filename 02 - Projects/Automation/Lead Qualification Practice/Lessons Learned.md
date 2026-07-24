@@ -15,7 +15,7 @@ tags:
 
 ## Current Status
 
-Incomplete. The inactive DEV workflow has been built, and all 25 Core Release Suite tests have passed using dummy data. The 88-test Extended Regression Suite, operational review, and any future deployment evidence remain incomplete.
+The demo phase is complete: the inactive DEV workflow was built and all 25 Core Release Suite tests passed using dummy data, with 0 failed and 0 blocked. This note remains incomplete for full project closure because the 88-test Extended Regression Suite, operational review, recovery evidence, client/owner approval, integrations, and production validation remain outstanding or deferred.
 
 ## Confirmed Lessons
 
@@ -43,6 +43,10 @@ Boundary tests should cover the value immediately below a threshold and the thre
 
 A smaller release suite remains credible when every selected case has an explicit risk purpose and the omitted tests remain visible in an Extended Regression Suite. Combining boundary, routing, identity, null, contract, notification, timestamp, and suspicious-input coverage produced a 25-test release gate without renumbering or discarding any existing test.
 
+### Separate demo acceptance from production readiness
+
+A controlled demo can have a complete, evidence-backed acceptance gate without implying production readiness. The 25-test Core Release Suite closes the inactive DEV demo phase, while the Extended Regression Suite, recovery, operational approval, integrations, and production smoke tests remain separate gates.
+
 ### Retain evidence boundaries
 
 TC-001 is recorded as passed from the result supplied for its documentation update; its successful execution ID was not supplied and must not be invented. The other 24 Core Release Suite tests have direct execution evidence recorded in [[Test Results]]. No Extended Regression Suite test is treated as passed.
@@ -63,10 +67,10 @@ Persistent duplicate controls, integrations, retries, concurrency, STAGING, PROD
 
 ## Evidence Required
 
-- Approved requirements and design decisions.
-- Dummy-data test results and issue records.
+- Approved demo requirements and architecture.
+- Dummy-data Core Release Suite results and issue records.
 - Version history and review decisions.
-- Approved production metrics, if a deployment occurs.
+- Operational, recovery, integration, and production evidence if live deployment is later proposed.
 
 ## Related Notes
 

@@ -1,13 +1,13 @@
 ---
 type: project
 project_type: automation
-status: planned
+status: active
 priority: medium
 client: Demo Sales Company
 owner: Demo Sales Company
 version: v0.1.0
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - project
   - client-automation
@@ -19,7 +19,15 @@ tags:
 
 ## Objective
 
-Plan an inactive DEV-only n8n practice automation that accepts one dummy lead, normalizes and validates it, calculates an approved qualification score, assigns a status and sales queue, prepares storage and notification payloads without side effects, and returns an audit-friendly final output.
+Maintain an inactive DEV-only n8n practice automation that accepts one dummy lead, normalizes and validates it, calculates an approved qualification score, assigns a status and sales queue, prepares storage and notification payloads without side effects, and returns an audit-friendly final output.
+
+## Phase Status
+
+- Demo phase: complete.
+- Demo acceptance gate: 25 of 25 Core Release Suite tests passed; 0 failed; 0 blocked.
+- Extended Regression Suite: 88 tests not run; required before production deployment or after a major workflow change.
+- Production readiness: not approved.
+- Full project closure: not applicable while operational review, recovery evidence, owner approval, integrations, and production validation remain outstanding.
 
 ## Business Problem
 
@@ -27,7 +35,7 @@ The sales team manually reviews incoming leads, checks whether information is co
 
 ## Desired Result
 
-A documented, client-style automation design that can later be built and tested in DEV using dummy data only. Nothing is currently represented as built, tested, deployed, activated, or approved.
+An evidence-backed, client-style practice automation that is safe to demonstrate in inactive DEV with dummy data only. The controlled demo is accepted; no production deployment, activation, live-data use, or operational approval is claimed.
 
 ## Scope
 
@@ -43,8 +51,6 @@ A documented, client-style automation design that can later be built and tested 
 
 ### Not Included
 
-- Creating or modifying an n8n workflow.
-- Using n8n MCP.
 - Live lead-capture forms or webhooks.
 - Writing records to Airtable or Google Sheets.
 - Sending Email or Telegram notifications.
@@ -81,8 +87,11 @@ This is a linear ten-node workflow. IF, Switch, and Merge are not used in v0.1. 
 - Routing follows the approved regional queue table; fallback uses General Sales Queue and human review.
 - The final output contains every field defined in [[Architecture]].
 - Each prepared payload explicitly states that no write or send was requested.
-- Each executable v0.1 case in [[Test Plan]] produces its exact expected result in under two seconds per lead.
+- The 25-test Core Release Suite in [[Test Plan]] produces its exact expected results.
 - The inactive DEV workflow uses dummy data, no credentials, and no external side effects.
+- Known limitations and v0.2 deferrals are disclosed.
+
+The demo criteria above are satisfied. The 88-test Extended Regression Suite, performance confirmation, operational review, recovery evidence, client/owner approval, integration testing, and production smoke testing remain outside the completed demo gate.
 
 ## Project Workflow
 
@@ -127,7 +136,9 @@ This is a linear ten-node workflow. IF, Switch, and Merge are not used in v0.1. 
 
 ## Next Action
 
-- [ ] Project Owner and Automation Engineer review the resolved v0.1 specification before authorizing development.
+- [ ] Complete operational review, recovery evidence, and client/owner approval before considering any live deployment.
+- [ ] Run the 88-test Extended Regression Suite before production deployment or after a major workflow change.
+- [ ] Design and approve v0.2 integrations separately.
 
 ## Related Notes
 

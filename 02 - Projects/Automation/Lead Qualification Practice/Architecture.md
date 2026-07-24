@@ -1,9 +1,9 @@
 ---
 type: project-note
-status: draft
+status: active
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - architecture
@@ -14,17 +14,17 @@ tags:
 
 ## Purpose
 
-Define the proposed n8n workflow, data contracts, environment boundaries, reliability controls, and future integration points. This is a design only; no workflow has been created.
+Define the implemented inactive DEV demo workflow, data contracts, environment boundaries, reliability controls, and future integration points. This architecture is accepted for the controlled practice demo only; it is not a production architecture.
 
 ## Environment Design
 
 | Environment | v0.1 status | Workflow name | Data | Credentials |
 |---|---|---|---|---|
-| DEV | Planned, inactive | `DEV - Demo Sales Company - Lead Qualification Practice - v0.1` | Dummy only | None |
+| DEV | Demo complete, inactive | `DEV - Demo Sales Company - Lead Qualification Practice - v0.1` | Dummy only | None |
 | STAGING | Not used | Not applicable | None | None |
 | PROD | Not used | Not applicable | None | None |
 
-## Proposed Workflow Architecture
+## Implemented Demo Workflow Architecture
 
 ```mermaid
 flowchart LR
@@ -52,7 +52,7 @@ flowchart LR
 
 ## Node Responsibilities
 
-| Order | Node | Proposed type | Responsibility | Failure behavior |
+| Order | Node | Implemented type | Responsibility | Failure behavior |
 |---|---|---|---|---|
 | 1 | Manual Trigger | Manual Trigger | Start controlled DEV execution. | No automatic retry. |
 | 2 | Set Sample Lead | Edit Fields (Set) | Supply one complete dummy fixture using the approved input contract. | Stop only for an unexpected node exception. |
@@ -61,8 +61,8 @@ flowchart LR
 | 5 | Generate Identity Hash | Crypto v2 | Generate the SHA-256 `idempotency_key` as a lowercase 64-character hexadecimal value, without credentials or network requests. | An unexpected hashing exception stops the manual DEV execution. |
 | 6 | Calculate Lead Score | Code | Derive `lead_id` from the hash, score valid leads, and emit exact reason codes; invalid leads receive `null`. | Unexpected exception stops the DEV execution. |
 | 7 | Assign Qualification Status and Routing | Code | Assign status, queue, assignment reason, and human-review flag. | Unsupported routing uses General Sales Queue and human review. |
-| 8 | Prepare Storage Record | Edit Fields or Code | Create the inert `deferred-v0.2` / `none` payload and complete prepared record. | No write node or external destination exists. |
-| 9 | Prepare Internal Notification | Edit Fields or Code | Create the inert status-based `internal-preview` payload. | No send node or channel credential exists. |
+| 8 | Prepare Storage Record | Code | Create the inert `deferred-v0.2` / `none` payload and complete prepared record. | No write node or external destination exists. |
+| 9 | Prepare Internal Notification | Code | Create the inert status-based `internal-preview` payload. | No send node or channel credential exists. |
 | 10 | Final Output | Edit Fields | Return one consolidated audit object. | Do not claim downstream success. |
 
 ## Data Flow
@@ -175,7 +175,7 @@ The following is the authoritative qualified-output example. It assumes an injec
 }
 ```
 
-Without an injected fixed clock, tests validate `processed_at` as a valid canonical ISO-8601 UTC value rather than an exact timestamp. This example is a planned contract, not an execution result.
+Without an injected fixed clock, tests validate `processed_at` as a valid canonical ISO-8601 UTC value rather than an exact timestamp. This example is the approved contract; actual Core Release Suite evidence is recorded in [[Test Results]].
 
 ## Prepared Payload Contracts
 
@@ -232,6 +232,10 @@ The raw lead `message` is excluded from the notification payload. Formula-risk d
 - Email or Telegram adapter.
 - Persistent idempotency, upsert, concurrency, external retries, timeouts, partial-failure recovery, reconciliation, and error alerts.
 - Any STAGING or PROD topology and production-safe lead identifier.
+
+## Release Boundary
+
+The ten-node architecture and complete output contract are ready for an inactive, dummy-data-only DEV demonstration. Production readiness is not approved. Operational review, recovery evidence, client/owner approval, the Extended Regression Suite when required, integration testing, and production smoke testing remain prerequisites for any future live deployment.
 
 ## Related Notes
 
