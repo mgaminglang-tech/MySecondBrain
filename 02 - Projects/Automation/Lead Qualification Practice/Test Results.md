@@ -4,7 +4,7 @@ status: draft
 completion: incomplete
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - testing
@@ -15,7 +15,7 @@ tags:
 
 ## Current Status
 
-The inactive DEV workflow has been created. TC-001 has one user-confirmed controlled DEV PASS using dummy data. No other executable v0.1 test is marked passed, and all v0.2 integration cases remain `deferred`.
+The inactive DEV workflow has been created. Six controlled v0.1 DEV tests have passed using dummy data: TC-001, TC-056, TC-070, TC-082, TC-086, and TC-104. No other executable v0.1 test is marked passed, and all v0.2 integration cases remain `deferred`.
 
 ## Controlled DEV Test Run
 
@@ -47,6 +47,26 @@ The inactive DEV workflow has been created. TC-001 has one user-confirmed contro
 
 The test used the approved 12-field TC-001 dummy fixture. Storage and notification payloads remained inert; no credential or external integration was used.
 
+## Controlled DEV Validation Batch
+
+- Date: 2026-07-24
+- Workflow state: inactive and unchanged before and after the batch
+- Fixture isolation: temporary pin data at Set Sample Lead; no pin data was saved to the workflow
+- Data classification: dummy only
+- Credentials: none
+- External integrations: none
+- Real data: none
+
+| Test | Execution | Expected validation errors | Actual validation errors | Expected / actual status | Expected / actual score | Expected / actual review | Queue / reason | Result |
+|---|---:|---|---|---|---|---|---|---|
+| TC-070 | `7026` | `[{"field":"full_name","code":"REQUIRED_FIELD","message":"full_name is required."}]` | `[{"field":"full_name","code":"REQUIRED_FIELD","message":"full_name is required."}]` | `invalid` / `invalid` | `null` / `null` | `true` / `true` | `APAC Sales Queue` / `REGION_APAC` | passed |
+| TC-056 | `7027` | `[{"field":"email","code":"INVALID_EMAIL_FORMAT","message":"email format is invalid."}]` | `[{"field":"email","code":"INVALID_EMAIL_FORMAT","message":"email format is invalid."}]` | `invalid` / `invalid` | `null` / `null` | `true` / `true` | `APAC Sales Queue` / `REGION_APAC` | passed |
+| TC-082 | `7028` | `[{"field":"consent","code":"CONSENT_NOT_TRUE","message":"consent must be true."}]` | `[{"field":"consent","code":"CONSENT_NOT_TRUE","message":"consent must be true."}]` | `invalid` / `invalid` | `null` / `null` | `true` / `true` | `APAC Sales Queue` / `REGION_APAC` | passed |
+| TC-104 | `7029` | `[{"field":"region","code":"INVALID_ENUM","message":"region is not an approved value."}]` | `[{"field":"region","code":"INVALID_ENUM","message":"region is not an approved value."}]` | `invalid` / `invalid` | `null` / `null` | `true` / `true` | `General Sales Queue` / `REGION_FALLBACK_REVIEW` | passed |
+| TC-086 | `7030` | `[{"field":"submitted_at","code":"INVALID_TIMESTAMP_UTC","message":"submitted_at must be a valid ISO-8601 UTC timestamp ending in Z."}]` | `[{"field":"submitted_at","code":"INVALID_TIMESTAMP_UTC","message":"submitted_at must be a valid ISO-8601 UTC timestamp ending in Z."}]` | `invalid` / `invalid` | `null` / `null` | `true` / `true` | `APAC Sales Queue` / `REGION_APAC` | passed |
+
+All five executions completed successfully and reached Final Output. Expected and actual values matched exactly.
+
 ## Results
 
 | Test group | Cases | Status | Evidence |
@@ -57,11 +77,11 @@ The test used the approved 12-field TC-001 dummy fixture. Storage and notificati
 | Timeframe scoring | 8 | not-run | None |
 | Need clarity | 5 | not-run | None |
 | Email scoring | 6 | not-run | None |
-| Email validation | 4 | not-run | None |
+| Email validation | 4 | 1 passed; 3 not-run | TC-056 / execution 7027 |
 | Status boundaries | 4 | not-run | None |
-| Individual missing fields | 12 | not-run | None |
-| Consent, timestamp, type, and range | 13 | not-run | None |
-| Routing | 5 | not-run | None |
+| Individual missing fields | 12 | 1 passed; 11 not-run | TC-070 / execution 7026 |
+| Consent, timestamp, type, and range | 13 | 2 passed; 11 not-run | TC-082 / execution 7028; TC-086 / execution 7030 |
+| Routing | 5 | 1 passed; 4 not-run | TC-104 / execution 7029 |
 | String length, enum, injection, and safety | 19 | not-run | None |
 | Identity fallback and determinism | 6 | not-run | None |
 | Output, runtime, and environment | 5 | not-run | None |
@@ -71,12 +91,12 @@ Executable v0.1 tests use only `passed`, `failed`, `blocked`, or `not-run`. Futu
 
 ## Summary
 
-- Passed: 1
+- Passed: 6
 - Failed: 0
 - Blocked: 0
-- Not run: 112
+- Not run: 107
 - Deferred to v0.2: 10
-- Approval: TC-001 result supplied for documentation; further execution requires approval
+- Approval: further execution requires approval
 
 ## Evidence Rules
 

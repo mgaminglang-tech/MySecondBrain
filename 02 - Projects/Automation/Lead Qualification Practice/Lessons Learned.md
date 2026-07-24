@@ -4,7 +4,7 @@ status: draft
 completion: incomplete
 client: Demo Sales Company
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-24
 tags:
   - client-automation
   - lessons-learned
@@ -15,7 +15,7 @@ tags:
 
 ## Current Status
 
-Incomplete. The inactive DEV workflow has been built, and TC-001 has one user-confirmed controlled PASS using dummy data. The broader v0.1 test suite, operational review, and any future deployment evidence remain incomplete.
+Incomplete. The inactive DEV workflow has been built, and six controlled v0.1 tests have passed using dummy data. The broader v0.1 test suite, operational review, and any future deployment evidence remain incomplete.
 
 ## Confirmed Lessons
 
@@ -31,9 +31,13 @@ Schema validation alone did not expose the invalid escaped backtick in a JavaScr
 
 The inactive, dummy-data-only design exposed both defects without credentials, external writes, notifications, or client-data risk. Preserving inert payloads and manual execution boundaries made the fixes narrow and reviewable.
 
+### Use temporary pin data for isolated fixtures
+
+Temporary pin data can isolate one dummy fixture per manual DEV execution without changing the saved Set node or workflow version. Each execution should confirm the pinned Set Sample Lead output and Final Output, and a post-batch inspection should verify that the workflow remains inactive and unchanged.
+
 ### Retain evidence boundaries
 
-TC-001 is recorded as passed from the result supplied for this documentation update. The successful execution ID was not supplied and must not be invented. No other v0.1 test is treated as passed.
+TC-001 is recorded as passed from the result supplied for its documentation update; its successful execution ID was not supplied and must not be invented. TC-056, TC-070, TC-082, TC-086, and TC-104 have direct execution evidence. No other v0.1 test is treated as passed.
 
 ## Questions for the Retrospective
 
