@@ -1,8 +1,8 @@
 ---
 type: project
 project_type: ai-automation
-status: planned
-phase: discovery
+status: in-progress
+phase: phase-1-validated
 priority: medium
 client: internal-demo
 owner: Mervin
@@ -26,14 +26,14 @@ Design a centralized DEV-only support-ticket process that converts dummy or sani
 
 ## Initial State
 
-- Status: planned
-- Current phase: discovery
+- Status: in-progress
+- Current phase: Phase 1 credential-free skeleton validated
 - Owner and current approver: Mervin
 - Target date: Not Yet Defined
 - Production ready: false
 - Canonical workflow name: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
-- Workflow state: unbuilt and inactive
-- Testing state: not-run
+- Workflow state: built and inactive; workflow ID `cyiCqsjLQdB7apjP`
+- Testing state: Phase 1 seed suite passed; integration testing not-run
 - Data classification: dummy and sanitized test data only
 - External side effects: not approved
 - Production credentials, integrations, deployment, and activation: not approved
@@ -83,7 +83,7 @@ Telegram ─────┘              → Duplicate check
                               → Return audit summary
 ```
 
-This is a proposed architecture, not evidence of an implemented workflow.
+The credential-free portion of this architecture is implemented and validated only within the approved Phase 1 boundary. All integration stages remain proposed.
 
 ## Success Criteria
 
@@ -97,13 +97,46 @@ This is a proposed architecture, not evidence of an implemented workflow.
 - Evidence distinguishes `passed`, `failed`, `blocked`, `not-run`, and `deferred`.
 - The workflow remains inactive and credential-safe throughout development.
 
+## Approved Discovery Decisions
+
+- Gmail and Telegram use explicit source-field allowlists, HTML-to-text conversion where needed, and a 5,000-character message limit.
+- Attachment contents and edited Telegram messages are excluded from v0.1.
+- Required-field validation fails closed before AI or downstream actions.
+- Duplicate handling distinguishes exact duplicates from content-based possible duplicates.
+- The approved categories are `billing`, `refund`, `account-access`, `technical-support`, `product-question`, `order-delivery`, `feedback-complaint`, and `other`.
+- Priorities are `p1-critical`, `p2-high`, `p3-normal`, and `p4-low`; deterministic rules override AI output.
+- Airtable uses one `Tickets` table. Mervin is the initial DEV ClickUp assignee.
+- Slack alerts are limited to approved P1/P2 or deterministic escalation rules.
+- OpenAI is the controlled DEV LLM provider with approved privacy, fallback, retry, and budget boundaries.
+- Planning assumes 30 sanitized fixtures, 100 tickets per day, a peak of 10 messages per five minutes, seven-day DEV execution retention, 30-day test-record retention, RTO four hours, RPO 24 hours, manual replay, and Mervin as portfolio-phase owner.
+- Ticket IDs use `SF-YYYYMMDD-XXXXXXXX`, where the suffix is the first eight uppercase hexadecimal characters of a UUID v4 and never derives from personal or customer information.
+- Sentiment is optional: `positive`, `neutral`, `negative`, or `unknown`, defaulting to `unknown`; it never independently changes priority or triggers alerts.
+- Content fingerprints use the approved NFKC normalization and SHA-256 contract.
+- Phase 1 uses six approved seed fixtures and mocked duplicate and AI results; live integrations remain deferred.
+
 ## Current Decision
 
-**CONDITIONAL GO — documentation and discovery refinement only.** The DEV build is not authorized. The conditions are recorded in [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Discovery and Scope|Discovery and Scope]].
+**GO — the Phase 1 credential-free skeleton meets its approved build and test boundary.** This decision is not integration, demo, production, deployment, or activation approval.
+
+## Approved Phase 1 Boundary
+
+Manual Trigger → dummy Gmail and Telegram payloads → channel normalization → unified ticket → required-field validation → ticket ID and content fingerprint → mocked duplicate result → mocked AI classification and draft → deterministic rules → final structured output.
+
+Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or OpenAI connections, credentials, external side effects, real data, workflow activation, and production claims.
+
+## Phase 1 Evidence
+
+- Workflow ID: `cyiCqsjLQdB7apjP`
+- Saved state: inactive; `activeVersionId` is null
+- Node count: 14
+- Credentials and external-service nodes: none
+- Manual execution IDs: `7107`, `7108`, `7109`, `7110`, `7111`, `7112`
+- Fixture result: `SF-FX-001` through `SF-FX-006` — 6 passed, 0 failed
+- External actions, customer replies, and real-data use: none
 
 ## Next Action
 
-Mervin reviews and resolves the blocking discovery questions, then separately approves or rejects the scope, requirements, architecture, and inactive DEV build phase.
+Mervin reviews the Phase 1 evidence and separately approves or rejects a Pre-Integration Readiness Review. No credential, external integration, additional fixture, activation, or workflow expansion is authorized by this result.
 
 ## Related Notes
 

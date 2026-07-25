@@ -1,7 +1,7 @@
 ---
 type: project-note
-status: planned
-phase: discovery
+status: in-progress
+phase: phase-1-validated
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -15,7 +15,13 @@ tags:
 
 ## Status
 
-Draft requirements derived from the approved project brief. They are not yet approved for implementation.
+Requirements are approved and validated for the credential-free Phase 1 skeleton. The completed Phase 1 authorization does not authorize further workflow modification, credentials, additional execution, integration, or external side effects.
+
+## Phase 1 Requirement Boundary
+
+Phase 1 includes only Manual Trigger, dummy Gmail and Telegram payloads, channel normalization, unified ticket formatting, strict validation, ticket-ID and content-fingerprint generation, mocked duplicate results, mocked AI classification and draft response, deterministic business rules, and final structured output.
+
+Phase 1 excludes all live triggers, service connections, credentials, external side effects, real data, activation, and production claims.
 
 ## Functional Requirements
 
@@ -39,29 +45,73 @@ Draft requirements derived from the approved project brief. They are not yet app
 | FR-016 | Keep customer communication manual | must | No node or path sends a Gmail or Telegram customer reply |
 | FR-017 | Keep DEV inactive | must | Saved workflow remains inactive before and after approved testing |
 
-## Unified Input and Output Contracts
+## Approved Input Contracts
 
-The proposed logical ticket fields are defined in [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Data Model|Data Model]]. Exact required fields, maximum lengths, enum values, identifiers, and storage mappings are **Not Yet Defined** and block implementation approval.
+| Source | Allowed input fields |
+|---|---|
+| Gmail | `message_id`, `thread_id`, `received_at`, sanitized `sender_reference`, sanitized `sender_name`, `subject`, plain-text body, attachment metadata |
+| Telegram | `update_id`, `message_id`, `chat_id`, `received_at`, sanitized `sender_reference`, sanitized `sender_name`, text or caption, `reply_to_message_id`, attachment metadata |
+
+- Gmail HTML may be converted to text only when a plain-text body is unavailable.
+- `message_text` is trimmed and limited to 5,000 characters.
+- Attachment contents and edited Telegram messages are excluded from v0.1.
+- Required unified fields are `source_channel`, `source_message_id`, `received_at`, `sender_reference`, and non-empty `message_text`.
+- `source_channel` must be `gmail` or `telegram`; identifiers must be non-empty; `received_at` must be a valid UTC datetime; `subject` is optional and limited to 250 characters.
+- Invalid input fails closed before duplicate lookup, AI, storage, task creation, or alerts.
+
+The complete approved logical model is in [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Data Model|Data Model]].
+
+## Ticket Identity and Fingerprint
+
+- Ticket ID format: `SF-YYYYMMDD-XXXXXXXX`.
+- `XXXXXXXX` is the first eight uppercase hexadecimal characters of a UUID v4.
+- No ticket-ID component derives from personal or customer information.
+- Before any create retry, re-check the ticket ID or applicable dedupe key.
+- Content normalization applies Unicode NFKC, lowercase, zero-width-character removal, line-ending normalization, repeated-whitespace collapse, and leading/trailing whitespace trimming.
+- Punctuation, signatures, and quoted text are preserved in v0.1.
+- The fingerprint is SHA-256 of the ordered normalized sender reference, subject, and message text.
+
+## Approved Duplicate Requirements
+
+- Exact duplicate key: `source_channel + source_message_id`, checked within retained Airtable records.
+- Content fingerprint: normalized `sender_reference + message_text`, checked within 72 hours using a 30-day Airtable lookback.
+- Exact duplicate: update the existing ticket record and increment `duplicate_count`; do not create another ClickUp task; do not send another Slack alert unless the final escalation state changes.
+- Content duplicate: create the request as `possible_duplicate`, store the candidate ticket reference, require human review, and do not suppress it automatically.
+- Cross-channel similarity may create `possible_duplicate` only; it may not automatically establish an exact duplicate.
+- Duplicate lookup uncertainty fails closed for downstream creation.
+
+## Approved Classification Requirements
+
+- Categories: `billing`, `refund`, `account-access`, `technical-support`, `product-question`, `order-delivery`, `feedback-complaint`, `other`.
+- Priorities: `p1-critical`, `p2-high`, `p3-normal`, `p4-low`.
+- Sentiment is optional: `positive`, `neutral`, `negative`, or `unknown`; default `unknown`.
+- Sentiment never independently changes priority or triggers Slack alerts.
+- Deterministic business rules override AI classifications.
+- OpenAI is the controlled DEV provider for a later phase. Phase 1 uses mocked structured classification output.
+- The exact model, structured-output settings, privacy boundary, and budget are recorded immediately before separately approved AI integration.
+- Draft responses remain review-only and are never sent automatically.
 
 ## Integration Requirements
 
 | System | Environment | Purpose | Current state |
 |---|---|---|---|
-| n8n | DEV | Orchestration | No workflow created; inactive design only |
+| n8n | DEV | Credential-free Phase 1 orchestration | Workflow `cyiCqsjLQdB7apjP` built and inactive |
 | Gmail | DEV/test | Controlled message intake | Access and trigger method Not Yet Defined |
 | Telegram Bot API | DEV/test | Controlled message intake | Bot and trigger method Not Yet Defined |
-| Airtable | DEV/test | Duplicate lookup and ticket storage | Base/table/schema Not Yet Defined |
-| Approved LLM | DEV/test | Classification and draft generation | Provider/model/policy Not Yet Defined |
-| ClickUp | DEV/test | Controlled task creation | Workspace/list/schema Not Yet Defined |
-| Slack | DEV/test | Controlled escalation alert | Channel/payload Not Yet Defined |
+| Airtable | DEV/test | Base `DEV - SupportFlow AI`, table `Tickets` | Actual IDs and credential Not Yet Assigned |
+| OpenAI | DEV/test | Controlled classification and draft generation after Phase 1 | Exact model and credential deferred |
+| ClickUp | DEV/test | List `DEV - SupportFlow AI - Ticket Queue`, assignee Mervin | Actual IDs and credential Not Yet Assigned |
+| Slack | DEV/test | Channel `#dev-supportflow-alerts` | Actual ID and credential Not Yet Assigned |
 
 Credential names may be documented later by reference only. Secret values must never be stored in the vault or Git.
 
 ## Error and Exception Requirements
 
 - Invalid input: return validation errors; do not check AI, store, create a task, or alert.
-- Duplicate: record or return the matched duplicate reference safely; do not create a second ticket or task.
-- AI failure: retry only under an approved bounded policy; otherwise mark manual review and prevent unsafe escalation decisions.
+- Exact duplicate: update the existing ticket and duplicate count; suppress a new task and suppress a repeat Slack alert unless escalation state changed.
+- Content duplicate: mark `possible_duplicate`, reference the candidate, require human review, and continue as a separate ticket.
+- AI failure: allow one retry, then set `category=other`, `classification_status=failed`, `needs_human_review=true`, and an empty `draft_response`. Priority comes from deterministic rules; default to `p3-normal` when none matches.
+- AI failure alone never creates a customer escalation alert. Repeated system-level AI failures may create a separate operational alert under a later approved operational-alert rule.
 - Airtable lookup uncertainty: fail closed for downstream creation until duplicate status is known.
 - Storage failure: do not create a ClickUp task or Slack alert unless an approved compensating design exists.
 - ClickUp or Slack failure: preserve ticket context, prevent uncontrolled retries, and expose the failure for manual recovery.
@@ -73,27 +123,36 @@ Credential names may be documented later by reference only. Secret values must n
 - Privacy: dummy or irreversibly sanitized DEV data only.
 - Auditability: deterministic rule results and execution evidence must be traceable without sensitive payloads.
 - Idempotency: duplicate and replay behavior must be defined before side-effect testing.
-- Reliability: retries, timeouts, concurrency, partial-failure handling, and replay controls are Not Yet Defined.
-- Performance, volume, availability, retention, recovery, and support targets: Not Yet Defined.
+- Reliability: DEV fixture tests run sequentially. Read-only API calls may retry at most twice with 2-second and 5-second backoff. Default API timeout is 15 seconds.
+- Idempotency: never blindly retry non-idempotent create actions; re-check the ticket ID or dedupe key before every create retry.
+- Failure behavior: persistent failure stops downstream processing and records an operational error when storage is available.
+- Locking: production-grade locking is deferred.
+- Capacity: 100 tickets per day and a peak of 10 messages per five minutes.
+- Retention: seven days for DEV execution data and 30 days for DEV Airtable records, ClickUp tasks, and Slack test alerts.
+- Recovery: RTO four hours, RPO 24 hours, preserved validated workflow exports, and manual replay using source-message identity.
+- Budget: maximum 500 OpenAI calls or USD 5 per month, whichever occurs first.
+- Ownership: Mervin owns portfolio-phase scope, taxonomy, escalation, testing, recovery, and approval.
 
 ## Acceptance Criteria
 
-- [ ] All open input and output contracts are approved.
-- [ ] Both channels pass equivalent-normalization tests.
-- [ ] Invalid and incomplete cases fail safely.
-- [ ] Ticket identity and duplicate behavior pass deterministic tests.
-- [ ] AI results conform to the approved schema and deterministic overrides.
-- [ ] Drafts are never sent automatically.
+- [x] All Phase 1 input and output contracts are approved.
+- [x] Both Phase 1 channel fixtures pass the unified normalization contract.
+- [x] The authorized invalid fixture fails safely.
+- [x] Phase 1 ticket identity and mocked duplicate behavior pass deterministic tests.
+- [x] Mocked AI results conform to the approved Phase 1 schema and deterministic overrides.
+- [x] Drafts are never sent automatically.
 - [ ] Controlled Airtable, ClickUp, and Slack effects match exact expectations.
 - [ ] Every required test has evidence and an allowed status.
-- [ ] The workflow remains inactive and uses no real customer data or production credentials.
+- [x] The workflow remains inactive and uses no real customer data or production credentials.
+- [x] Phase 1 contains no integration node, credential reference, external connection, or side effect.
+- [x] Phase 1 validates the six seed fixtures `SF-FX-001` through `SF-FX-006`.
 
 ## Approval
 
 - Requirements approver: Mervin
-- Approval status: Not Yet Defined
-- Approval date: Not Yet Defined
-- DEV build authorization: not approved
+- Approval status: approved for Phase 1 boundary
+- Approval date: 2026-07-25
+- DEV build authorization: approved and completed for Phase 1 only on 2026-07-25
 
 ## Related Notes
 

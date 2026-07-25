@@ -1,7 +1,7 @@
 ---
 type: project-note
-status: planned
-phase: discovery
+status: in-progress
+phase: phase-1-validated
 client: internal-demo
 owner: Mervin
 production_ready: false
@@ -18,69 +18,89 @@ tags:
 
 ## Objective
 
-Define the gated path to an inactive DEV workflow. This note does not authorize implementation.
+Record the gated path and verified evidence for the inactive DEV Phase 1 workflow. Further implementation still requires separate authorization.
 
 ## Development Boundaries
 
 - Workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
-- Current state: unbuilt and inactive
+- Current state: built and inactive; workflow ID `cyiCqsjLQdB7apjP`
 - Data: dummy or sanitized only
 - Credentials: not approved
 - External side effects: not approved
 - Customer replies: prohibited
 - Production work: outside current scope
-- Testing: not-run
+- Testing: Phase 1 seed suite passed; integration testing not-run
 
 ## Phase 1 — Complete Discovery
 
-- [ ] Resolve OQ-001 through OQ-011 in Discovery and Scope.
-- [ ] Approve source contracts, unified schema, taxonomy, rules, and duplicate behavior.
-- [ ] Define owners, volumes, retention, privacy, retry, timeout, and recovery expectations.
-- [ ] Approve exact sanitized fixtures and controlled destinations or mocks.
+- [x] Approve Gmail and Telegram allowlists, HTML conversion, size limit, and v0.1 exclusions.
+- [x] Approve validation, categories, priorities, duplicate outcomes, deterministic overrides, and LLM failure behavior.
+- [x] Approve the single Airtable table, ClickUp task contract, Slack conditions, OpenAI controls, and operating defaults.
+- [x] Approve 30 sanitized fixtures as the planned dataset size.
 
 **Gate:** Mervin records discovery and scope approval.
 
-**Current status:** in-progress.
+**Current status:** complete on 2026-07-25.
 
 ## Phase 2 — Approve Design
 
-- [ ] Review Requirements, Architecture, Data Model, and Business Rules.
-- [ ] Resolve all Not Yet Defined implementation decisions.
-- [ ] Define exact n8n node responsibilities without assigning credentials.
-- [ ] Approve the core test IDs and expected outputs.
-- [ ] Complete the required pre-development review.
+- [x] Review Requirements, Architecture, Data Model, and Business Rules.
+- [x] Resolve ticket-ID, sentiment, fingerprint, DEV reliability, resource-name, fixture-ID, and escalation decisions for Phase 1.
+- [x] Define exact n8n node responsibilities through an approved read-only audit.
+- [x] Reserve `SF-FX-001` through `SF-FX-030` and approve six Phase 1 seed scenarios.
+- [x] Complete the pre-implementation readiness review.
 
 **Gate:** requirements and architecture approved; explicit DEV build authorization recorded.
 
-**Current status:** blocked by Phase 1.
+**Current status:** complete for Phase 1.
+
+## Pre-Implementation Readiness Review
+
+- Review date: 2026-07-25
+- Reviewer and decision owner: Mervin
+- Result: **GO for Phase 1 — Credential-Free n8n Skeleton only**
+- Confirmed boundary: inactive DEV only, dummy or sanitized fixtures, no customer responses, no credentials, and no production access
+- Deferred without blocking Phase 1: actual resource IDs and credentials, exact OpenAI model, fixtures `SF-FX-007` through `SF-FX-030`, integration behavior, and production-grade locking
 
 ## Phase 3 — Read-Only Environment Audit
 
-- [ ] Obtain an explicit request to use n8n MCP.
-- [ ] Verify connectivity, n8n version, required nodes, node versions, and naming conflicts.
-- [ ] Confirm the proposed design can remain inactive and isolated.
-- [ ] Record GO, CONDITIONAL GO, or NO-GO without changing n8n.
+- [x] Obtain an explicit request to use n8n MCP.
+- [x] Verify connectivity, required nodes, compatible node versions, and naming conflicts.
+- [x] Confirm the proposed design can remain inactive and isolated.
+- [x] Record GO without changing n8n during the audit.
 
 **Gate:** read-only audit supports the approved design.
 
-**Current status:** not approved and not run.
+**Current status:** complete on 2026-07-25.
 
 ## Phase 4 — Inactive DEV Build
 
-- [ ] Create only the approved inactive DEV workflow.
-- [ ] Build channel intake or fixture paths.
-- [ ] Normalize, validate, and generate identity.
-- [ ] Add duplicate lookup and fail-closed routing.
-- [ ] Add constrained AI classification and unsent draft generation.
-- [ ] Apply deterministic rules and human-review routing.
-- [ ] Add only approved DEV storage, task, and alert destinations.
-- [ ] Add bounded failure handling, idempotency, and audit output.
-- [ ] Validate each changed node and the full workflow.
-- [ ] Confirm credentials by reference, saved state, connections, and inactive status.
+The first implementation phase, once separately approved after the read-only audit gate, is an inactive credential-free skeleton.
+
+- [x] Create only the approved inactive DEV workflow.
+- [x] Add Manual Trigger and dummy Gmail/Telegram fixture payloads.
+- [x] Normalize channels and produce the unified ticket.
+- [x] Validate required fields and generate the approved ticket ID and fingerprint.
+- [x] Add mocked duplicate results.
+- [x] Add mocked structured AI classification and unsent draft output.
+- [x] Apply deterministic rules and human-review routing.
+- [x] Produce the final structured output.
+- [x] Validate each node configuration and the full workflow.
+- [x] Validate `SF-FX-001` through `SF-FX-006`.
+- [x] Confirm no credentials, external nodes, side effects, or activation exist.
 
 **Gate:** saved inactive workflow matches approved documentation.
 
-**Current status:** not authorized.
+**Current status:** complete on 2026-07-25. Workflow `cyiCqsjLQdB7apjP` remains inactive.
+
+### Phase 1 Implementation Evidence
+
+- Node count: 14
+- Node versions: Manual Trigger 1, Edit Fields 3.4, Code 2, Crypto 2
+- Manual executions: `7107`, `7108`, `7109`, `7110`, `7111`, `7112`
+- Fixture result: six passed, zero failed
+- Compatibility correction: Edit Fields raw JSON was changed from object form to runtime-compatible JSON-string form after execution `7106` failed with `jsonOutput?.startsWith is not a function`. This did not change scope or add a side effect; the complete suite was restarted afterward.
+- Final verification: inactive, no active version, no credentials, no external-service nodes
 
 ## Phase 5 — Controlled Testing
 
@@ -93,7 +113,7 @@ Define the gated path to an inactive DEV workflow. This note does not authorize 
 
 **Gate:** critical tests pass with evidence and limitations are current.
 
-**Current status:** not-run.
+**Current status:** Phase 1 skeleton suite complete; the 30-fixture integration suite is not-run and not authorized.
 
 ## Phase 6 — Demo Evidence
 
@@ -110,7 +130,8 @@ Define the gated path to an inactive DEV workflow. This note does not authorize 
 
 - Keep the workflow inactive throughout DEV.
 - Stop if real data, secrets, production access, or an unapproved destination appears.
-- Stop if duplicate safety, idempotency, or partial-failure behavior is unresolved.
+- Stop if ticket-ID, fingerprint, mocked duplicate, mocked AI, deterministic priority, or final-output behavior differs from the approved contract.
+- Stop if any Gmail/Telegram trigger, Airtable, ClickUp, Slack, OpenAI connection, credential, API call, external effect, or activation is introduced.
 - Preserve the last validated DEV version before approved risky changes.
 - Never delete tickets, tasks, alerts, workflows, or evidence as a cleanup shortcut.
 

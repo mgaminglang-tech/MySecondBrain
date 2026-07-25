@@ -1,7 +1,7 @@
 ---
 type: project-note
-status: planned
-phase: discovery
+status: in-progress
+phase: phase-1-validated
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -15,26 +15,28 @@ tags:
 
 ## Status
 
-These are current planning limitations. None is accepted for production, and no implemented behavior is claimed.
+These are current limitations after the Phase 1 credential-free skeleton build. None is accepted for production, and no integration behavior is claimed.
 
 ## Limitation Register
 
 | ID | Limitation | Impact | Workaround or next action | Owner | Status |
 |---|---|---|---|---|---|
-| LIM-001 | Workflow is unbuilt and inactive | No runtime capability exists | Complete gates before build | Mervin | open |
-| LIM-002 | Source field contracts are undefined | Normalization cannot be implemented safely | Approve sanitized channel examples and mappings | Mervin | open |
-| LIM-003 | Duplicate definition and concurrency controls are undefined | Duplicate or missed-ticket risk remains | Approve exact keys, window, replay, and locking rules | Mervin | open |
-| LIM-004 | Classification taxonomy is undefined | AI output cannot be validated | Approve enums, definitions, and fallbacks | Mervin | open |
-| LIM-005 | Escalation thresholds and owners are undefined | Urgent/refund/high-risk routing is unsafe | Approve deterministic rules and recipients | Mervin | open |
-| LIM-006 | LLM provider, model, policy, and fallback are undefined | Privacy, quality, cost, and availability are unknown | Complete provider review | Mervin | open |
-| LIM-007 | DEV Airtable, ClickUp, and Slack destinations are undefined | Controlled integration testing is blocked | Approve isolated destinations or mocks | Mervin | open |
-| LIM-008 | Retries, timeouts, concurrency, and recovery are undefined | Partial failures may duplicate or lose actions | Approve reliability design | Mervin | open |
-| LIM-009 | Volumes, performance targets, retention, and support ownership are undefined | Operational readiness cannot be assessed | Complete non-functional discovery | Mervin | open |
-| LIM-010 | Attachments, rich content, edits, replies, and threads are not specified | Some channel messages may be unsupported | Define version-one handling or exclude explicitly | Mervin | open |
+| LIM-001 | Workflow is built but intentionally inactive | No live intake or continuous runtime exists | Keep inactive until a separately approved future phase | Mervin | accepted Phase 1 boundary |
+| LIM-002 | Six dummy fixture paths are verified; real Gmail and Telegram payloads are not | Live mappings remain unverified | Validate only after separate integration authorization | Mervin | deferred |
+| LIM-003 | Fingerprint normalization is approved; production-grade locking is deferred | Concurrent integration arrivals are not protected | Phase 1 runs fixtures sequentially | Mervin | deferred |
+| LIM-004 | Optional sentiment enum is approved | Sentiment quality is unverified | Default to `unknown`; never use alone for priority or alerts | Mervin | not-run |
+| LIM-005 | Refund and default deterministic paths passed; full P1/P2/P3/P4 rule coverage is incomplete | Untested rules may still be incorrect | Complete the 30-fixture integration suite before integration claims | Mervin | partially tested |
+| LIM-006 | Exact OpenAI model and credential are deferred | AI integration remains blocked | Phase 1 uses mocked output | Mervin | deferred |
+| LIM-007 | DEV resource names are reserved; actual IDs and credentials are Not Yet Assigned | External integration remains blocked | Phase 1 uses no external resources | Mervin | deferred |
+| LIM-008 | DEV retries and timeout are approved; production reliability remains deferred | Not production-ready | Keep Phase 1 credential-free and inactive | Mervin | deferred |
+| LIM-009 | Capacity, retention, recovery, replay, and ownership are approved but untested | Operational claims cannot be made | Verify after authorized build | Mervin | not-run |
+| LIM-010 | Attachment contents and edited Telegram messages are excluded from v0.1 | Some requests require manual handling | Disclose exclusion and test metadata-only path | Mervin | accepted scope boundary |
 | LIM-011 | AI classification is probabilistic | Misclassification remains possible | Schema validation, deterministic overrides, human review | Mervin | open |
 | LIM-012 | Automatic replies, closure, deletion, SLA enforcement, and analytics are excluded | Manual operations remain | Retain manual process or approve future phase | Mervin | accepted scope boundary |
-| LIM-013 | Testing has not begun | No pass, performance, or reliability claims are valid | Execute approved tests after build | Mervin | not-run |
+| LIM-013 | Six Phase 1 fixtures passed, but integration, performance, retention, and recovery testing have not begun | Only skeleton behavior is evidenced | Define fixtures 007–030 and obtain separate integration-test authorization | Mervin | deferred |
 | LIM-014 | Production is not approved | No live service or production-readiness claim | Separate production discovery and approval | Mervin | blocked |
+| LIM-015 | UUID v4 suffix is limited to eight hexadecimal characters | Collision remains theoretically possible | Re-check ticket ID before any later create action | Mervin | accepted for DEV |
+| LIM-016 | Only six seed scenarios are defined; fixtures 007–030 remain undefined | Integration testing cannot begin | Complete all fixtures before integration testing | Mervin | deferred |
 
 ## Current Safety Boundaries
 
@@ -43,6 +45,8 @@ These are current planning limitations. None is accepted for production, and no 
 - No automatic customer replies.
 - No activation, deployment, closure, deletion, or unapproved external side effects.
 - No portfolio screenshots until sanitized evidence exists.
+- OpenAI receives only approved dummy or sanitized text and remains unconnected until credential approval.
+- Phase 1 permits only mocked duplicate and AI results and a final structured output.
 
 ## Future Review Triggers
 
@@ -58,7 +62,7 @@ Review this note whenever:
 
 - Limitation owner: Mervin
 - Accepted risks beyond explicit scope boundaries: none
-- Review date: Not Yet Defined
+- Review date: 2026-07-25
 - Production acceptance: not approved
 
 ## Related Notes

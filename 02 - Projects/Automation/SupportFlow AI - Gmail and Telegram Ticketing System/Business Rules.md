@@ -1,7 +1,7 @@
 ---
 type: project-note
-status: planned
-phase: discovery
+status: in-progress
+phase: phase-1-validated
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -16,7 +16,7 @@ tags:
 
 ## Status
 
-Rule framework only. Values marked **Not Yet Defined** must not be implemented by guesswork.
+Approved rules for the credential-free Phase 1 skeleton. Integration behavior remains deferred.
 
 ## Evaluation Order
 
@@ -35,71 +35,104 @@ Earlier safety failures take precedence over later actions.
 
 | ID | Rule | Result | Status |
 |---|---|---|---|
-| BR-001 | Required input is missing or malformed | Mark invalid; no AI, storage, task, or alert | proposed |
-| BR-002 | Duplicate status is `duplicate` | Do not create a new ticket or task; return matched reference safely | proposed |
-| BR-003 | Duplicate status is `unknown` | Fail closed; manual review; no creation effects | proposed |
-| BR-004 | AI output fails schema or enum validation | Manual review; do not trust AI routing | proposed |
-| BR-005 | Deterministic and AI results conflict | Deterministic rule wins and conflict is audited | proposed |
-| BR-006 | Valid, non-duplicate ticket passes all gates | Store exactly one DEV ticket | proposed |
-| BR-007 | Airtable storage fails | Do not create task or alert unless a compensating design is approved | proposed |
-| BR-008 | Ticket is stored successfully | Create at most one controlled ClickUp task | proposed |
-| BR-009 | Approved escalation condition matches | Send at most one controlled Slack alert | proposed |
-| BR-010 | Draft response exists | Store for human review; never automatically send | confirmed constraint |
-| BR-011 | Real data, secret, or production destination is detected | Stop processing and report safely | confirmed constraint |
+| BR-001 | Required input is missing or malformed | Mark invalid; no AI, storage, task, or alert | approved |
+| BR-002 | Exact duplicate matches | Update existing ticket and `duplicate_count`; no new task; alert only if escalation state changed | approved |
+| BR-003 | Content duplicate matches | Mark `possible_duplicate`, reference candidate, require review, and do not suppress | approved |
+| BR-004 | Duplicate status is `unknown` | Fail closed; manual review; no creation effects | approved |
+| BR-005 | AI output fails after one retry | Apply approved safe fallback | approved |
+| BR-006 | Deterministic and AI results conflict | Deterministic rule wins and conflict is audited | approved |
+| BR-007 | Valid new or possible-duplicate ticket passes all gates | Store exactly one DEV ticket | approved |
+| BR-008 | Airtable storage fails | Do not create task or customer-escalation alert | approved |
+| BR-009 | Ticket is stored and is not an exact duplicate | Create at most one controlled ClickUp task | approved |
+| BR-010 | Approved P1/P2 or escalation condition matches | Send at most one controlled Slack alert per escalation state | approved |
+| BR-011 | Draft response exists | Store for human review; never automatically send | confirmed constraint |
+| BR-012 | Real data, secret, or production destination is detected | Stop processing and report safely | confirmed constraint |
 
 ## Classification Rules
 
-Approved enums and definitions are **Not Yet Defined**.
+The category, priority, and optional sentiment enums are approved.
 
 | Dimension | Proposed responsibility | Required decision |
 |---|---|---|
-| Category | LLM suggestion constrained to approved enum | Categories, definitions, and fallback |
-| Priority | LLM suggestion plus deterministic override | Levels, thresholds, and precedence |
-| Sentiment | LLM suggestion constrained to approved enum | Values and whether sentiment affects priority |
-| Escalation | Deterministic final decision informed by structured signals | Exact signals, thresholds, and owners |
-| Draft response | LLM prepares review-only text | Tone, length, policy boundaries, and prohibited claims |
+| Category | OpenAI suggestion constrained to eight approved values | `other` fallback |
+| Priority | OpenAI suggestion plus deterministic override | Four approved levels |
+| Sentiment | Mock AI suggestion constrained to approved optional enum | Defaults to `unknown`; never independently affects priority or alerts |
+| Escalation | Deterministic final decision informed by structured signals | Approved P1/P2 framework |
+| Draft response | OpenAI prepares review-only text | Never automatically sent |
+
+### Approved Categories
+
+`billing`, `refund`, `account-access`, `technical-support`, `product-question`, `order-delivery`, `feedback-complaint`, `other`
+
+### Approved Priorities
+
+- `p1-critical`: security or account takeover, safety threat, legal threat, or widespread outage.
+- `p2-high`: refund or chargeback, explicit urgent request, repeated serious failure, or another approved high-risk condition.
+- `p3-normal`: standard support request and the default after AI failure when no deterministic priority rule matches.
+- `p4-low`: feedback or non-urgent information request.
+
+AI must not lower a priority assigned by a deterministic rule.
+
+### Approved Sentiment
+
+`positive`, `neutral`, `negative`, `unknown`; default `unknown`. Sentiment alone never changes priority and never triggers a Slack alert.
 
 ## Escalation Framework
 
-The brief requires alerts for urgent, refund, or high-risk requests. Exact matching rules are Not Yet Defined. Before implementation, each rule must define:
+P1 and P2 tickets, refunds, explicit urgent requests, and approved high-risk conditions are eligible for a controlled Slack alert after successful ticket storage. Sentiment alone and AI failure alone do not create a customer escalation alert.
 
-- machine-readable rule ID
-- exact phrase, category, amount, severity, or account condition
-- whether matching is case-normalized, exact, semantic, or combined
-- priority override
-- Slack eligibility
-- manual-review requirement
-- alert owner and safe payload
-- conflict behavior and test examples
-
-Potential topics such as threats, fraud, security, safety, legal claims, chargebacks, data deletion, account takeover, or regulated matters are **recommendations for review**, not approved scope or rules.
+- Deterministic rules override AI category, priority, and escalation suggestions.
+- Refund and chargeback use a minimum priority of `p2-high`.
+- P1/P2 tickets require human review.
+- An exact duplicate alerts again only when its final escalation state changed.
+- Repeated system-level AI failures may use a separate operational alert after that rule and destination are separately approved.
 
 ## Duplicate Framework
 
-A message must not be labeled duplicate until the approved comparison succeeds. Decisions still required:
+A message is an exact duplicate only when `source_channel + source_message_id` matches a retained ticket. A content match uses the approved SHA-256 fingerprint of normalized sender reference, subject, and message text within 72 hours and a 30-day lookup. Cross-channel similarity is never an automatic exact duplicate. Production-grade concurrent locking and manual correction are deferred.
 
-- source-message exact match
-- cross-channel customer identity matching
-- normalized subject/body fingerprint
-- time window
-- reply and thread behavior
-- concurrent request locking
-- allowed manual merge, reopen, or false-positive correction
+## Ticket Identity Rule
+
+Generate `SF-YYYYMMDD-XXXXXXXX`, using the first eight uppercase hexadecimal characters of a UUID v4. Never derive the identifier from personal or customer information.
+
+## LLM Failure Rule
+
+After one retry:
+
+- `category=other`
+- `classification_status=failed`
+- `needs_human_review=true`
+- `draft_response` is empty
+- priority comes only from deterministic rules
+- priority defaults to `p3-normal` when no deterministic priority rule matches
+- AI failure alone does not create a customer escalation alert
+
+Phase 1 uses mocked structured AI output and makes no OpenAI call.
+
+## DEV Reliability Rules
+
+- Run fixture tests sequentially.
+- Re-check the ticket ID or dedupe key before every create retry.
+- Never blindly retry non-idempotent create actions.
+- Read-only API calls use at most two retries with 2-second and 5-second backoff.
+- Default API timeout is 15 seconds.
+- Persistent failure stops downstream processing and records an operational error when storage is available.
+- Production-grade locking is deferred.
 
 ## Side-Effect Eligibility
 
 | Effect | Required conditions |
 |---|---|
-| Airtable ticket | Valid input, identity generated, duplicate=`new`, AI/rules safe, approved DEV destination |
-| ClickUp task | Airtable ticket stored, task not already created, approved DEV destination |
-| Slack alert | Ticket stored, approved escalation rule matched, alert not already sent, approved DEV destination |
+| Airtable ticket | Valid input, identity generated, not an exact duplicate, approved fallback or AI/rules result, approved DEV destination |
+| Airtable exact-duplicate update | Exact source identity match and approved DEV destination |
+| ClickUp task | Airtable ticket stored, not an exact duplicate, task not already created, approved DEV destination |
+| Slack alert | Ticket stored, approved P1/P2 or escalation rule matched, escalation state not already alerted, approved DEV destination |
 | Customer reply | Prohibited in current scope |
 
 ## Ownership and Change Control
 
 - Rule owner: Mervin until another owner is explicitly named.
-- Taxonomy approver: Not Yet Defined.
-- Escalation approver: Not Yet Defined.
+- Taxonomy and escalation approver during the portfolio phase: Mervin.
 - Changes require documentation, approval, versioning, test updates, and DEV evidence before use.
 
 ## Related Notes

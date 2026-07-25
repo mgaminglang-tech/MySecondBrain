@@ -1,8 +1,8 @@
 ---
 type: project-note
-status: planned
-phase: discovery
-testing_status: not-run
+status: in-progress
+phase: phase-1-validated
+testing_status: passed-for-phase-1
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -16,25 +16,65 @@ tags:
 
 ## Status
 
-- Testing status: **not-run**
+- Testing status: **passed for Phase 1 seed suite; integration not-run**
 - Environment: DEV
 - Workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
-- Workflow state: unbuilt and inactive
-- Workflow ID/version: Not Yet Defined
+- Workflow state: built and inactive
+- Workflow ID/version: `cyiCqsjLQdB7apjP` / `ea24015d-27fe-41cc-90e8-1e68222282d6`
 - Credentials and destinations: not approved
 - Data: dummy or sanitized only
+- Planned fixture count: 30
 
-This is a planning document. No result or pass status is claimed.
+This note contains verified Phase 1 manual-test evidence only. It does not claim integration, performance, demo, or production readiness.
 
 ## Entry Criteria
 
-- [ ] Discovery and scope approved.
-- [ ] Requirements and architecture approved.
-- [ ] Exact schemas, enums, duplicate rules, and escalation rules approved.
-- [ ] Inactive DEV build separately authorized and validated.
-- [ ] Approved sanitized fixtures exist.
-- [ ] Controlled destinations or mocks are confirmed.
-- [ ] Exact side effects and cleanup steps are approved.
+- [x] Discovery and scope approved for Phase 1.
+- [x] Requirements and architecture approved for Phase 1.
+- [x] Exact Phase 1 schemas, enums, mocked duplicate rules, and escalation examples approved.
+- [x] Inactive DEV build separately authorized and validated.
+- [x] Six sanitized seed fixture IDs and scenarios approved.
+- [x] Mocked duplicate and AI behavior approved.
+- [x] No external side effects are allowed.
+
+## Approved Fixture Plan
+
+Thirty fabricated or irreversibly sanitized fixtures:
+
+- four channel-normalization happy paths
+- six required-field, HTML-conversion, length, and excluded-content boundaries
+- four exact/content/cross-channel/lookup-failure duplicate cases
+- eight category and priority cases covering every approved category and priority
+- four OpenAI success, malformed-output, retry, and failure-fallback cases
+- four Airtable, ClickUp, Slack, replay, and workflow-state cases
+
+Fixture IDs `SF-FX-001` through `SF-FX-030` are reserved. The full thirty fixtures are required before integration testing, not before the skeleton build. Only `SF-FX-001` through `SF-FX-006` have been executed.
+
+## Phase 1 Seed Fixtures
+
+| Fixture ID | Scenario | Required skeleton expectation |
+|---|---|---|
+| `SF-FX-001` | Valid Gmail refund | Valid unified ticket; deterministic `p2-high` minimum |
+| `SF-FX-002` | Valid Telegram technical-support request | Valid unified ticket with approved category |
+| `SF-FX-003` | Invalid missing message text | Fail closed with no downstream processing |
+| `SF-FX-004` | Exact duplicate | Mock exact-duplicate outcome |
+| `SF-FX-005` | Possible content duplicate | Mock `possible_duplicate` and human review |
+| `SF-FX-006` | Simulated AI failure | `other`, failed status, human review, empty draft, deterministic priority or P3 |
+
+Exact dummy payload values may be created during the separately approved skeleton build and must contain no real data.
+
+## Phase 1 Execution Evidence
+
+| Fixture ID | Execution ID | Actual result | Status |
+|---|---:|---|---|
+| `SF-FX-001` | `7107` | Gmail normalized; valid; `new`; `refund`; deterministic `p2-high`; escalation eligible only after future storage | passed |
+| `SF-FX-002` | `7108` | Telegram identifiers preserved; valid; `technical-support`; `p3-normal`; no escalation | passed |
+| `SF-FX-003` | `7109` | Missing `message_text` failed closed; identity, duplicate, AI, draft, and actions skipped or empty | passed |
+| `SF-FX-004` | `7110` | Mock `exact_duplicate`; existing-ticket reference; no new task; no repeat alert because escalation state was unchanged | passed |
+| `SF-FX-005` | `7111` | Mock `possible_duplicate`; candidate reference; human review; not automatically suppressed | passed |
+| `SF-FX-006` | `7112` | Mock AI failure after one retry; `other`; failed status; human review; empty draft; deterministic `p3-normal`; no AI-failure escalation | passed |
+
+All six executions used manual mode and dummy data. Each final output reported matching expected fields, a valid ticket-ID pattern where applicable, a valid SHA-256 fingerprint where applicable, no credentials, no external nodes or calls, no customer reply, and no real-data use.
 
 ## Planned Test Cases
 
@@ -48,11 +88,11 @@ This is a planning document. No result or pass status is claimed.
 | TC-006 | Missing message text | Invalid with machine-readable error | None | not-run |
 | TC-007 | Malformed or oversized input | Safe rejection or manual review per approved rule | None | not-run |
 | TC-008 | Unique ticket identity | ID matches approved format and collision expectations | None | not-run |
-| TC-009 | Exact duplicate | Existing ticket identified | No new ticket/task/alert | not-run |
-| TC-010 | Cross-channel or fuzzy duplicate | Approved rule applied exactly | As approved | not-run |
+| TC-009 | Exact duplicate | Existing ticket updated and duplicate count incremented | No new task; alert only if escalation changed | not-run |
+| TC-010 | Content or cross-channel match | `possible_duplicate`, candidate reference, and human review | Separate ticket; not automatically suppressed | not-run |
 | TC-011 | Duplicate lookup failure | Fail closed with recoverable error | None | not-run |
 | TC-012 | Valid AI classification | Output matches approved schema and enums | None | not-run |
-| TC-013 | Malformed AI output | Manual review or bounded fallback | None | not-run |
+| TC-013 | AI fails after one retry | `other`, failed status, human review, empty draft, deterministic priority or P3 | No customer-escalation alert from AI failure alone | not-run |
 | TC-014 | AI and deterministic rule conflict | Deterministic override and audit trace | Conditional only if safe | not-run |
 | TC-015 | Refund escalation | Approved priority/alert rule applied | One controlled Slack alert if eligible | not-run |
 | TC-016 | Urgent or high-risk escalation | Approved rule and manual-review flag applied | One controlled Slack alert if eligible | not-run |
@@ -78,6 +118,16 @@ For each approved executed case, record:
 
 `Test Results.md` must not be created until the testing lifecycle begins and real execution evidence exists.
 
+## Approved Non-Functional Test Targets
+
+- Capacity: 100 tickets per day; peak 10 messages per five minutes.
+- DEV execution retention: seven days.
+- DEV Airtable, ClickUp, and Slack test artifact retention: 30 days.
+- Recovery: RTO four hours and RPO 24 hours.
+- Replay: manual using source-message identity; no automatic replay.
+- OpenAI budget: 500 calls or USD 5 per month, whichever occurs first.
+- Owner: Mervin.
+
 ## Exit Criteria
 
 - [ ] Every critical approved test has evidence.
@@ -89,12 +139,24 @@ For each approved executed case, record:
 - [ ] Workflow remains inactive.
 - [ ] Mervin records the test-gate decision.
 
+### Phase 1 Exit Criteria
+
+- [x] Every authorized seed fixture has execution evidence.
+- [x] Six fixtures passed and none failed.
+- [x] Invalid, exact-duplicate, possible-duplicate, deterministic override, and mocked AI-failure behavior were verified.
+- [x] Ticket-ID format and SHA-256 fingerprint shape were verified where applicable.
+- [x] No automatic customer reply, credential, external call, or real-data path existed or occurred.
+- [x] Workflow remained inactive after testing.
+- [x] Integration, performance, retention, recovery, and production testing remain explicitly not-run or deferred.
+
 ## Approval
 
 - Test owner: Mervin
-- Exact Core Release Suite: Not Yet Defined
-- Approval date: Not Yet Defined
-- Execution authorization: not approved
+- Phase 1 skeleton suite: `SF-FX-001` through `SF-FX-006`
+- Integration suite: `SF-FX-001` through `SF-FX-030`, remaining fixture definitions deferred
+- Plan approval date: 2026-07-25
+- Execution authorization: approved by Mervin for `SF-FX-001` through `SF-FX-006` on 2026-07-25
+- Phase 1 result: passed, 6 of 6
 
 ## Related Notes
 

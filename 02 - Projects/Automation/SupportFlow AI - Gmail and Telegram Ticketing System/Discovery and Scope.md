@@ -1,7 +1,7 @@
 ---
 type: project-note
-status: planned
-phase: discovery
+status: in-progress
+phase: phase-1-validated
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -31,7 +31,18 @@ tags:
 - Automatic customer replies, real customer data, credentials, production activation, and unapproved external side effects are prohibited.
 - Draft responses require human review and must never be sent automatically.
 - The intended tools are n8n, Gmail, Telegram Bot API, Airtable, ClickUp, Slack, and an approved LLM.
-- The workflow must remain unbuilt and inactive during the current discovery phase.
+- The Phase 1 credential-free workflow is built, manually validated, and inactive; integrations remain unbuilt.
+
+## Approved Discovery Decisions
+
+- Gmail allowlist: message ID, thread ID, received timestamp, sanitized sender reference and name, subject, plain-text body, and attachment metadata.
+- Telegram allowlist: update ID, message ID, chat ID, received timestamp, sanitized sender reference and name, text or caption, reply-to ID, and attachment metadata.
+- Gmail HTML is converted to text when a plain-text body is unavailable. Message text is limited to 5,000 characters.
+- Attachment contents and edited Telegram messages are excluded from v0.1.
+- Required fields fail closed before AI, storage, task creation, or alerts.
+- Duplicate handling uses exact identity and content fingerprints with the approved windows and outcomes.
+- Eight categories, four priorities, deterministic overrides, one Airtable `Tickets` table, Mervin assignment, controlled Slack alerts, OpenAI controls, and operating defaults are approved as documented in the project notes.
+- Ticket ID, sentiment, content-fingerprint normalization, DEV concurrency/retry rules, reserved resource names, deferred OpenAI-model selection, fixture IDs, and deterministic escalation examples are approved.
 
 ## Current Process
 
@@ -84,27 +95,30 @@ The exact current operating procedure, staffing, handoffs, volumes, response exp
 
 ## Dependencies
 
-- Approved field contracts and business rules
+- Remaining executable field contracts and business rules listed below
 - Sanitized Gmail and Telegram fixtures
 - Approved DEV-only destinations or mocks for Airtable, ClickUp, and Slack
 - Approved LLM provider, model, data-handling terms, output schema, and cost limits
 - Defined owners for support operations, taxonomy, escalation, and test evidence
 
-## Major Open Questions
+## Decision Resolution
 
 | ID | Question | Owner | Due date | Impact | Status |
 |---|---|---|---|---|---|
-| OQ-001 | What exact Gmail and Telegram fields are available and required? | Mervin | Not Yet Defined | Blocks input contracts | open |
-| OQ-002 | What duplicate keys, similarity rules, and time window are approved? | Mervin | Not Yet Defined | Blocks safe idempotency | open |
-| OQ-003 | What category, priority, sentiment, and escalation enums are approved? | Mervin | Not Yet Defined | Blocks AI schema and rules | open |
-| OQ-004 | Which phrases, amounts, customer tiers, or risk signals override AI output? | Mervin | Not Yet Defined | Blocks escalation rules | open |
-| OQ-005 | What Airtable fields, table IDs, and allowed DEV destination will be used? | Mervin | Not Yet Defined | Blocks storage design | open |
-| OQ-006 | What ClickUp space, list, task fields, and controlled DEV destination are approved? | Mervin | Not Yet Defined | Blocks task integration | open |
-| OQ-007 | What Slack channel or mock destination and alert payload are approved? | Mervin | Not Yet Defined | Blocks alert testing | open |
-| OQ-008 | Which LLM provider/model and privacy, retention, budget, and fallback rules are approved? | Mervin | Not Yet Defined | Blocks AI design | open |
-| OQ-009 | What expected volume, concurrency, response-time target, retention, and support hours apply? | Mervin | Not Yet Defined | Blocks non-functional requirements | open |
-| OQ-010 | Who will own triage, escalation, assignment, rule changes, and future client approval? | Mervin | Not Yet Defined | Blocks operational ownership | open |
-| OQ-011 | What sanitized fixtures and exact expected outputs define acceptance? | Mervin | Not Yet Defined | Blocks executable testing | open |
+| OQ-001 | Gmail and Telegram allowlists and required fields | Mervin | 2026-07-25 | Input contract | resolved |
+| OQ-002 | Exact and content-based duplicate behavior and windows | Mervin | 2026-07-25 | Idempotency | resolved |
+| OQ-003 | Eight categories and four priorities | Mervin | 2026-07-25 | Classification | resolved |
+| OQ-004 | Approved deterministic escalation framework | Mervin | 2026-07-25 | Routing | resolved |
+| OQ-005 | Resource names approved; actual Airtable resource IDs remain deferred | Mervin | 2026-07-25 | Integration work only | deferred |
+| OQ-006 | ClickUp list name and Mervin assignment approved; actual list ID remains deferred | Mervin | 2026-07-25 | Integration work only | deferred |
+| OQ-007 | Slack channel name and alert contract approved; actual channel ID remains deferred | Mervin | 2026-07-25 | Integration work only | deferred |
+| OQ-008 | OpenAI provider approved; exact model and credential deferred to AI integration | Mervin | 2026-07-25 | AI integration only | deferred |
+| OQ-009 | Capacity, retention, recovery, and replay defaults | Mervin | 2026-07-25 | Non-functional design | resolved |
+| OQ-010 | Mervin owns portfolio-phase decisions and operations | Mervin | 2026-07-25 | Ownership | resolved |
+| OQ-011 | IDs `SF-FX-001` through `SF-FX-030` reserved; six Phase 1 seeds approved | Mervin | 2026-07-25 | Skeleton validation | resolved |
+| OQ-012 | Ticket ID `SF-YYYYMMDD-XXXXXXXX` using UUID v4 suffix | Mervin | 2026-07-25 | Identity contract | resolved |
+| OQ-013 | Optional sentiment enum with `unknown` default | Mervin | 2026-07-25 | Mock AI schema | resolved |
+| OQ-014 | Sequential fixtures, idempotency recheck, bounded read retries, and 15-second timeout | Mervin | 2026-07-25 | DEV reliability | resolved-for-dev |
 
 ## Risks and Stop Conditions
 
@@ -115,15 +129,15 @@ The exact current operating procedure, staffing, handoffs, volumes, response exp
 
 ## Discovery Readiness Decision
 
-- Selected decision: **CONDITIONAL GO**
-- Decision scope: documentation and discovery refinement only
+- Selected decision: **GO for Phase 1 — Credential-Free n8n Skeleton only**
+- Decision scope: the exact fixture-driven, credential-free skeleton boundary
 - Decision owner: Mervin
 - Decision date: 2026-07-25
-- Evidence: approved project brief and approved ten-file documentation scope
-- Conditions: resolve OQ-001 through OQ-011 and obtain separate approvals for scope, requirements, architecture, and inactive DEV build
+- Evidence: approved project brief and approved Discovery Decision Pack with duplicate and LLM refinements
+- Conditions: external integration decisions remain deferred and prohibited in Phase 1
 - Next review date: Not Yet Defined
 
-The project is **not ready for implementation**.
+The Phase 1 skeleton build and six authorized fixture runs are complete. Any Pre-Integration Readiness Review or integration work requires separate approval.
 
 ## Related Notes
 
