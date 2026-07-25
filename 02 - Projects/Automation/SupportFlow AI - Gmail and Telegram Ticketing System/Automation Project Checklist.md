@@ -52,6 +52,7 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 | 9a. Phase 2 decision resolution | complete | Gemini, fingerprint, schema, mapping, resource, fixture, trigger, and DEV-limit decisions recorded | Mervin, 2026-07-25 |
 | 9b. Phase 2 credential-free compatibility audit | complete | All six node families exist; schema migration, Gemini privacy/model validation, and resource assignment block credentials | Mervin authorization, 2026-07-25 |
 | 9c. Inactive schema alignment | complete | Workflow emits schema `0.1.0`, approved source mapping, and U+001F-composed SHA-256 input; executions `7113`–`7118` passed | Mervin authorization, 2026-07-25 |
+| 9d. Airtable physical-schema gate | blocked-pending-schema-change | Base/table/43 fields verified with zero records; storage/retry decisions resolved; approved priority-choice rename remains unapplied | Mervin authorization, 2026-07-25 |
 | 10. Demo approval | pending | Verified demo evidence and disclosed limitations | Not Yet Defined |
 | 11. Production review | not-applicable-currently | Production is outside current scope | Not approved |
 | 12. Deployment and activation | not-applicable-currently | Separate production scope and approvals required | Not approved |
@@ -66,11 +67,11 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Not authorized after this completed batch: further workflow modification or execution, credentials, connections, external writes or sends, activation, integration, deployment, commit, or push
 - Decision owner: Mervin
 - Decision date: 2026-07-25
-- Next action: repeat the Airtable credential gate after assigning and verifying the exact DEV resource IDs, owner, least-privilege scope, and validation batch; do not create or connect a credential without separate approval
+- Next action: obtain separate approval to rename the four Airtable priority choices to the approved machine values without creating records, verify the schema read-only, then repeat the credential gate
 
 ## Deferred Beyond Phase 1
 
-- Actual Airtable, ClickUp, and Slack resource IDs and credentials
+- Airtable credential; ClickUp and Slack resource IDs and credentials
 - Gmail and Telegram triggers and credentials
 - Exact Gemini free-tier model, structured-output settings, project, and credential
 - Execution of defined fixtures `SF-FX-007` through `SF-FX-030`
@@ -82,7 +83,7 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Schema version: `0.1.0`.
 - Fingerprint separator: `\u001F`.
 - Owner: Mervin.
-- Resource names are approved; actual resource and credential IDs remain Not Yet Assigned.
+- Airtable base `appell78p9BIEek9J`, table `tblI3JYon6kLqZPbP`, primary field `fldFnVtL1BHIjowt4`, and the complete 43-field manifest are verified. Every credential and other service resource ID remains Not Yet Assigned.
 - The complete 30-fixture plan is defined, but only `SF-FX-001` through `SF-FX-006` have execution evidence.
 - Mervin accepts Gemini free-tier processing for sanitized dummy DEV fixtures only; Gemini remains mocked and unconnected.
 - The completed authorization covered only the inactive credential-free schema alignment and executions `7113`–`7118`.
@@ -90,12 +91,14 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 ## Phase 2 Compatibility Gate
 
 - Prior audit result: **NO-GO for credential creation**
-- Current decision: **GO to repeat the Airtable credential gate only; credential creation and connection remain unapproved**
+- Current Airtable decision: **NO-GO for credential creation**
 - Compatible node families found: Airtable 2.2, Google Gemini 1.2 / Gemini Chat Model 1.1, ClickUp 1, Slack 2.5, Gmail Trigger 1.4, and Telegram Trigger 1.3.
 - The saved inactive workflow now emits schema `0.1.0`, the approved unified source fields, and SHA-256 of the normalized sender, subject, and message text joined with `\u001F`.
 - Mervin accepts the documented Gemini free-tier privacy boundary for sanitized dummy DEV fixtures only; Gemini remains mocked pending a separate credential and model gate.
-- Actual DEV resource identifiers and credentials remain Not Yet Assigned.
-- Next action: assign the exact Airtable DEV base/table IDs and credential owner, then perform the repeated read-only credential gate. Do not create or connect credentials without separate approval.
+- Airtable base/table/field IDs are assigned and verified, with zero records and no n8n credential or connection.
+- Resolved decisions: compact UTF-8 JSON serialization, `ai_schema_valid` blank/true/false handling, two read retries with 2-second and 5-second backoff, 15-second target timeout, exact-dedupe recheck after ambiguous create, and fail-closed persistent failure.
+- Remaining blocker: the four physical priority choices have not yet been renamed to the approved machine values.
+- Next action: separately authorize the schema-only priority rename, verify it read-only, then repeat the Airtable credential gate. Do not create or connect credentials without separate approval.
 
 ## Phase 1 Stop Conditions
 

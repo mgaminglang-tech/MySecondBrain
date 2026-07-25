@@ -133,7 +133,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 - Telegram mapping: `update_id` → `source_event_id`; `message_id` → `source_message_id`; `chat_id` → `source_conversation_id`; `reply_to_message_id` → `source_parent_message_id`, defaulting to null.
 - DEV limits per review cycle: 500 Gemini calls, 100 Airtable records, 100 ClickUp tasks, and 30 Slack alerts.
 - Gmail uses a future dedicated DEV mailbox and read-only trigger boundary. Telegram uses a future dedicated DEV bot and one private DEV chat with new-message updates only.
-- Actual resource IDs, project IDs, chat IDs, credentials, and exact Gemini model remain Not Yet Assigned.
+- Airtable is assigned as base `appell78p9BIEek9J`, table `tblI3JYon6kLqZPbP`, with `ticket_id` as the primary field and `Asia/Manila` date-time display. Other resource IDs, all credentials, and the exact Gemini model remain Not Yet Assigned.
 
 ## Phase 1 Evidence
 
@@ -149,7 +149,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 
 ## Next Action
 
-**GO to repeat the Airtable credential gate only.** The schema-alignment blocker is cleared, and the workflow remains inactive and credential-free. Before any Airtable credential is created or connected, assign and verify the exact DEV base/table IDs, credential owner, least-privilege scope, and separately authorized validation batch. No credential creation, connection, external action, activation, or workflow expansion is authorized by this decision.
+**NO-GO for Airtable credential creation until the approved physical priority rename is applied and verified.** JSON serialization, `ai_schema_valid`, retry, timeout, ambiguous-create, and persistent-failure decisions are now approved. No Airtable schema change, credential creation, connection, record action, workflow change, activation, or integration execution is authorized by this documentation update.
 
 ## Related Notes
 

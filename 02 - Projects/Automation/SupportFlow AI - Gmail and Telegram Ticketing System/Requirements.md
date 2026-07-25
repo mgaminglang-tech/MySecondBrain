@@ -82,6 +82,16 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 - Cross-channel similarity may create `possible_duplicate` only; it may not automatically establish an exact duplicate.
 - Duplicate lookup uncertainty fails closed for downstream creation.
 
+## Approved Airtable Physical-Storage Requirements
+
+- The `priority` select must use exactly `p1-critical`, `p2-high`, `p3-normal`, and `p4-low`.
+- `attachment_metadata`, `escalation_reasons`, `validation_errors`, and `rule_ids_applied` must be stored as compact valid UTF-8 JSON using the array or object structure defined in the data model.
+- Invalid JSON, code fences, and human-readable pseudo-JSON are prohibited.
+- `ai_schema_valid` is blank when Gemini was not called, true when returned output passed schema validation, and false when returned output failed schema validation.
+- Read-only Airtable operations allow at most two retries with 2-second and 5-second backoff and a target timeout of 15 seconds.
+- Airtable create operations must never be retried blindly. After an ambiguous create result, re-check the exact dedupe key before any retry.
+- Persistent Airtable failure stops downstream processing.
+
 ## Approved Classification Requirements
 
 - Categories: `billing`, `refund`, `account-access`, `technical-support`, `product-question`, `order-delivery`, `feedback-complaint`, `other`.
@@ -102,7 +112,7 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 | n8n | DEV | Credential-free Phase 1 orchestration | Workflow `cyiCqsjLQdB7apjP` built and inactive |
 | Gmail | DEV/test | Read-only controlled message intake from a dedicated DEV mailbox | Mailbox, label/filter, trigger configuration, IDs, and credential Not Yet Assigned |
 | Telegram Bot API | DEV/test | New-message intake from a dedicated DEV bot and one private DEV chat | Bot/chat identities, trigger configuration, IDs, and credential Not Yet Assigned |
-| Airtable | DEV/test | Base `DEV - SupportFlow AI`, table `Tickets` | Actual IDs and credential Not Yet Assigned |
+| Airtable | DEV/test | Base `DEV - SupportFlow AI` (`appell78p9BIEek9J`), table `Tickets` (`tblI3JYon6kLqZPbP`), primary `ticket_id` | Manifest and storage/retry decisions approved; zero records; physical priority-choice rename and credential approval remain pending |
 | Google Gemini | DEV/test | Free-tier structured classification and draft generation after Phase 1 | Dedicated project, exact model, IDs, and credential Not Yet Assigned |
 | ClickUp | DEV/test | List `DEV - SupportFlow AI - Ticket Queue`, assignee Mervin | Actual IDs and credential Not Yet Assigned |
 | Slack | DEV/test | Channel `#dev-supportflow-alerts` | Actual ID and credential Not Yet Assigned |

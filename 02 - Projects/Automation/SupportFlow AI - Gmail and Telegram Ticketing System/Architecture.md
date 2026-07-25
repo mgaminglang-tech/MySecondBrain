@@ -177,7 +177,11 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 ## Reserved DEV Resource Names
 
 - Airtable base: `DEV - SupportFlow AI`
+- Airtable base ID: `appell78p9BIEek9J`
 - Airtable table: `Tickets`
+- Airtable table ID: `tblI3JYon6kLqZPbP`
+- Airtable primary field: `ticket_id` (`fldFnVtL1BHIjowt4`)
+- Airtable date-time timezone: `Asia/Manila`
 - ClickUp list: `DEV - SupportFlow AI - Ticket Queue`
 - ClickUp assignee: Mervin
 - Slack channel: `#dev-supportflow-alerts`
@@ -185,7 +189,7 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 - Telegram bot and chat: Dedicated DEV bot and private DEV chat — Not Yet Assigned
 - Gemini project: Dedicated DEV Google AI Studio or Google Cloud project — Not Yet Assigned
 
-These names do not confirm that resources exist. Actual IDs and credentials are Not Yet Assigned and are prohibited in Phase 1.
+The Airtable base, table, and 43-field physical schema were verified read-only on 2026-07-25; the table contained zero records. Other external resource IDs and every n8n credential remain Not Yet Assigned and prohibited in Phase 1.
 
 ## Approved Operational Defaults
 
@@ -208,13 +212,17 @@ These names do not confirm that resources exist. Actual IDs and credentials are 
 ## Phase 2 Credential-Free Compatibility Findings
 
 - Airtable 2.2 supports schema read, record search, create, update, and upsert with `airtableTokenApi` or `airtableOAuth2Api`.
+- The least-privilege Airtable credential remains `airtableTokenApi` using a PAT restricted to base `appell78p9BIEek9J` with `schema.bases:read`, `data.records:read`, and `data.records:write`.
+- The approved Airtable priority values are exactly `p1-critical`, `p2-high`, `p3-normal`, and `p4-low`. The existing physical choices still require a schema-only rename and read-only verification before credential creation.
+- Multiline logical arrays and objects use compact valid UTF-8 JSON with no code fences or pseudo-JSON. `ai_schema_valid` uses blank/not-called, true/valid, and false/returned-invalid conventions.
+- Read-only Airtable operations permit at most two retries with 2-second and 5-second backoff and a 15-second target timeout. Creates are never retried blindly; an ambiguous result requires an exact-dedupe recheck, and persistent failure stops downstream processing.
 - Gemini is available as Google Gemini 1.2 and as Google Gemini Chat Model 1.1. A Basic LLM Chain 1.9 plus Structured Output Parser 1.3 provides explicit JSON Schema validation; automatic parser repair must remain disabled because it would add an uncounted LLM call.
 - The direct Google Gemini 1.2 text node supports JSON output, but its built-in Google Search, URL Context, and Code Execution controls must all be explicitly false.
 - ClickUp 1 supports task lookup/create/update and custom fields with `clickUpOAuth2Api` or `clickUpApi`.
 - Slack 2.5 supports controlled message posting with `slackOAuth2Api` or `slackApi`.
 - Gmail Trigger 1.4 is polling-based, supports label/query filters, full message bodies with `simple=false`, and attachment download disabled.
 - Telegram Trigger 1.3 is webhook-based. Registration calls Telegram `setWebhook`, allows only one trigger per bot, and drops pending updates at this node version; test or production registration is an external mutation and is not approved.
-- Native integration-node parameter definitions do not expose the approved 15-second API timeout. Exact 2-second then 5-second backoff also requires explicit orchestration rather than one fixed node retry setting.
+- Native integration-node parameter definitions do not expose the approved 15-second target timeout. Exact 2-second then 5-second backoff requires explicit orchestration rather than one fixed node retry setting; that implementation must be validated before connection or execution.
 - The connected MCP does not expose the exact n8n application build number; compatibility is evidenced by the installed node catalog and successful schema-only validation.
 
 ### Completed Pre-Connection Migration

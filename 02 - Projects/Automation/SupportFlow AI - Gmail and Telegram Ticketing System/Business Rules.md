@@ -122,10 +122,18 @@ Phase 1 uses mocked structured AI output and makes no Gemini call. Gemini permit
 - Run fixture tests sequentially.
 - Re-check the ticket ID or dedupe key before every create retry.
 - Never blindly retry non-idempotent create actions.
-- Read-only API calls use at most two retries with 2-second and 5-second backoff.
-- Default API timeout is 15 seconds.
+- Read-only Airtable operations use at most two retries with 2-second and 5-second backoff.
+- The target Airtable timeout is 15 seconds.
+- After an ambiguous Airtable create result, re-check the exact dedupe key before any retry.
 - Persistent failure stops downstream processing and records an operational error when storage is available.
 - Production-grade locking is deferred.
+
+## Airtable Serialization Rules
+
+- Store `attachment_metadata`, `escalation_reasons`, `validation_errors`, and `rule_ids_applied` as compact valid UTF-8 JSON strings using their documented array or object contracts.
+- Reject invalid JSON, code fences, and human-readable pseudo-JSON before storage.
+- Store `ai_schema_valid` as blank when Gemini was not called, true when returned output passed validation, and false when returned output failed validation.
+- Store priority using only `p1-critical`, `p2-high`, `p3-normal`, or `p4-low`.
 
 ## Side-Effect Eligibility
 

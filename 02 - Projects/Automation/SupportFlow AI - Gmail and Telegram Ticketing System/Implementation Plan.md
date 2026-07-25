@@ -126,7 +126,7 @@ The first implementation phase, once separately approved after the read-only aud
 - [x] Complete the credential-free compatibility audit for Airtable, Gemini, ClickUp, Slack, Gmail, and Telegram.
 - [ ] Obtain separate approval before creating credentials or connecting any service.
 
-**Current status:** inactive schema alignment is complete, Gemini free-tier processing is accepted for sanitized dummy DEV fixtures only, and the workflow remains mocked and credential-free. GO to repeat the Airtable credential gate only; credential creation and connection remain unapproved pending exact DEV resource assignment, ownership, least-privilege scope, and a separately authorized validation batch.
+**Current status:** the Airtable DEV base `appell78p9BIEek9J`, `Tickets` table `tblI3JYon6kLqZPbP`, and 43-field manifest are verified read-only with zero records. JSON serialization, `ai_schema_valid`, retry, timeout, ambiguous-create, and persistent-failure decisions are approved. Airtable credential creation remains NO-GO until the four physical priority choices are renamed to the approved machine values and verified. No schema change, credential, connection, record action, or workflow change is authorized.
 
 ## Phase 6 — Demo Evidence
 

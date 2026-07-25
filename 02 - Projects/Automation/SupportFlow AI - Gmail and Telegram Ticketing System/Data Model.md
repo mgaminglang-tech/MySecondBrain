@@ -100,8 +100,96 @@ Gmail uses the plain-text body or HTML-to-text fallback. Telegram uses message t
 The future single `Tickets` table contains the unified ticket fields, processing-audit fields, duplicate counters and references, ClickUp reference, Slack alert state, schema version, and timestamps defined in this note.
 
 - Airtable base name: `DEV - SupportFlow AI`
+- Airtable base ID: `appell78p9BIEek9J`
 - Airtable table name: `Tickets`
-- Actual base ID, table ID, and credential: Not Yet Assigned
+- Airtable table ID: `tblI3JYon6kLqZPbP`
+- Primary field: `ticket_id` (`fldFnVtL1BHIjowt4`)
+- Date-time display timezone: `Asia/Manila`
+- Record count at read-only verification on 2026-07-25: `0`
+- n8n credential and connection: not created or connected
+
+### Verified Physical Schema Manifest
+
+| Field | Field ID | Airtable type | Physical detail |
+|---|---|---|---|
+| `ticket_id` | `fldFnVtL1BHIjowt4` | `singleLineText` | Primary field |
+| `source_channel` | `fldsyGUjfyZivagKD` | `singleSelect` | `gmail`, `telegram` |
+| `source_event_id` | `fldIu0ED7tnkIsHn0` | `singleLineText` | Nullable by contract |
+| `source_message_id` | `fldbIRkPNzOJHD1Bh` | `singleLineText` | Exact-duplicate key component |
+| `source_conversation_id` | `fldq3M5wW1gSPffy5` | `singleLineText` | Nullable by contract |
+| `source_parent_message_id` | `flde46s1rjljMnxjS` | `singleLineText` | Nullable by contract |
+| `received_at` | `fldCU5IBS1N2hYqIs` | `dateTime` | ISO date, 24-hour time, `Asia/Manila` |
+| `sender_reference` | `fldzWmerJ8B4FILfV` | `singleLineText` | Sanitized only |
+| `sender_name` | `fldgv5vVZp4fZ7fGk` | `singleLineText` | Sanitized only |
+| `subject` | `fldWfaKYhCJNS6hBv` | `singleLineText` | Nullable by contract |
+| `message_text` | `fldPVMsqB1FkvfHrF` | `multilineText` | Sanitized, maximum 5,000 characters |
+| `attachment_metadata` | `fldM2ys6sjyNS8tpM` | `multilineText` | Compact UTF-8 JSON array; metadata only, no contents |
+| `language` | `fldsEXXXp4zr36BRA` | `singleLineText` | Nullable by contract |
+| `category` | `flda5FwIryWnyN4yk` | `singleSelect` | Eight approved values |
+| `priority` | `fld11BIrZeyF3CBen` | `singleSelect` | Must use exactly `p1-critical`, `p2-high`, `p3-normal`, `p4-low`; physical rename pending |
+| `sentiment` | `fldSR4ocVQmDQ7ja0` | `singleSelect` | Four approved values |
+| `escalation_required` | `fld2CPiYhKt3KoQCO` | `checkbox` | Boolean |
+| `escalation_reasons` | `fldQlKf4JNc8wKYTd` | `multilineText` | Compact UTF-8 JSON string array |
+| `needs_human_review` | `fldt7kVLwY1VaLjgU` | `checkbox` | Boolean |
+| `draft_response` | `fldl8GTmVOe9UIDrS` | `multilineText` | Unsent review draft |
+| `duplicate_status` | `fldzPQVIBm24DuQHT` | `singleLineText` | Approved enum enforced upstream |
+| `duplicate_of_ticket_id` | `flddOlHPK1PJEdrtW` | `singleLineText` | Nullable by contract |
+| `possible_duplicate_ticket_id` | `fldtxEjf8dzqV0fVp` | `singleLineText` | Nullable by contract |
+| `duplicate_count` | `fldWD6QWiXbraQZUe` | `number` | Precision `0` |
+| `content_fingerprint` | `fldLCa3pM9EpakCzk` | `singleLineText` | SHA-256 hexadecimal |
+| `status` | `fldhZeI8Ra21tXTg7` | `singleLineText` | Approved value enforced upstream |
+| `assigned_owner` | `fldSNKm8G8OXgKAkx` | `singleLineText` | Nullable by contract |
+| `airtable_record_id` | `fldvjYYL7uY4DXtZY` | `singleLineText` | Post-create reference |
+| `clickup_task_id` | `fldzp2vca6Pwa85g0` | `singleLineText` | Nullable until task creation |
+| `slack_alert_reference` | `fldL3UaDmKnBJ1AKy` | `singleLineText` | Nullable until alert |
+| `last_alerted_escalation_state` | `fldsomrPDAuhvMPZG` | `singleLineText` | Idempotency state |
+| `created_at` | `fldM8blRggq0HVqNw` | `dateTime` | ISO date, 24-hour time, `Asia/Manila` |
+| `updated_at` | `fldkEKhRhNtraJLMt` | `dateTime` | ISO date, 24-hour time, `Asia/Manila` |
+| `schema_version` | `fldoP2o6cvvzOFUYB` | `singleLineText` | Must equal `0.1.0` |
+| `processing_status` | `fldyYrNnw6SJpHLCy` | `singleLineText` | Approved enum enforced upstream |
+| `validation_errors` | `fldR691T188Kz8pbl` | `multilineText` | Compact UTF-8 JSON object array |
+| `classification_source` | `fldsDzWOaNWHJWePc` | `singleLineText` | Approved enum enforced upstream |
+| `classification_status` | `fldAq39dXnfOByMLx` | `singleLineText` | Approved enum enforced upstream |
+| `rule_ids_applied` | `fldXF2KaDiqJJh48U` | `multilineText` | Compact UTF-8 JSON string array |
+| `ai_schema_valid` | `fldrcPnOy6UO0XQPK` | `checkbox` | Blank when Gemini was not called; true when valid; false when returned output failed validation |
+| `error_stage` | `fldwo41ogAApStPUe` | `singleLineText` | Nullable by contract |
+| `error_code` | `fldDHpDpwxhMNBezU` | `singleLineText` | Nullable by contract |
+| `execution_reference` | `fldR5BQqrJiyd7edw` | `singleLineText` | Sanitized DEV reference |
+
+### Verified Select Choices
+
+| Field | Choice name | Choice ID | Compatibility |
+|---|---|---|---|
+| `source_channel` | `gmail` | `seleHwpxMKwJr827G` | compatible |
+| `source_channel` | `telegram` | `selOcCjAhrd5gyRP4` | compatible |
+| `category` | `billing` | `selKogpr1B8xY233Z` | compatible |
+| `category` | `refund` | `selGt770a3xF6hciO` | compatible |
+| `category` | `account-access` | `selOxkUhcPcnUXEvo` | compatible |
+| `category` | `technical-support` | `selmotyScpA88ZjXn` | compatible |
+| `category` | `product-question` | `selRyNfoX8C2bvvr0` | compatible |
+| `category` | `order-delivery` | `selCgga36V18j7NED` | compatible |
+| `category` | `feedback-complaint` | `selikqrSzs7nVCnOk` | compatible |
+| `category` | `other` | `selBjtXyCquGSZuaA` | compatible |
+| `priority` | `P1 critical` | `selECyozwdBejuU6t` | approved rename required: `p1-critical` |
+| `priority` | `P2 high` | `sel3c1zGWeXB3pEc6` | approved rename required: `p2-high` |
+| `priority` | `P3 normal` | `selPFIfsNeGjvs5I9` | approved rename required: `p3-normal` |
+| `priority` | `P4 low` | `selP7wsoKe2bnplkn` | approved rename required: `p4-low` |
+| `sentiment` | `positive` | `selvjDG5hK4e6RYs1` | compatible |
+| `sentiment` | `neutral` | `selD496UG1Ml7EqXX` | compatible |
+| `sentiment` | `negative` | `selZnRxpXx0cxK68K` | compatible |
+| `sentiment` | `unknown` | `selsHwYE0UKZlGEjT` | compatible |
+
+The JSON, nullable-AI-validation, and retry decisions are approved. Credential creation remains blocked until the four physical priority choices are renamed and verified. No field type change is approved or required.
+
+### Approved Airtable Storage Conventions
+
+- `attachment_metadata`: compact valid UTF-8 JSON array containing metadata objects only.
+- `escalation_reasons`: compact valid UTF-8 JSON string array.
+- `validation_errors`: compact valid UTF-8 JSON array of objects matching the documented validation-error contract.
+- `rule_ids_applied`: compact valid UTF-8 JSON string array.
+- Reject invalid JSON, code fences, and human-readable pseudo-JSON before any record write.
+- `ai_schema_valid` is blank or omitted when Gemini was not called, true when returned output passed schema validation, and false when returned output failed schema validation.
+- `classification_status` and `classification_source` remain the authoritative context for distinguishing a not-run Gemini stage from a failed validation stage.
 
 ## ClickUp Task Contract
 
