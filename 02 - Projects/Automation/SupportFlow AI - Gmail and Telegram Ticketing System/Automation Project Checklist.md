@@ -48,9 +48,10 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 | 6. Git checkpoint | pending | Separately authorized status/diff review and checkpoint decision | Not Yet Defined |
 | 7. Read-only MCP audit | complete | Required node types and versions confirmed compatible | Mervin authorization, 2026-07-25 |
 | 8. Inactive DEV build | complete-for-phase-1 | Workflow `cyiCqsjLQdB7apjP`, 14 approved nodes, inactive, no credentials | Mervin authorization, 2026-07-25 |
-| 9. Core release suite | complete-for-phase-1 | `SF-FX-001` through `SF-FX-006` passed in executions `7107`–`7112`; integration suite remains not-run | Mervin authorization, 2026-07-25 |
+| 9. Core release suite | complete-for-phase-1 | Initial executions `7107`–`7112` and schema-alignment rerun `7113`–`7118` both passed 6 of 6; integration suite remains not-run | Mervin authorization, 2026-07-25 |
 | 9a. Phase 2 decision resolution | complete | Gemini, fingerprint, schema, mapping, resource, fixture, trigger, and DEV-limit decisions recorded | Mervin, 2026-07-25 |
 | 9b. Phase 2 credential-free compatibility audit | complete | All six node families exist; schema migration, Gemini privacy/model validation, and resource assignment block credentials | Mervin authorization, 2026-07-25 |
+| 9c. Inactive schema alignment | complete | Workflow emits schema `0.1.0`, approved source mapping, and U+001F-composed SHA-256 input; executions `7113`–`7118` passed | Mervin authorization, 2026-07-25 |
 | 10. Demo approval | pending | Verified demo evidence and disclosed limitations | Not Yet Defined |
 | 11. Production review | not-applicable-currently | Production is outside current scope | Not approved |
 | 12. Deployment and activation | not-applicable-currently | Separate production scope and approvals required | Not approved |
@@ -61,11 +62,11 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 
 - Decision: **GO — Phase 1 credential-free skeleton validated**
 - Completed boundary: Manual Trigger, dummy Gmail and Telegram payloads, normalization, unified ticket, validation, ticket ID, content fingerprint, mocked duplicate result, mocked AI output and draft, deterministic rules, and final structured output
-- Evidence: workflow `cyiCqsjLQdB7apjP`; executions `7107`–`7112`; six passed, zero failed; final saved state inactive
-- Not authorized: workflow creation or modification, execution, credentials, connections, external writes or sends, activation, integration, deployment, commit, or push
+- Evidence: workflow `cyiCqsjLQdB7apjP`; schema-alignment executions `7113`–`7118`; six passed, zero failed; final saved state inactive
+- Not authorized after this completed batch: further workflow modification or execution, credentials, connections, external writes or sends, activation, integration, deployment, commit, or push
 - Decision owner: Mervin
 - Decision date: 2026-07-25
-- Next action: obtain approval for an inactive credential-free schema-alignment change and resolve the Gemini privacy boundary before any credential is created
+- Next action: repeat the Airtable credential gate after assigning and verifying the exact DEV resource IDs, owner, least-privilege scope, and validation batch; do not create or connect a credential without separate approval
 
 ## Deferred Beyond Phase 1
 
@@ -83,16 +84,18 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Owner: Mervin.
 - Resource names are approved; actual resource and credential IDs remain Not Yet Assigned.
 - The complete 30-fixture plan is defined, but only `SF-FX-001` through `SF-FX-006` have execution evidence.
-- Current authorization permits documentation updates and read-only compatibility inspection only.
+- Mervin accepts Gemini free-tier processing for sanitized dummy DEV fixtures only; Gemini remains mocked and unconnected.
+- The completed authorization covered only the inactive credential-free schema alignment and executions `7113`–`7118`.
 
 ## Phase 2 Compatibility Gate
 
-- Audit result: **NO-GO for credential creation**
+- Prior audit result: **NO-GO for credential creation**
+- Current decision: **GO to repeat the Airtable credential gate only; credential creation and connection remain unapproved**
 - Compatible node families found: Airtable 2.2, Google Gemini 1.2 / Gemini Chat Model 1.1, ClickUp 1, Slack 2.5, Gmail Trigger 1.4, and Telegram Trigger 1.3.
-- The saved inactive workflow remains unchanged, but it still emits schema `0.1`, legacy source fields, and a JSON-array fingerprint input rather than the new `0.1.0`, source mapping, and `\u001F` contract.
-- Gemini free-tier documentation states that submitted content may be used to improve provider products; Mervin must approve sanitized-fixture-only use under that boundary or separately approve another privacy/billing path.
+- The saved inactive workflow now emits schema `0.1.0`, the approved unified source fields, and SHA-256 of the normalized sender, subject, and message text joined with `\u001F`.
+- Mervin accepts the documented Gemini free-tier privacy boundary for sanitized dummy DEV fixtures only; Gemini remains mocked pending a separate credential and model gate.
 - Actual DEV resource identifiers and credentials remain Not Yet Assigned.
-- Next action: obtain approval for an inactive credential-free schema-alignment change and resolve the Gemini privacy boundary before any credential is created.
+- Next action: assign the exact Airtable DEV base/table IDs and credential owner, then perform the repeated read-only credential gate. Do not create or connect credentials without separate approval.
 
 ## Phase 1 Stop Conditions
 

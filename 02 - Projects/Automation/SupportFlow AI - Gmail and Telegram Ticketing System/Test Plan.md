@@ -20,7 +20,7 @@ tags:
 - Environment: DEV
 - Workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
 - Workflow state: built and inactive
-- Workflow ID/version: `cyiCqsjLQdB7apjP` / `ea24015d-27fe-41cc-90e8-1e68222282d6`
+- Workflow ID/version: `cyiCqsjLQdB7apjP` / `1e9a0fe9-314f-4c67-bce6-c303628508ef`
 - Credentials and destinations: not approved
 - Data: dummy or sanitized only
 - Planned fixture count: 30
@@ -62,6 +62,19 @@ Fixture IDs `SF-FX-001` through `SF-FX-030` are reserved. The full thirty fixtur
 | `SF-FX-006` | Simulated AI failure | `other`, failed status, human review, empty draft, deterministic priority or P3 |
 
 Exact dummy payload values may be created during the separately approved skeleton build and must contain no real data.
+
+## Schema-Alignment Rerun Evidence
+
+| Fixture ID | Execution ID | Result |
+|---|---:|---|
+| `SF-FX-001` | `7113` | passed |
+| `SF-FX-002` | `7114` | passed |
+| `SF-FX-003` | `7115` | passed |
+| `SF-FX-004` | `7116` | passed |
+| `SF-FX-005` | `7117` | passed |
+| `SF-FX-006` | `7118` | passed |
+
+The rerun verified schema `0.1.0`, approved Gmail and Telegram source mapping, fail-closed validation, ticket-ID format, the U+001F-composed SHA-256 fingerprint contract, mocked duplicate and Gemini behavior, deterministic rules, zero external effects, and final inactive state. Fixtures `SF-FX-007` through `SF-FX-030` remain not-run.
 
 ## Defined Phase 2 Fixtures — Not Run
 
@@ -198,7 +211,7 @@ For each approved executed case, record:
 
 - Test owner: Mervin
 - Phase 1 skeleton suite: `SF-FX-001` through `SF-FX-006`
-- Integration suite: `SF-FX-001` through `SF-FX-030`, remaining fixture definitions deferred
+- Integration suite: `SF-FX-001` through `SF-FX-030`; fixtures `SF-FX-007` through `SF-FX-030` are defined but not-run
 - Plan approval date: 2026-07-25
 - Execution authorization: approved by Mervin for `SF-FX-001` through `SF-FX-006` on 2026-07-25
 - Phase 1 result: passed, 6 of 6

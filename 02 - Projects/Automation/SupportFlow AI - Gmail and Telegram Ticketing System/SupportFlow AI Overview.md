@@ -126,7 +126,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 
 ## Approved Phase 2 Decisions
 
-- Provider: Google Gemini; the exact free-tier, structured-JSON-compatible model remains Not Yet Defined pending privacy acceptance and credential-grounded model-list validation.
+- Provider: Google Gemini; Mervin accepts free-tier processing for sanitized dummy DEV fixtures only. The exact free-tier, structured-JSON-compatible model remains Not Yet Defined pending credential-grounded model-list validation.
 - Gemini boundary: dedicated DEV project and API key, sanitized text only, 5,000-character maximum, no attachment contents, direct identifiers, tools, browsing, code execution, external actions, or paid use.
 - Schema version: `0.1.0`.
 - Fingerprint input: normalized sender reference + `\u001F` + normalized subject + `\u001F` + normalized message text, then SHA-256.
@@ -141,13 +141,15 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 - Saved state: inactive; `activeVersionId` is null
 - Node count: 14
 - Credentials and external-service nodes: none
-- Manual execution IDs: `7107`, `7108`, `7109`, `7110`, `7111`, `7112`
-- Fixture result: `SF-FX-001` through `SF-FX-006` — 6 passed, 0 failed
+- Initial manual execution IDs: `7107`, `7108`, `7109`, `7110`, `7111`, `7112`
+- Schema-alignment rerun IDs: `7113`, `7114`, `7115`, `7116`, `7117`, `7118`
+- Rerun result: `SF-FX-001` through `SF-FX-006` — 6 passed, 0 failed
+- Verified alignment: schema `0.1.0`, approved unified source fields, and SHA-256 of the normalized three-component input separated by `\u001F`
 - External actions, customer replies, and real-data use: none
 
 ## Next Action
 
-Mervin reviews the completed compatibility audit and decides whether to authorize an inactive credential-free schema-alignment change. Gemini privacy/model validation and exact DEV resource assignment must also be resolved before credential creation. No credential, external integration, activation, or workflow expansion is authorized.
+**GO to repeat the Airtable credential gate only.** The schema-alignment blocker is cleared, and the workflow remains inactive and credential-free. Before any Airtable credential is created or connected, assign and verify the exact DEV base/table IDs, credential owner, least-privilege scope, and separately authorized validation batch. No credential creation, connection, external action, activation, or workflow expansion is authorized by this decision.
 
 ## Related Notes
 

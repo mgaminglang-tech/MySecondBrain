@@ -97,8 +97,10 @@ The first implementation phase, once separately approved after the read-only aud
 
 - Node count: 14
 - Node versions: Manual Trigger 1, Edit Fields 3.4, Code 2, Crypto 2
-- Manual executions: `7107`, `7108`, `7109`, `7110`, `7111`, `7112`
-- Fixture result: six passed, zero failed
+- Initial manual executions: `7107`, `7108`, `7109`, `7110`, `7111`, `7112`
+- Schema-alignment rerun: `7113`, `7114`, `7115`, `7116`, `7117`, `7118`
+- Rerun result: six passed, zero failed
+- Alignment verified: schema `0.1.0`, approved unified source mapping, and U+001F-composed SHA-256 fingerprint input
 - Compatibility correction: Edit Fields raw JSON was changed from object form to runtime-compatible JSON-string form after execution `7106` failed with `jsonOutput?.startsWith is not a function`. This did not change scope or add a side effect; the complete suite was restarted afterward.
 - Final verification: inactive, no active version, no credentials, no external-service nodes
 
@@ -124,7 +126,7 @@ The first implementation phase, once separately approved after the read-only aud
 - [x] Complete the credential-free compatibility audit for Airtable, Gemini, ClickUp, Slack, Gmail, and Telegram.
 - [ ] Obtain separate approval before creating credentials or connecting any service.
 
-**Current status:** compatibility audit complete; credential creation is NO-GO pending inactive schema alignment, Gemini privacy/model validation, and exact DEV resource assignment.
+**Current status:** inactive schema alignment is complete, Gemini free-tier processing is accepted for sanitized dummy DEV fixtures only, and the workflow remains mocked and credential-free. GO to repeat the Airtable credential gate only; credential creation and connection remain unapproved pending exact DEV resource assignment, ownership, least-privilege scope, and a separately authorized validation batch.
 
 ## Phase 6 — Demo Evidence
 

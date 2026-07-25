@@ -217,9 +217,9 @@ These names do not confirm that resources exist. Actual IDs and credentials are 
 - Native integration-node parameter definitions do not expose the approved 15-second API timeout. Exact 2-second then 5-second backoff also requires explicit orchestration rather than one fixed node retry setting.
 - The connected MCP does not expose the exact n8n application build number; compatibility is evidenced by the installed node catalog and successful schema-only validation.
 
-### Required Pre-Connection Migration
+### Completed Pre-Connection Migration
 
-The saved inactive Phase 1 workflow still uses `schema_version: 0.1`, `source_thread_id`, `source_update_id`, `source_chat_id`, and `JSON.stringify(components)` for fingerprint input. Before any integration node is added, a separately authorized credential-free change must align it to schema `0.1.0`, the approved source fields, and the literal `\u001F` fingerprint separator, then rerun the six Phase 1 fixtures.
+The saved inactive Phase 1 workflow now uses `schema_version: 0.1.0`; `source_event_id`, `source_message_id`, `source_conversation_id`, and `source_parent_message_id`; and SHA-256 of normalized sender reference, subject, and message text joined with U+001F. Executions `7113`–`7118` reran only `SF-FX-001` through `SF-FX-006` and passed 6 of 6. Gemini and every external integration remain mocked, credential-free, and disconnected.
 
 ## Approval
 
