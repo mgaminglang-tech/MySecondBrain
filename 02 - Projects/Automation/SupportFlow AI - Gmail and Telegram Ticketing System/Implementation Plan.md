@@ -5,7 +5,7 @@ phase: phase-1-validated
 client: internal-demo
 owner: Mervin
 production_ready: false
-version: v0.1.0
+version: 0.1.0
 created: 2026-07-25
 updated: 2026-07-25
 tags:
@@ -33,9 +33,9 @@ Record the gated path and verified evidence for the inactive DEV Phase 1 workflo
 
 ## Phase 1 — Complete Discovery
 
-- [x] Approve Gmail and Telegram allowlists, HTML conversion, size limit, and v0.1 exclusions.
+- [x] Approve Gmail and Telegram allowlists, HTML conversion, size limit, and schema `0.1.0` exclusions.
 - [x] Approve validation, categories, priorities, duplicate outcomes, deterministic overrides, and LLM failure behavior.
-- [x] Approve the single Airtable table, ClickUp task contract, Slack conditions, OpenAI controls, and operating defaults.
+- [x] Approve the single Airtable table, ClickUp task contract, Slack conditions, Gemini controls, and operating defaults.
 - [x] Approve 30 sanitized fixtures as the planned dataset size.
 
 **Gate:** Mervin records discovery and scope approval.
@@ -60,7 +60,7 @@ Record the gated path and verified evidence for the inactive DEV Phase 1 workflo
 - Reviewer and decision owner: Mervin
 - Result: **GO for Phase 1 — Credential-Free n8n Skeleton only**
 - Confirmed boundary: inactive DEV only, dummy or sanitized fixtures, no customer responses, no credentials, and no production access
-- Deferred without blocking Phase 1: actual resource IDs and credentials, exact OpenAI model, fixtures `SF-FX-007` through `SF-FX-030`, integration behavior, and production-grade locking
+- Deferred without blocking Phase 1: actual resource IDs and credentials, exact Gemini model, fixtures `SF-FX-007` through `SF-FX-030`, integration behavior, and production-grade locking
 
 ## Phase 3 — Read-Only Environment Audit
 
@@ -115,6 +115,17 @@ The first implementation phase, once separately approved after the read-only aud
 
 **Current status:** Phase 1 skeleton suite complete; the 30-fixture integration suite is not-run and not authorized.
 
+## Phase 2 — Controlled DEV Integration Readiness
+
+- [x] Replace OpenAI with Google Gemini as the approved DEV LLM provider.
+- [x] Resolve fingerprint separator, schema version, and Telegram source mapping.
+- [x] Approve DEV resource names, ownership, trigger boundaries, and review-cycle limits.
+- [x] Define `SF-FX-007` through `SF-FX-030`; do not execute them yet.
+- [x] Complete the credential-free compatibility audit for Airtable, Gemini, ClickUp, Slack, Gmail, and Telegram.
+- [ ] Obtain separate approval before creating credentials or connecting any service.
+
+**Current status:** compatibility audit complete; credential creation is NO-GO pending inactive schema alignment, Gemini privacy/model validation, and exact DEV resource assignment.
+
 ## Phase 6 — Demo Evidence
 
 - [ ] Demonstrate only verified behavior.
@@ -131,7 +142,7 @@ The first implementation phase, once separately approved after the read-only aud
 - Keep the workflow inactive throughout DEV.
 - Stop if real data, secrets, production access, or an unapproved destination appears.
 - Stop if ticket-ID, fingerprint, mocked duplicate, mocked AI, deterministic priority, or final-output behavior differs from the approved contract.
-- Stop if any Gmail/Telegram trigger, Airtable, ClickUp, Slack, OpenAI connection, credential, API call, external effect, or activation is introduced.
+- Stop if any Gmail/Telegram trigger, Airtable, ClickUp, Slack, Gemini connection, credential, API call, external effect, or activation is introduced.
 - Preserve the last validated DEV version before approved risky changes.
 - Never delete tickets, tasks, alerts, workflows, or evidence as a cleanup shortcut.
 

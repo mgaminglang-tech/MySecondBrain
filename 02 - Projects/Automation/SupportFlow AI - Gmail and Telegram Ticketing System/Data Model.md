@@ -23,14 +23,16 @@ Approved logical model for the Phase 1 skeleton and future single Airtable `Tick
 |---|---|---|---|
 | `ticket_id` | string | yes after validation | `SF-YYYYMMDD-XXXXXXXX` |
 | `source_channel` | enum | yes | `gmail` or `telegram` |
+| `source_event_id` | string or null | conditional | Source event/update identifier; Telegram `update_id` |
 | `source_message_id` | string | yes | Channel message identifier |
-| `source_thread_id` | string or null | conditional | Gmail thread or Telegram chat/thread context |
+| `source_conversation_id` | string or null | conditional | Gmail thread ID or Telegram chat ID |
+| `source_parent_message_id` | string or null | no | Telegram reply-to message ID; null when absent |
 | `received_at` | UTC datetime | yes | Source receipt timestamp |
 | `sender_reference` | string | yes | Sanitized or non-sensitive source reference |
 | `sender_name` | string or null | no | Sanitized display name |
 | `subject` | string or null | conditional | Gmail subject or normalized Telegram summary |
 | `message_text` | string | yes | Sanitized support request text |
-| `attachment_metadata` | array | no | Safe metadata only; contents excluded from v0.1 |
+| `attachment_metadata` | array | no | Safe metadata only; contents excluded from schema `0.1.0` |
 | `language` | string or null | no | Detected or source-provided language |
 | `category` | enum | yes after classification | Eight approved taxonomy values |
 | `priority` | enum | yes after rules | Four approved priority values |
@@ -52,7 +54,7 @@ Approved logical model for the Phase 1 skeleton and future single Airtable `Tick
 | `last_alerted_escalation_state` | string or null | after alert | Prevents unchanged duplicate alerts |
 | `created_at` | UTC datetime | yes after creation | Internal creation timestamp |
 | `updated_at` | UTC datetime | yes | Last controlled update timestamp |
-| `schema_version` | string | yes | Contract version, initially proposed `v0.1.0` |
+| `schema_version` | string | yes | Exact contract version `0.1.0` |
 
 ## Processing Audit
 
@@ -73,15 +75,17 @@ Approved logical model for the Phase 1 skeleton and future single Airtable `Tick
 | Unified field | Gmail source | Telegram source |
 |---|---|---|
 | `source_channel` | constant `gmail` | constant `telegram` |
-| `source_message_id` | Gmail message ID | Telegram update/message ID |
-| `source_thread_id` | Gmail thread ID | Telegram chat/thread ID |
+| `source_event_id` | null unless an approved Gmail event identifier is available | Telegram `update_id` |
+| `source_message_id` | Gmail message ID | Telegram `message_id` |
+| `source_conversation_id` | Gmail thread ID | Telegram `chat_id` |
+| `source_parent_message_id` | null | Telegram `reply_to_message_id`, otherwise null |
 | `received_at` | message receipt date | message date |
 | `sender_reference` | sanitized sender email/reference | sanitized user/chat reference |
 | `sender_name` | sender display name | Telegram display name |
 | `subject` | Gmail subject | derived summary or null |
 | `message_text` | approved text body selection | message text or approved caption |
 
-Gmail uses the plain-text body or HTML-to-text fallback. Telegram uses message text or caption. `message_text` is limited to 5,000 characters. Attachment metadata may be retained, but attachment contents and edited Telegram messages are excluded from v0.1.
+Gmail uses the plain-text body or HTML-to-text fallback. Telegram uses message text or caption. `message_text` is limited to 5,000 characters. Attachment metadata may be retained, but attachment contents and edited Telegram messages are excluded from schema `0.1.0`.
 
 ## Approved Enums
 
@@ -106,7 +110,7 @@ The future single `Tickets` table contains the unified ticket fields, processing
 - Custom fields: ticket ID, channel, category, priority, sentiment, escalation, and Airtable record ID
 - Initial status: `To Do`
 - Initial DEV assignee: Mervin
-- SLA-based due date: none in v0.1
+- SLA-based due date: none in schema `0.1.0`
 - DEV list name: `DEV - SupportFlow AI - Ticket Queue`
 - Actual list ID and credential: Not Yet Assigned
 
@@ -136,12 +140,18 @@ Normalize sender reference, subject, and message text individually using:
 5. collapse repeated whitespace
 6. trim leading and trailing whitespace
 
-Preserve punctuation, signatures, and quoted text for v0.1. Calculate SHA-256 over the ordered normalized sender reference, subject, and message text.
+Preserve punctuation, signatures, and quoted text for schema `0.1.0`. Join the normalized values as:
+
+```text
+normalized_sender_reference + "\u001F" + normalized_subject + "\u001F" + normalized_message_text
+```
+
+`\u001F` is the literal Unicode Unit Separator. If subject is absent, its normalized value is an empty string and both separators remain. Calculate SHA-256 over this exact combined value.
 
 Approved behavior:
 
 - Exact key: `source_channel + source_message_id`, checked within retained records.
-- Content key: normalized `sender_reference + message_text`, checked within 72 hours using a 30-day lookback.
+- Content key: the approved three-component fingerprint, checked within 72 hours using a 30-day lookback.
 - Exact duplicate updates the existing record and increments `duplicate_count`.
 - Content match creates `possible_duplicate`, references the candidate, and requires human review without automatic suppression.
 
@@ -154,7 +164,8 @@ Production-grade concurrent-arrival locking and manual duplicate correction rema
 - Attachment content is excluded until separately approved.
 - DEV n8n execution data is retained for seven days.
 - DEV Airtable records, ClickUp tasks, and Slack test alerts are retained for 30 days.
-- OpenAI receives only dummy or sanitized text up to 5,000 characters, without attachment contents or direct identifiers.
+- Gemini receives only dummy or sanitized structured JSON text up to 5,000 characters, without attachment contents or direct identifiers.
+- Gemini tools, browsing, code execution, external actions, paid usage, and unapproved training use are prohibited.
 - Screenshots must be sanitized and created only after verified evidence exists.
 
 ## Related Notes

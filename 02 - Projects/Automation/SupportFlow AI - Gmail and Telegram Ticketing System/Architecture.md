@@ -33,7 +33,7 @@ flowchart LR
     R --> O["Final structured output"]
 ```
 
-No node in this boundary may call Gmail, Telegram, Airtable, ClickUp, Slack, OpenAI, or another external service.
+No node in this boundary may call Gmail, Telegram, Airtable, ClickUp, Slack, Gemini, or another external service.
 
 ## Environment Design
 
@@ -54,7 +54,7 @@ flowchart LR
     U --> V["Validate"]
     V --> I["Generate ticket ID"]
     I --> D["Airtable duplicate check"]
-    D -->|New or possible duplicate| AI["OpenAI classification and draft"]
+    D -->|New or possible duplicate| AI["Gemini classification and draft"]
     D -->|Exact duplicate| DU["Update ticket and duplicate count"]
     DU --> EC{"Escalation state changed?"}
     EC -->|Yes| S
@@ -83,7 +83,7 @@ flowchart LR
 | 4 | Validation | Enforce required fields, types, and limits | Invalid result; no side effects |
 | 5 | Ticket identity | Generate approved ticket ID and idempotency data | Stop if identity is unsafe |
 | 6 | Duplicate lookup | Exact identity plus 72-hour content fingerprint in a 30-day lookback | Fail closed if unknown |
-| 7 | AI classification | Produce constrained classification and draft through OpenAI | One retry, then approved safe fallback |
+| 7 | AI classification | Produce constrained structured-JSON classification and draft through Gemini | One retry, then approved safe fallback |
 | 8 | Rule enforcement | Validate schema and apply deterministic overrides | Manual review |
 | 9 | Ticket storage | Create one valid new DEV ticket | Stop downstream if write fails |
 | 10 | Task creation | Create one controlled task | Record failure; prevent duplicate replay |
@@ -140,7 +140,7 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 
 - Input validation: approved strict allowlist and required-field contract with a 5,000-character limit.
 - Idempotency and duplicate prevention: exact source identity, 72-hour content fingerprint, 30-day lookup, and fail-closed unknown state.
-- AI safety: OpenAI, constrained JSON schema, enum validation, deterministic overrides, one retry, and approved safe fallback.
+- AI safety: Google Gemini free tier only, constrained JSON schema, enum validation, deterministic overrides, one retry, and approved safe fallback.
 - Retry and timeout policy: read-only API calls use at most two retries with 2-second and 5-second backoff; default API timeout is 15 seconds. Phase 1 makes no API calls.
 - Concurrency: Phase 1 fixture tests run sequentially. Production-grade locking is deferred.
 - Create retries: never blind; re-check ticket ID or dedupe key first. Phase 1 performs no creates.
@@ -169,6 +169,10 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 | AD-013 | Fingerprint uses approved NFKC normalization and SHA-256 contract | approved |
 | AD-014 | Phase 1 uses mocked duplicate and AI results only | approved |
 | AD-015 | Phase 1 contains no credentials, connections, side effects, or activation | approved |
+| AD-016 | Google Gemini replaces OpenAI as the only approved DEV LLM provider | approved |
+| AD-017 | Schema version is exactly `0.1.0` | approved |
+| AD-018 | Fingerprint components use the literal `\u001F` separator | approved |
+| AD-019 | Gmail trigger is read-only and Telegram accepts new-message updates only | approved and node-compatible; configuration pending |
 
 ## Reserved DEV Resource Names
 
@@ -177,16 +181,45 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 - ClickUp list: `DEV - SupportFlow AI - Ticket Queue`
 - ClickUp assignee: Mervin
 - Slack channel: `#dev-supportflow-alerts`
+- Gmail mailbox: Dedicated DEV mailbox — Not Yet Assigned
+- Telegram bot and chat: Dedicated DEV bot and private DEV chat — Not Yet Assigned
+- Gemini project: Dedicated DEV Google AI Studio or Google Cloud project — Not Yet Assigned
 
 These names do not confirm that resources exist. Actual IDs and credentials are Not Yet Assigned and are prohibited in Phase 1.
 
 ## Approved Operational Defaults
 
 - Capacity: 100 tickets per day; peak 10 per five minutes.
-- OpenAI budget: 500 calls or USD 5 per month, whichever occurs first.
+- Gemini: maximum 500 free-tier calls per review cycle; paid use prohibited without separate approval.
+- Airtable: maximum 100 created DEV test records per review cycle.
+- ClickUp: maximum 100 created DEV tasks per review cycle.
+- Slack: maximum 30 DEV alerts per review cycle.
 - Recovery: RTO four hours, RPO 24 hours, validated export, manual replay.
 - Ownership: Mervin for the portfolio phase.
 - Slack and ClickUp remain controlled DEV side effects requiring later resource and credential approval.
+
+## Approved Trigger Boundaries
+
+- Gmail Trigger: dedicated DEV mailbox, dummy/sanitized messages, approved label or search filter, read-only access, no send, draft, modification, label mutation, deletion, or attachment-content download.
+- Telegram Trigger: dedicated DEV bot, one private DEV chat, dummy new-message updates only, no edited/outbound messages, file downloads, attachment contents, admin permissions, or production chats.
+- Trigger node operation/version, polling or webhook behavior, activation requirements, lookback/pending-update handling, filtering, pagination, mapping, and idempotency must be verified in the credential-free compatibility audit.
+- No trigger may be added, connected, registered, executed, or activated under the current authorization.
+
+## Phase 2 Credential-Free Compatibility Findings
+
+- Airtable 2.2 supports schema read, record search, create, update, and upsert with `airtableTokenApi` or `airtableOAuth2Api`.
+- Gemini is available as Google Gemini 1.2 and as Google Gemini Chat Model 1.1. A Basic LLM Chain 1.9 plus Structured Output Parser 1.3 provides explicit JSON Schema validation; automatic parser repair must remain disabled because it would add an uncounted LLM call.
+- The direct Google Gemini 1.2 text node supports JSON output, but its built-in Google Search, URL Context, and Code Execution controls must all be explicitly false.
+- ClickUp 1 supports task lookup/create/update and custom fields with `clickUpOAuth2Api` or `clickUpApi`.
+- Slack 2.5 supports controlled message posting with `slackOAuth2Api` or `slackApi`.
+- Gmail Trigger 1.4 is polling-based, supports label/query filters, full message bodies with `simple=false`, and attachment download disabled.
+- Telegram Trigger 1.3 is webhook-based. Registration calls Telegram `setWebhook`, allows only one trigger per bot, and drops pending updates at this node version; test or production registration is an external mutation and is not approved.
+- Native integration-node parameter definitions do not expose the approved 15-second API timeout. Exact 2-second then 5-second backoff also requires explicit orchestration rather than one fixed node retry setting.
+- The connected MCP does not expose the exact n8n application build number; compatibility is evidenced by the installed node catalog and successful schema-only validation.
+
+### Required Pre-Connection Migration
+
+The saved inactive Phase 1 workflow still uses `schema_version: 0.1`, `source_thread_id`, `source_update_id`, `source_chat_id`, and `JSON.stringify(components)` for fingerprint input. Before any integration node is added, a separately authorized credential-free change must align it to schema `0.1.0`, the approved source fields, and the literal `\u001F` fingerprint separator, then rerun the six Phase 1 fixtures.
 
 ## Approval
 

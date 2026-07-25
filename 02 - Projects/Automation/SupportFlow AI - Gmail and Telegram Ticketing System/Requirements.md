@@ -54,7 +54,7 @@ Phase 1 excludes all live triggers, service connections, credentials, external s
 
 - Gmail HTML may be converted to text only when a plain-text body is unavailable.
 - `message_text` is trimmed and limited to 5,000 characters.
-- Attachment contents and edited Telegram messages are excluded from v0.1.
+- Attachment contents and edited Telegram messages are excluded from schema `0.1.0`.
 - Required unified fields are `source_channel`, `source_message_id`, `received_at`, `sender_reference`, and non-empty `message_text`.
 - `source_channel` must be `gmail` or `telegram`; identifiers must be non-empty; `received_at` must be a valid UTC datetime; `subject` is optional and limited to 250 characters.
 - Invalid input fails closed before duplicate lookup, AI, storage, task creation, or alerts.
@@ -68,13 +68,15 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 - No ticket-ID component derives from personal or customer information.
 - Before any create retry, re-check the ticket ID or applicable dedupe key.
 - Content normalization applies Unicode NFKC, lowercase, zero-width-character removal, line-ending normalization, repeated-whitespace collapse, and leading/trailing whitespace trimming.
-- Punctuation, signatures, and quoted text are preserved in v0.1.
-- The fingerprint is SHA-256 of the ordered normalized sender reference, subject, and message text.
+- Punctuation, signatures, and quoted text are preserved in schema `0.1.0`.
+- The fingerprint input is `normalized_sender_reference + "\u001F" + normalized_subject + "\u001F" + normalized_message_text`.
+- `\u001F` is the literal Unicode Unit Separator used between components; an absent subject normalizes to an empty string but both separators remain.
+- The fingerprint is SHA-256 of that exact combined value.
 
 ## Approved Duplicate Requirements
 
 - Exact duplicate key: `source_channel + source_message_id`, checked within retained Airtable records.
-- Content fingerprint: normalized `sender_reference + message_text`, checked within 72 hours using a 30-day Airtable lookback.
+- Content fingerprint: normalized sender reference, subject, and message text joined with `\u001F`, checked within 72 hours using a 30-day Airtable lookback.
 - Exact duplicate: update the existing ticket record and increment `duplicate_count`; do not create another ClickUp task; do not send another Slack alert unless the final escalation state changes.
 - Content duplicate: create the request as `possible_duplicate`, store the candidate ticket reference, require human review, and do not suppress it automatically.
 - Cross-channel similarity may create `possible_duplicate` only; it may not automatically establish an exact duplicate.
@@ -87,8 +89,10 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 - Sentiment is optional: `positive`, `neutral`, `negative`, or `unknown`; default `unknown`.
 - Sentiment never independently changes priority or triggers Slack alerts.
 - Deterministic business rules override AI classifications.
-- OpenAI is the controlled DEV provider for a later phase. Phase 1 uses mocked structured classification output.
-- The exact model, structured-output settings, privacy boundary, and budget are recorded immediately before separately approved AI integration.
+- Google Gemini is the controlled DEV provider for a later phase; OpenAI is no longer approved. Phase 1 uses mocked structured classification output.
+- The exact free-tier model, structured-output settings, privacy boundary, current rate limits, billing requirement, and budget are recorded after the credential-free compatibility audit and before separately approved credential creation.
+- Gemini input is structured JSON only and limited to dummy or sanitized text of at most 5,000 characters without attachment contents or direct personal identifiers.
+- Gemini tools, browsing, code execution, external actions, and paid usage are prohibited.
 - Draft responses remain review-only and are never sent automatically.
 
 ## Integration Requirements
@@ -96,10 +100,10 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 | System | Environment | Purpose | Current state |
 |---|---|---|---|
 | n8n | DEV | Credential-free Phase 1 orchestration | Workflow `cyiCqsjLQdB7apjP` built and inactive |
-| Gmail | DEV/test | Controlled message intake | Access and trigger method Not Yet Defined |
-| Telegram Bot API | DEV/test | Controlled message intake | Bot and trigger method Not Yet Defined |
+| Gmail | DEV/test | Read-only controlled message intake from a dedicated DEV mailbox | Mailbox, label/filter, trigger configuration, IDs, and credential Not Yet Assigned |
+| Telegram Bot API | DEV/test | New-message intake from a dedicated DEV bot and one private DEV chat | Bot/chat identities, trigger configuration, IDs, and credential Not Yet Assigned |
 | Airtable | DEV/test | Base `DEV - SupportFlow AI`, table `Tickets` | Actual IDs and credential Not Yet Assigned |
-| OpenAI | DEV/test | Controlled classification and draft generation after Phase 1 | Exact model and credential deferred |
+| Google Gemini | DEV/test | Free-tier structured classification and draft generation after Phase 1 | Dedicated project, exact model, IDs, and credential Not Yet Assigned |
 | ClickUp | DEV/test | List `DEV - SupportFlow AI - Ticket Queue`, assignee Mervin | Actual IDs and credential Not Yet Assigned |
 | Slack | DEV/test | Channel `#dev-supportflow-alerts` | Actual ID and credential Not Yet Assigned |
 
@@ -110,7 +114,7 @@ Credential names may be documented later by reference only. Secret values must n
 - Invalid input: return validation errors; do not check AI, store, create a task, or alert.
 - Exact duplicate: update the existing ticket and duplicate count; suppress a new task and suppress a repeat Slack alert unless escalation state changed.
 - Content duplicate: mark `possible_duplicate`, reference the candidate, require human review, and continue as a separate ticket.
-- AI failure: allow one retry, then set `category=other`, `classification_status=failed`, `needs_human_review=true`, and an empty `draft_response`. Priority comes from deterministic rules; default to `p3-normal` when none matches.
+- Gemini failure, timeout, or invalid structured output: allow one retry, then set `category=other`, `sentiment=unknown`, `classification_status=failed`, `needs_human_review=true`, and an empty `draft_response`. Priority comes from deterministic rules; default to `p3-normal` when none matches.
 - AI failure alone never creates a customer escalation alert. Repeated system-level AI failures may create a separate operational alert under a later approved operational-alert rule.
 - Airtable lookup uncertainty: fail closed for downstream creation until duplicate status is known.
 - Storage failure: do not create a ClickUp task or Slack alert unless an approved compensating design exists.
@@ -130,8 +134,22 @@ Credential names may be documented later by reference only. Secret values must n
 - Capacity: 100 tickets per day and a peak of 10 messages per five minutes.
 - Retention: seven days for DEV execution data and 30 days for DEV Airtable records, ClickUp tasks, and Slack test alerts.
 - Recovery: RTO four hours, RPO 24 hours, preserved validated workflow exports, and manual replay using source-message identity.
-- Budget: maximum 500 OpenAI calls or USD 5 per month, whichever occurs first.
+- Usage limits per review cycle: maximum 500 Gemini calls, 100 created Airtable records, 100 created ClickUp tasks, and 30 Slack alerts.
+- Gemini budget: free tier only; paid usage and billing-enabled projects require separate approval.
+- Stop conditions: free quota exhaustion, repeated rate-limit failure, 500 Gemini calls, unexpected billing, real data, unexpected resource access, broader permissions, out-of-bound external actions, or failed idempotency.
 - Ownership: Mervin owns portfolio-phase scope, taxonomy, escalation, testing, recovery, and approval.
+
+## Approved Telegram Mapping
+
+| Telegram field | Unified field |
+|---|---|
+| `update_id` | `source_event_id` |
+| `message_id` | `source_message_id` |
+| `chat_id` | `source_conversation_id` |
+| `reply_to_message_id` | `source_parent_message_id`; null when absent |
+| sanitized sender reference | `sender_reference` |
+| received message timestamp | `received_at` |
+| message text or caption | `message_text` |
 
 ## Acceptance Criteria
 

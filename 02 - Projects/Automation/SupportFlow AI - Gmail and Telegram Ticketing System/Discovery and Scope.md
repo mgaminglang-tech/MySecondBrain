@@ -38,11 +38,11 @@ tags:
 - Gmail allowlist: message ID, thread ID, received timestamp, sanitized sender reference and name, subject, plain-text body, and attachment metadata.
 - Telegram allowlist: update ID, message ID, chat ID, received timestamp, sanitized sender reference and name, text or caption, reply-to ID, and attachment metadata.
 - Gmail HTML is converted to text when a plain-text body is unavailable. Message text is limited to 5,000 characters.
-- Attachment contents and edited Telegram messages are excluded from v0.1.
+- Attachment contents and edited Telegram messages are excluded from schema `0.1.0`.
 - Required fields fail closed before AI, storage, task creation, or alerts.
 - Duplicate handling uses exact identity and content fingerprints with the approved windows and outcomes.
-- Eight categories, four priorities, deterministic overrides, one Airtable `Tickets` table, Mervin assignment, controlled Slack alerts, OpenAI controls, and operating defaults are approved as documented in the project notes.
-- Ticket ID, sentiment, content-fingerprint normalization, DEV concurrency/retry rules, reserved resource names, deferred OpenAI-model selection, fixture IDs, and deterministic escalation examples are approved.
+- Eight categories, four priorities, deterministic overrides, one Airtable `Tickets` table, Mervin assignment, controlled Slack alerts, Gemini controls, and operating defaults are approved as documented in the project notes.
+- Ticket ID, sentiment, content-fingerprint normalization and `\u001F` separator, DEV concurrency/retry rules, reserved resource names, deferred Gemini-model selection, fixture IDs, and deterministic escalation examples are approved.
 
 ## Current Process
 
@@ -112,13 +112,27 @@ The exact current operating procedure, staffing, handoffs, volumes, response exp
 | OQ-005 | Resource names approved; actual Airtable resource IDs remain deferred | Mervin | 2026-07-25 | Integration work only | deferred |
 | OQ-006 | ClickUp list name and Mervin assignment approved; actual list ID remains deferred | Mervin | 2026-07-25 | Integration work only | deferred |
 | OQ-007 | Slack channel name and alert contract approved; actual channel ID remains deferred | Mervin | 2026-07-25 | Integration work only | deferred |
-| OQ-008 | OpenAI provider approved; exact model and credential deferred to AI integration | Mervin | 2026-07-25 | AI integration only | deferred |
+| OQ-008 | Google Gemini approved; OpenAI removed; exact free-tier model and credential deferred until compatibility evidence exists | Mervin | 2026-07-25 | AI integration only | resolved-with-deferred-model |
 | OQ-009 | Capacity, retention, recovery, and replay defaults | Mervin | 2026-07-25 | Non-functional design | resolved |
 | OQ-010 | Mervin owns portfolio-phase decisions and operations | Mervin | 2026-07-25 | Ownership | resolved |
 | OQ-011 | IDs `SF-FX-001` through `SF-FX-030` reserved; six Phase 1 seeds approved | Mervin | 2026-07-25 | Skeleton validation | resolved |
 | OQ-012 | Ticket ID `SF-YYYYMMDD-XXXXXXXX` using UUID v4 suffix | Mervin | 2026-07-25 | Identity contract | resolved |
 | OQ-013 | Optional sentiment enum with `unknown` default | Mervin | 2026-07-25 | Mock AI schema | resolved |
 | OQ-014 | Sequential fixtures, idempotency recheck, bounded read retries, and 15-second timeout | Mervin | 2026-07-25 | DEV reliability | resolved-for-dev |
+| OQ-015 | Fingerprint uses normalized sender, subject, and message text separated by `\u001F`; schema version is `0.1.0` | Mervin | 2026-07-25 | Data contract | resolved |
+| OQ-016 | Telegram source-event, message, conversation, and parent mapping | Mervin | 2026-07-25 | Channel mapping | resolved |
+| OQ-017 | Gmail dedicated DEV mailbox and Telegram dedicated DEV bot/private chat | Mervin | Not Yet Defined | Trigger integration | partially resolved; identities not assigned |
+| OQ-018 | Gemini, Airtable, ClickUp, and Slack review-cycle limits | Mervin | 2026-07-25 | DEV cost and side effects | resolved |
+
+## Approved Phase 2 Integration Boundaries
+
+- Gemini: free tier only, maximum 500 calls per review cycle, structured JSON only, sanitized text only, and no paid usage, tools, browsing, code execution, attachment contents, or direct identifiers.
+- Airtable: maximum 100 created DEV test records per review cycle.
+- ClickUp: maximum 100 created DEV tasks per review cycle.
+- Slack: maximum 30 DEV alerts per review cycle.
+- Gmail: dedicated DEV mailbox, dummy/sanitized messages, read-only access, and no message or label mutation.
+- Telegram: dedicated DEV bot, one private DEV chat, dummy new-message updates only, and no outbound messages, file downloads, or administrator permissions.
+- Stop immediately for real data, an unexpected resource, broader permissions, out-of-bound external action, unexpected billing, or failed idempotency.
 
 ## Risks and Stop Conditions
 

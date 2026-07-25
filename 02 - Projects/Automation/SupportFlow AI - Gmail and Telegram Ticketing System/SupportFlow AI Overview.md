@@ -7,7 +7,7 @@ priority: medium
 client: internal-demo
 owner: Mervin
 production_ready: false
-version: v0.1.0
+version: 0.1.0
 created: 2026-07-25
 updated: 2026-07-25
 tags:
@@ -100,18 +100,18 @@ The credential-free portion of this architecture is implemented and validated on
 ## Approved Discovery Decisions
 
 - Gmail and Telegram use explicit source-field allowlists, HTML-to-text conversion where needed, and a 5,000-character message limit.
-- Attachment contents and edited Telegram messages are excluded from v0.1.
+- Attachment contents and edited Telegram messages are excluded from schema `0.1.0`.
 - Required-field validation fails closed before AI or downstream actions.
 - Duplicate handling distinguishes exact duplicates from content-based possible duplicates.
 - The approved categories are `billing`, `refund`, `account-access`, `technical-support`, `product-question`, `order-delivery`, `feedback-complaint`, and `other`.
 - Priorities are `p1-critical`, `p2-high`, `p3-normal`, and `p4-low`; deterministic rules override AI output.
 - Airtable uses one `Tickets` table. Mervin is the initial DEV ClickUp assignee.
 - Slack alerts are limited to approved P1/P2 or deterministic escalation rules.
-- OpenAI is the controlled DEV LLM provider with approved privacy, fallback, retry, and budget boundaries.
+- Google Gemini is the controlled DEV LLM provider with approved privacy, fallback, retry, free-tier, and no-paid-usage boundaries. OpenAI is no longer approved for this project.
 - Planning assumes 30 sanitized fixtures, 100 tickets per day, a peak of 10 messages per five minutes, seven-day DEV execution retention, 30-day test-record retention, RTO four hours, RPO 24 hours, manual replay, and Mervin as portfolio-phase owner.
 - Ticket IDs use `SF-YYYYMMDD-XXXXXXXX`, where the suffix is the first eight uppercase hexadecimal characters of a UUID v4 and never derives from personal or customer information.
 - Sentiment is optional: `positive`, `neutral`, `negative`, or `unknown`, defaulting to `unknown`; it never independently changes priority or triggers alerts.
-- Content fingerprints use the approved NFKC normalization and SHA-256 contract.
+- Content fingerprints use the approved NFKC normalization and SHA-256 contract with `\u001F` between normalized sender reference, subject, and message text.
 - Phase 1 uses six approved seed fixtures and mocked duplicate and AI results; live integrations remain deferred.
 
 ## Current Decision
@@ -122,7 +122,18 @@ The credential-free portion of this architecture is implemented and validated on
 
 Manual Trigger → dummy Gmail and Telegram payloads → channel normalization → unified ticket → required-field validation → ticket ID and content fingerprint → mocked duplicate result → mocked AI classification and draft → deterministic rules → final structured output.
 
-Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or OpenAI connections, credentials, external side effects, real data, workflow activation, and production claims.
+Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemini connections, credentials, external side effects, real data, workflow activation, and production claims.
+
+## Approved Phase 2 Decisions
+
+- Provider: Google Gemini; the exact free-tier, structured-JSON-compatible model remains Not Yet Defined pending privacy acceptance and credential-grounded model-list validation.
+- Gemini boundary: dedicated DEV project and API key, sanitized text only, 5,000-character maximum, no attachment contents, direct identifiers, tools, browsing, code execution, external actions, or paid use.
+- Schema version: `0.1.0`.
+- Fingerprint input: normalized sender reference + `\u001F` + normalized subject + `\u001F` + normalized message text, then SHA-256.
+- Telegram mapping: `update_id` → `source_event_id`; `message_id` → `source_message_id`; `chat_id` → `source_conversation_id`; `reply_to_message_id` → `source_parent_message_id`, defaulting to null.
+- DEV limits per review cycle: 500 Gemini calls, 100 Airtable records, 100 ClickUp tasks, and 30 Slack alerts.
+- Gmail uses a future dedicated DEV mailbox and read-only trigger boundary. Telegram uses a future dedicated DEV bot and one private DEV chat with new-message updates only.
+- Actual resource IDs, project IDs, chat IDs, credentials, and exact Gemini model remain Not Yet Assigned.
 
 ## Phase 1 Evidence
 
@@ -136,7 +147,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or OpenA
 
 ## Next Action
 
-Mervin reviews the Phase 1 evidence and separately approves or rejects a Pre-Integration Readiness Review. No credential, external integration, additional fixture, activation, or workflow expansion is authorized by this result.
+Mervin reviews the completed compatibility audit and decides whether to authorize an inactive credential-free schema-alignment change. Gemini privacy/model validation and exact DEV resource assignment must also be resolved before credential creation. No credential, external integration, activation, or workflow expansion is authorized.
 
 ## Related Notes
 

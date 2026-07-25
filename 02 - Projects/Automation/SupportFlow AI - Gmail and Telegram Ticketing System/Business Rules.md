@@ -54,11 +54,11 @@ The category, priority, and optional sentiment enums are approved.
 
 | Dimension | Proposed responsibility | Required decision |
 |---|---|---|
-| Category | OpenAI suggestion constrained to eight approved values | `other` fallback |
-| Priority | OpenAI suggestion plus deterministic override | Four approved levels |
+| Category | Gemini suggestion constrained to eight approved values | `other` fallback |
+| Priority | Gemini suggestion plus deterministic override | Four approved levels |
 | Sentiment | Mock AI suggestion constrained to approved optional enum | Defaults to `unknown`; never independently affects priority or alerts |
 | Escalation | Deterministic final decision informed by structured signals | Approved P1/P2 framework |
-| Draft response | OpenAI prepares review-only text | Never automatically sent |
+| Draft response | Gemini prepares review-only text | Never automatically sent |
 
 ### Approved Categories
 
@@ -95,11 +95,12 @@ A message is an exact duplicate only when `source_channel + source_message_id` m
 
 Generate `SF-YYYYMMDD-XXXXXXXX`, using the first eight uppercase hexadecimal characters of a UUID v4. Never derive the identifier from personal or customer information.
 
-## LLM Failure Rule
+## Gemini Failure Rule
 
 After one retry:
 
 - `category=other`
+- `sentiment=unknown`
 - `classification_status=failed`
 - `needs_human_review=true`
 - `draft_response` is empty
@@ -107,7 +108,14 @@ After one retry:
 - priority defaults to `p3-normal` when no deterministic priority rule matches
 - AI failure alone does not create a customer escalation alert
 
-Phase 1 uses mocked structured AI output and makes no OpenAI call.
+Phase 1 uses mocked structured AI output and makes no Gemini call. Gemini permits one retry only; repeated system-level failures may create an operational record or alert only after separate approval.
+
+## Gemini Usage and Privacy Rules
+
+- Free tier only, maximum 500 calls per review cycle, and no paid or billing-enabled project without separate approval.
+- Structured JSON only; dummy or sanitized text only; maximum 5,000 characters.
+- Exclude attachment contents, direct personal identifiers, tools, browsing, code execution, and external actions.
+- Stop for exhausted free quota, repeated rate limits, 500 calls, unexpected billing, broader access, or real data.
 
 ## DEV Reliability Rules
 
