@@ -27,7 +27,7 @@ Design a centralized DEV-only support-ticket process that converts dummy or sani
 ## Initial State
 
 - Status: in-progress
-- Current phase: Phase 2 controlled DEV integration — ClickUp credential gate
+- Current phase: Phase 2 controlled DEV integration — ClickUp fixture-test gate
 - Owner and current approver: Mervin
 - Target date: Not Yet Defined
 - Production ready: false
@@ -135,7 +135,21 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 - Telegram mapping: `update_id` → `source_event_id`; `message_id` → `source_message_id`; `chat_id` → `source_conversation_id`; `reply_to_message_id` → `source_parent_message_id`, defaulting to null.
 - DEV limits per review cycle: 500 Gemini calls, 100 Airtable records, 100 ClickUp tasks, and 30 Slack alerts.
 - Gmail uses a future dedicated DEV mailbox and read-only trigger boundary. Telegram uses a future dedicated DEV bot and one private DEV chat with new-message updates only.
-- Airtable is assigned as base `appell78p9BIEek9J`, table `tblI3JYon6kLqZPbP`, with `ticket_id` as the primary field and `Asia/Manila` date-time display. The Gemini credential and future model are recorded above; other unresolved service resource IDs and credentials remain Not Yet Assigned.
+- Airtable is assigned as base `appell78p9BIEek9J`, table `tblI3JYon6kLqZPbP`, with `ticket_id` as the primary field and `Asia/Manila` date-time display. ClickUp is assigned as Workspace `90161719575`, Space `90167621384`, Folder `901610630678`, and List `901616152035`. The Gemini credential and future model are recorded above; other unresolved service resource IDs and credentials remain Not Yet Assigned.
+
+## ClickUp Read-Only Audit Evidence
+
+- Audit workflow: `AUDIT - SupportFlow AI - ClickUp Read-Only Credential Test`
+- Workflow ID: `6yZO7DfXRD8yjsp9`
+- Execution ID: `7126`
+- Result: **PASS**
+- Saved state: inactive and unpublished
+- Verified List: `DEV - SupportFlow AI - Ticket Queue` (`901616152035`), `archived=false`
+- Verified statuses: `to do`, `in progress`, `complete`
+- Existing task count: `0`
+- Verified custom fields: seven required fields with their exact field IDs, types, applicability, and dropdown option IDs recorded in [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Data Model#Verified ClickUp Physical Manifest|Data Model]]
+- Side effects: zero writes and zero notifications
+- Isolation: no ClickUp credential was attached to SupportFlow workflow `cyiCqsjLQdB7apjP`
 
 ## Phase 1 Evidence
 
@@ -151,7 +165,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 
 ## Next Action
 
-Perform the **ClickUp credential gate only**: verify the exact credential type, least-privilege permissions, DEV workspace/list and assignee IDs, allowed actions, idempotency controls, and stop conditions. Do not create or connect a ClickUp credential, modify the workflow, execute an external action, activate the workflow, or make a production claim without separate explicit approval.
+Perform the **ClickUp fixture-test gate only**. Define and review the exact sanitized fixtures, expected create and duplicate-prevention behavior, allowed task count, evidence requirements, and retention before any ClickUp task operation. Do not create, update, assign, comment on, move, or delete a task without separate explicit approval.
 
 ## Related Notes
 

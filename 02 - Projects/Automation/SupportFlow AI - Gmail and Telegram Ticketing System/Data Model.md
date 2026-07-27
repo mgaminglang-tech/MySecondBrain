@@ -199,8 +199,30 @@ The JSON, nullable-AI-validation, and retry decisions are approved. Credential c
 - Initial status: `To Do`
 - Initial DEV assignee: Mervin
 - SLA-based due date: none in schema `0.1.0`
+- Workspace ID: `90161719575`
+- Space: `Team Space` (`90167621384`)
+- Folder: `Support Operations - Automation` (`901610630678`)
 - DEV list name: `DEV - SupportFlow AI - Ticket Queue`
-- Actual list ID and credential: Not Yet Assigned
+- DEV list ID: `901616152035`
+- List archived: false
+- Statuses: `to do`, `in progress`, `complete`
+- Existing task count at read-only audit execution `7126`: `0`
+
+### Verified ClickUp Physical Manifest
+
+All fields apply to List `901616152035`. The manifest was returned by audit workflow `6yZO7DfXRD8yjsp9`, execution `7126`.
+
+| Field name | Field ID | Type | Applicability | Dropdown labels and option IDs |
+|---|---|---|---|---|
+| `ticket ID` | `01a40e6a-d8b4-459e-a257-545d729fa822` | `short_text` | List `901616152035` | none |
+| `Airtable record ID` | `1012c6b8-7f46-4804-99a4-0b9867c04414` | `short_text` | List `901616152035` | none |
+| `priority` | `63020409-fde3-4bb1-89ac-f640b90b359e` | `drop_down` | List `901616152035` | `p1-critical` → `7980a022-a8a1-47b3-aa5b-f74e7bd6b63a`; `p2-high` → `f5cc3e9b-a5f9-4ee0-ba3a-9d1ae789a393`; `p3-normal` → `e4b2b998-a8a4-4356-8469-9fe8dda8f5b9`; `p4-low` → `9b95686e-5f10-4f88-80f6-6ffdab3b6206` |
+| `escalation` | `67a1f273-f363-46e6-a526-0df2b83c4221` | `drop_down` | List `901616152035` | `none` → `df9b0966-49bc-498b-8401-a0a9986be2f8`; `human_review` → `b2c2faae-2274-4a90-ab5f-c6dc9e73e6dc`; `urgent` → `30609205-6583-41f6-beca-a21d4d04d0d4`; `security` → `7d927b59-79ca-4990-bbea-d74941aa3854`; `billing` → `f8c96292-f558-4f79-a89e-8a368496d0f9` |
+| `sentiment` | `6e788e25-f164-468f-b720-d35140fa6dad` | `drop_down` | List `901616152035` | `positive` → `55d9113f-d980-40c7-82c2-1adedf4f00a1`; `neutral` → `8cc8b1e6-f28d-46db-8433-540a32a6bd3a`; `negative` → `a8414f7d-7eec-4489-94de-6e4940ddd71a`; `unknown` → `b4619c72-677a-4a17-a944-a706fe7747f8` |
+| `channel` | `962d5211-b361-4109-b7be-fcd2aad31b43` | `drop_down` | List `901616152035` | `gmail` → `d59d6a42-5eb4-4739-a030-75fadb06a844`; `telegram` → `62e75c6d-ea38-4a77-8cee-020875204033`; `other` → `9b89fabf-27d9-47bc-9a1f-4fc35072fa70` |
+| `category` | `c9ae68bc-98db-42b6-82d4-17857294a013` | `drop_down` | List `901616152035` | `billing` → `ac7e60f5-9529-478d-b586-5f21691a152e`; `technical` → `aa5e04b7-dbcb-4841-b983-24c97499c74f`; `feature_request` → `dbd65fe5-832f-4008-9dde-abf47f0f2ce1`; `general` → `eae7d080-6a00-4c59-9e3d-04466103feca`; `other` → `ecabfb42-e043-4fd0-b0af-0a0fe72f6e1e` |
+
+The read-only audit workflow remained inactive and unpublished. It made zero writes, sent zero notifications, and did not attach the ClickUp credential to SupportFlow workflow `cyiCqsjLQdB7apjP`. ClickUp task creation and update behavior remain not-run.
 
 ## Slack Alert Contract
 

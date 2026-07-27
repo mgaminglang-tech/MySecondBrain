@@ -114,7 +114,7 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 | Telegram Bot API | DEV/test | New-message intake from a dedicated DEV bot and one private DEV chat | Bot/chat identities, trigger configuration, IDs, and credential Not Yet Assigned |
 | Airtable | DEV/test | Base `DEV - SupportFlow AI` (`appell78p9BIEek9J`), table `Tickets` (`tblI3JYon6kLqZPbP`), primary `ticket_id` | Manifest and storage/retry decisions approved; zero records; physical priority-choice rename and credential approval remain pending |
 | Google Gemini | DEV/test | Free-tier structured classification and draft generation after Phase 1 | Credential `AI TASK`; `Google Gemini(PaLM) API` / `googlePalmApi`; connection test passed; future model `models/gemini-3.1-flash-lite`; no API calls made and no workflow node configured |
-| ClickUp | DEV/test | List `DEV - SupportFlow AI - Ticket Queue`, assignee Mervin | Actual IDs and credential Not Yet Assigned |
+| ClickUp | DEV/test | Workspace `90161719575`; Space `90167621384`; Folder `901610630678`; List `DEV - SupportFlow AI - Ticket Queue` (`901616152035`); assignee Mervin | Read-only audit `7126` passed; List active, seven-field manifest verified, zero tasks, zero writes/notifications; fixture-test gate next |
 | Slack | DEV/test | Channel `#dev-supportflow-alerts` | Actual ID and credential Not Yet Assigned |
 
 Credential names may be documented later by reference only. Secret values must never be stored in the vault or Git.

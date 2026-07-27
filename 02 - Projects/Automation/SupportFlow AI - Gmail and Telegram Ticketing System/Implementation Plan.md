@@ -126,10 +126,11 @@ The first implementation phase, once separately approved after the read-only aud
 - [x] Complete the credential-free compatibility audit for Airtable, Gemini, ClickUp, Slack, Gmail, and Telegram.
 - [x] Complete the Gemini credential stage with saved credential `AI TASK` (`Google Gemini(PaLM) API` / `googlePalmApi`) and a passed connection test.
 - [x] Approve `models/gemini-3.1-flash-lite` as the future DEV classification model; defer model configuration until the Gemini workflow node is separately authorized and built.
-- [ ] Perform the ClickUp credential gate.
+- [x] Complete the ClickUp credential gate and isolated read-only audit: workflow `6yZO7DfXRD8yjsp9`, execution `7126`, PASS, inactive and unpublished, zero writes and notifications.
+- [ ] Perform the ClickUp fixture-test gate only.
 - [ ] Obtain separate approval before creating or connecting any remaining service credential.
 
-**Current status:** the Gemini credential stage is complete. Its API key and secrets are not stored in notes or Git; no Gemini API call, Gemini workflow-node configuration, real-data use, workflow activation, or production use has occurred. The next phase is the ClickUp credential gate.
+**Current status:** the ClickUp read-only credential audit is complete. It verified Workspace `90161719575`, Space `90167621384`, Folder `901610630678`, List `901616152035`, the three statuses, all seven custom-field definitions and option IDs, and an existing task count of zero. Audit workflow `6yZO7DfXRD8yjsp9` remained inactive and unpublished; execution `7126` passed with zero writes and notifications, and no ClickUp credential was attached to SupportFlow workflow `cyiCqsjLQdB7apjP`. The next action is the ClickUp fixture-test gate only.
 
 ## Phase 6 — Demo Evidence
 
