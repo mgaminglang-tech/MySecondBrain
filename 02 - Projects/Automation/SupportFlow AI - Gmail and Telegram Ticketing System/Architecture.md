@@ -1,11 +1,11 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-1-validated
+phase: phase-2-credential-gates
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
-updated: 2026-07-25
+updated: 2026-07-27
 tags:
   - client-automation
   - architecture
@@ -173,6 +173,7 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 | AD-017 | Schema version is exactly `0.1.0` | approved |
 | AD-018 | Fingerprint components use the literal `\u001F` separator | approved |
 | AD-019 | Gmail trigger is read-only and Telegram accepts new-message updates only | approved and node-compatible; configuration pending |
+| AD-020 | Gemini uses saved credential `AI TASK` (`Google Gemini(PaLM) API` / `googlePalmApi`) and future model `models/gemini-3.1-flash-lite`; model configuration waits for a separately authorized Gemini node build | approved |
 
 ## Reserved DEV Resource Names
 
@@ -188,8 +189,10 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 - Gmail mailbox: Dedicated DEV mailbox — Not Yet Assigned
 - Telegram bot and chat: Dedicated DEV bot and private DEV chat — Not Yet Assigned
 - Gemini project: Dedicated DEV Google AI Studio or Google Cloud project — Not Yet Assigned
+- Gemini n8n credential: `AI TASK` — `Google Gemini(PaLM) API` / `googlePalmApi`; connection test passed
+- Gemini future model: `models/gemini-3.1-flash-lite`; not configured in the workflow
 
-The Airtable base, table, and 43-field physical schema were verified read-only on 2026-07-25; the table contained zero records. Other external resource IDs and every n8n credential remain Not Yet Assigned and prohibited in Phase 1.
+The Airtable base, table, and 43-field physical schema were verified read-only on 2026-07-25; the table contained zero records. The Gemini credential stage is complete, but no Gemini node or API call exists. Other unresolved external resource IDs and credentials remain Not Yet Assigned.
 
 ## Approved Operational Defaults
 
@@ -217,6 +220,7 @@ The Airtable base, table, and 43-field physical schema were verified read-only o
 - Multiline logical arrays and objects use compact valid UTF-8 JSON with no code fences or pseudo-JSON. `ai_schema_valid` uses blank/not-called, true/valid, and false/returned-invalid conventions.
 - Read-only Airtable operations permit at most two retries with 2-second and 5-second backoff and a 15-second target timeout. Creates are never retried blindly; an ambiguous result requires an exact-dedupe recheck, and persistent failure stops downstream processing.
 - Gemini is available as Google Gemini 1.2 and as Google Gemini Chat Model 1.1. A Basic LLM Chain 1.9 plus Structured Output Parser 1.3 provides explicit JSON Schema validation; automatic parser repair must remain disabled because it would add an uncounted LLM call.
+- Credential `AI TASK` uses `googlePalmApi` and passed its connection test. `models/gemini-3.1-flash-lite` is approved for the future Gemini node; no Gemini request has been made.
 - The direct Google Gemini 1.2 text node supports JSON output, but its built-in Google Search, URL Context, and Code Execution controls must all be explicitly false.
 - ClickUp 1 supports task lookup/create/update and custom fields with `clickUpOAuth2Api` or `clickUpApi`.
 - Slack 2.5 supports controlled message posting with `slackOAuth2Api` or `slackApi`.

@@ -1,13 +1,13 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-1-validated
+phase: phase-2-credential-gates
 client: internal-demo
 owner: Mervin
 production_ready: false
 version: 0.1.0
 created: 2026-07-25
-updated: 2026-07-25
+updated: 2026-07-27
 tags:
   - client-automation
   - implementation
@@ -124,9 +124,12 @@ The first implementation phase, once separately approved after the read-only aud
 - [x] Approve DEV resource names, ownership, trigger boundaries, and review-cycle limits.
 - [x] Define `SF-FX-007` through `SF-FX-030`; do not execute them yet.
 - [x] Complete the credential-free compatibility audit for Airtable, Gemini, ClickUp, Slack, Gmail, and Telegram.
-- [ ] Obtain separate approval before creating credentials or connecting any service.
+- [x] Complete the Gemini credential stage with saved credential `AI TASK` (`Google Gemini(PaLM) API` / `googlePalmApi`) and a passed connection test.
+- [x] Approve `models/gemini-3.1-flash-lite` as the future DEV classification model; defer model configuration until the Gemini workflow node is separately authorized and built.
+- [ ] Perform the ClickUp credential gate.
+- [ ] Obtain separate approval before creating or connecting any remaining service credential.
 
-**Current status:** the Airtable DEV base `appell78p9BIEek9J`, `Tickets` table `tblI3JYon6kLqZPbP`, and 43-field manifest are verified read-only with zero records. JSON serialization, `ai_schema_valid`, retry, timeout, ambiguous-create, and persistent-failure decisions are approved. Airtable credential creation remains NO-GO until the four physical priority choices are renamed to the approved machine values and verified. No schema change, credential, connection, record action, or workflow change is authorized.
+**Current status:** the Gemini credential stage is complete. Its API key and secrets are not stored in notes or Git; no Gemini API call, Gemini workflow-node configuration, real-data use, workflow activation, or production use has occurred. The next phase is the ClickUp credential gate.
 
 ## Phase 6 — Demo Evidence
 

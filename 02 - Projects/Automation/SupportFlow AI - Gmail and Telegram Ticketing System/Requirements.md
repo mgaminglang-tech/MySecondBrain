@@ -1,11 +1,11 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-1-validated
+phase: phase-2-credential-gates
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
-updated: 2026-07-25
+updated: 2026-07-27
 tags:
   - client-automation
   - requirements
@@ -100,7 +100,7 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 - Sentiment never independently changes priority or triggers Slack alerts.
 - Deterministic business rules override AI classifications.
 - Google Gemini is the controlled DEV provider for a later phase; OpenAI is no longer approved. Phase 1 uses mocked structured classification output.
-- The exact free-tier model, structured-output settings, privacy boundary, current rate limits, billing requirement, and budget are recorded after the credential-free compatibility audit and before separately approved credential creation.
+- The approved future model is `models/gemini-3.1-flash-lite`. Exact structured-output node settings will be configured only when the Gemini workflow node is separately authorized and built.
 - Gemini input is structured JSON only and limited to dummy or sanitized text of at most 5,000 characters without attachment contents or direct personal identifiers.
 - Gemini tools, browsing, code execution, external actions, and paid usage are prohibited.
 - Draft responses remain review-only and are never sent automatically.
@@ -113,11 +113,13 @@ The complete approved logical model is in [[02 - Projects/Automation/SupportFlow
 | Gmail | DEV/test | Read-only controlled message intake from a dedicated DEV mailbox | Mailbox, label/filter, trigger configuration, IDs, and credential Not Yet Assigned |
 | Telegram Bot API | DEV/test | New-message intake from a dedicated DEV bot and one private DEV chat | Bot/chat identities, trigger configuration, IDs, and credential Not Yet Assigned |
 | Airtable | DEV/test | Base `DEV - SupportFlow AI` (`appell78p9BIEek9J`), table `Tickets` (`tblI3JYon6kLqZPbP`), primary `ticket_id` | Manifest and storage/retry decisions approved; zero records; physical priority-choice rename and credential approval remain pending |
-| Google Gemini | DEV/test | Free-tier structured classification and draft generation after Phase 1 | Dedicated project, exact model, IDs, and credential Not Yet Assigned |
+| Google Gemini | DEV/test | Free-tier structured classification and draft generation after Phase 1 | Credential `AI TASK`; `Google Gemini(PaLM) API` / `googlePalmApi`; connection test passed; future model `models/gemini-3.1-flash-lite`; no API calls made and no workflow node configured |
 | ClickUp | DEV/test | List `DEV - SupportFlow AI - Ticket Queue`, assignee Mervin | Actual IDs and credential Not Yet Assigned |
 | Slack | DEV/test | Channel `#dev-supportflow-alerts` | Actual ID and credential Not Yet Assigned |
 
 Credential names may be documented later by reference only. Secret values must never be stored in the vault or Git.
+
+The Gemini credential's API key and secrets remain only in the approved n8n credential store and are not recorded in these requirements. The completed connection test does not authorize Gemini calls, real data, workflow activation, or production use.
 
 ## Error and Exception Requirements
 

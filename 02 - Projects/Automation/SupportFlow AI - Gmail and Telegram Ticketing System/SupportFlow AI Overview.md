@@ -2,14 +2,14 @@
 type: project
 project_type: ai-automation
 status: in-progress
-phase: phase-1-validated
+phase: phase-2-credential-gates
 priority: medium
 client: internal-demo
 owner: Mervin
 production_ready: false
 version: 0.1.0
 created: 2026-07-25
-updated: 2026-07-25
+updated: 2026-07-27
 tags:
   - project
   - client-automation
@@ -27,7 +27,7 @@ Design a centralized DEV-only support-ticket process that converts dummy or sani
 ## Initial State
 
 - Status: in-progress
-- Current phase: Phase 1 credential-free skeleton validated
+- Current phase: Phase 2 controlled DEV integration — ClickUp credential gate
 - Owner and current approver: Mervin
 - Target date: Not Yet Defined
 - Production ready: false
@@ -126,14 +126,16 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 
 ## Approved Phase 2 Decisions
 
-- Provider: Google Gemini; Mervin accepts free-tier processing for sanitized dummy DEV fixtures only. The exact free-tier, structured-JSON-compatible model remains Not Yet Defined pending credential-grounded model-list validation.
+- Provider: Google Gemini; Mervin accepts free-tier processing for sanitized dummy DEV fixtures only. The approved future model is `models/gemini-3.1-flash-lite`.
+- Gemini credential stage: complete. The saved n8n credential is named `AI TASK`, uses `Google Gemini(PaLM) API` / `googlePalmApi`, and passed its connection test. Its API key and secrets are not stored in the vault or Git.
+- Gemini implementation state: the model will be configured only when the Gemini workflow node is separately authorized and built. No Gemini API call has been made.
 - Gemini boundary: dedicated DEV project and API key, sanitized text only, 5,000-character maximum, no attachment contents, direct identifiers, tools, browsing, code execution, external actions, or paid use.
 - Schema version: `0.1.0`.
 - Fingerprint input: normalized sender reference + `\u001F` + normalized subject + `\u001F` + normalized message text, then SHA-256.
 - Telegram mapping: `update_id` → `source_event_id`; `message_id` → `source_message_id`; `chat_id` → `source_conversation_id`; `reply_to_message_id` → `source_parent_message_id`, defaulting to null.
 - DEV limits per review cycle: 500 Gemini calls, 100 Airtable records, 100 ClickUp tasks, and 30 Slack alerts.
 - Gmail uses a future dedicated DEV mailbox and read-only trigger boundary. Telegram uses a future dedicated DEV bot and one private DEV chat with new-message updates only.
-- Airtable is assigned as base `appell78p9BIEek9J`, table `tblI3JYon6kLqZPbP`, with `ticket_id` as the primary field and `Asia/Manila` date-time display. Other resource IDs, all credentials, and the exact Gemini model remain Not Yet Assigned.
+- Airtable is assigned as base `appell78p9BIEek9J`, table `tblI3JYon6kLqZPbP`, with `ticket_id` as the primary field and `Asia/Manila` date-time display. The Gemini credential and future model are recorded above; other unresolved service resource IDs and credentials remain Not Yet Assigned.
 
 ## Phase 1 Evidence
 
@@ -149,7 +151,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 
 ## Next Action
 
-**NO-GO for Airtable credential creation until the approved physical priority rename is applied and verified.** JSON serialization, `ai_schema_valid`, retry, timeout, ambiguous-create, and persistent-failure decisions are now approved. No Airtable schema change, credential creation, connection, record action, workflow change, activation, or integration execution is authorized by this documentation update.
+Perform the **ClickUp credential gate only**: verify the exact credential type, least-privilege permissions, DEV workspace/list and assignee IDs, allowed actions, idempotency controls, and stop conditions. Do not create or connect a ClickUp credential, modify the workflow, execute an external action, activate the workflow, or make a production claim without separate explicit approval.
 
 ## Related Notes
 
