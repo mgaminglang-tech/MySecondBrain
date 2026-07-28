@@ -1,12 +1,12 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-1-validated
-testing_status: passed-for-phase-1
+phase: phase-2-controlled-dev-integration
+testing_status: passed-for-phase-1-and-clickup-fixture
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
-updated: 2026-07-25
+updated: 2026-07-28
 tags:
   - client-automation
   - testing
@@ -16,7 +16,7 @@ tags:
 
 ## Status
 
-- Testing status: **passed for Phase 1 seed suite; integration not-run**
+- Testing status: **passed for Phase 1 seed suite and ClickUp `SF-CUP-001`; remaining integration suite not-run**
 - Environment: DEV
 - Workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
 - Workflow state: built and inactive
@@ -131,6 +131,15 @@ Fixtures `SF-FX-007` through `SF-FX-030` are definitions only. Their status is `
 
 All six executions used manual mode and dummy data. Each final output reported matching expected fields, a valid ticket-ID pattern where applicable, a valid SHA-256 fingerprint where applicable, no credentials, no external nodes or calls, no customer reply, and no real-data use.
 
+## ClickUp Fixture Execution Evidence
+
+| Stage | Execution IDs | Actual result | Status |
+|---|---|---|---|
+| `SF-CUP-001` creation | `7127`, `7128`, `7129` | Airtable record `rechUtKgq1V0poegN` produced task `86d3ut8nt`; one task created; assigned to Mervin; status `to do`; Airtable changed only at `clickup_task_id` | passed |
+| `SF-CUP-001` replay | `7130`, `7131`, `7132` | Existing task `86d3ut8nt` reused; zero new tasks; final task count `1`; Airtable reference unchanged; zero ClickUp writes, notification-producing writes, or Airtable writes | passed |
+
+The isolated workflow `ths9GF0Z819GrHYe` remained inactive and unpublished. The retained task name is `[P3] SF-20260727-7A3F1C2D — billing — Dummy invoice question`, linked to ticket `SF-20260727-7A3F1C2D`. Production-grade concurrency locking remains deferred.
+
 ## Planned Test Cases
 
 | ID | Scenario | Expected result | Side effect | Status |
@@ -153,7 +162,7 @@ All six executions used manual mode and dummy data. Each final output reported m
 | TC-016 | Urgent or high-risk escalation | Approved rule and manual-review flag applied | One controlled Slack alert if eligible | not-run |
 | TC-017 | Non-escalated valid ticket | Stored and tasked without alert | One DEV ticket and task | not-run |
 | TC-018 | Airtable storage failure | Downstream task and alert suppressed | No downstream effect | not-run |
-| TC-019 | ClickUp task failure/replay | Failure visible; no duplicate task | Controlled retry only if approved | not-run |
+| TC-019 | ClickUp task failure/replay | Failure visible; no duplicate task | Controlled retry only if approved | replay passed; failure path not-run |
 | TC-020 | Slack alert failure/replay | Failure visible; no duplicate alert | Controlled retry only if approved | not-run |
 | TC-021 | Draft response boundary | Draft stored for review | No customer send | not-run |
 | TC-022 | Real-data or secret guard | Processing stopped and exposure not reproduced | None | not-run |

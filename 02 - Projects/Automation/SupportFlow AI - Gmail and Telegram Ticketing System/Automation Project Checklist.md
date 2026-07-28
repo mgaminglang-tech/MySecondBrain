@@ -1,13 +1,13 @@
 ---
 type: automation-project-checklist
 status: in-progress
-phase: phase-2-credential-gates
+phase: phase-2-controlled-dev-integration
 client: internal-demo
 project: SupportFlow AI - Gmail and Telegram Ticketing System
 owner: Mervin
 production_ready: false
 created: 2026-07-25
-updated: 2026-07-27
+updated: 2026-07-28
 tags:
   - client-automation
   - project-management
@@ -19,7 +19,7 @@ tags:
 Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]. A checked gate requires evidence and approval; creating a planning note does not complete its gate.
 
 > [!danger] Authorization boundary
-> Phase 1 build and six manual fixture runs were authorized and completed. The Gemini credential stage and isolated ClickUp read-only credential audit are complete. The ClickUp audit passed with zero writes and zero notifications; its credential was not attached to the SupportFlow workflow. This record does not authorize ClickUp task creation, fixture execution, workflow activation, production work, or any other external side effect.
+> Phase 1 build and six manual fixture runs were completed. The Gemini credential stage, isolated ClickUp read-only audit, and `SF-CUP-001` create/idempotency fixture are complete. The fixture created exactly one sanitized DEV task and its replay created none. This record does not authorize the next workflow build, additional fixture execution, workflow activation, production work, or any other external side effect.
 
 ## Project Record
 
@@ -27,14 +27,14 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Project owner: Mervin
 - Current approver: Mervin
 - Future client stakeholders: Not Yet Defined
-- Current phase: Phase 2 controlled DEV integration — ClickUp fixture-test gate
+- Current phase: Phase 2 controlled DEV integration — ClickUp branch build gate
 - Project status: in-progress
 - Production ready: false
 - DEV workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System` — built and inactive; ID `cyiCqsjLQdB7apjP`
 - STAGING workflow: not used
 - PROD workflow: not approved
-- Testing: Phase 1 seed suite passed; integration testing not-run
-- Updated: 2026-07-27
+- Testing: Phase 1 seed suite and ClickUp `SF-CUP-001` fixture passed; full integration testing not-run
+- Updated: 2026-07-28
 
 ## Lifecycle Gates
 
@@ -55,7 +55,7 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 | 9d. Airtable physical-schema gate | blocked-pending-schema-change | Base/table/43 fields verified with zero records; storage/retry decisions resolved; approved priority-choice rename remains unapplied | Mervin authorization, 2026-07-25 |
 | 9e. Gemini credential stage | complete | n8n credential `AI TASK`; `Google Gemini(PaLM) API` / `googlePalmApi`; connection test passed; no API call, workflow change, activation, real data, or production use | Mervin, 2026-07-27 |
 | 9f. ClickUp credential and read-only audit gate | complete | Isolated audit workflow `6yZO7DfXRD8yjsp9`; execution `7126`; PASS; hierarchy, statuses, seven custom fields, option IDs, and zero existing tasks verified; inactive and unpublished; zero writes and notifications | Mervin authorization, 2026-07-27 |
-| 9g. ClickUp fixture-test gate | next | Define the exact sanitized task fixtures, expected create/deduplication behavior, allowed record count, and retention before any ClickUp task write | Not Yet Defined |
+| 9g. ClickUp fixture-test gate | complete | `SF-CUP-001` creation executions `7127`–`7129` and replay executions `7130`–`7132`; one task created, replay reused it with zero writes, final count `1` | Mervin authorization, 2026-07-28 |
 | 10. Demo approval | pending | Verified demo evidence and disclosed limitations | Not Yet Defined |
 | 11. Production review | not-applicable-currently | Production is outside current scope | Not approved |
 | 12. Deployment and activation | not-applicable-currently | Separate production scope and approvals required | Not approved |
@@ -70,12 +70,11 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Not authorized after this completed batch: further workflow modification or execution, credentials, connections, external writes or sends, activation, integration, deployment, commit, or push
 - Decision owner: Mervin
 - Decision date: 2026-07-25
-- Next action: perform the ClickUp fixture-test gate only; do not create, update, assign, comment on, move, or delete any ClickUp task without separate explicit approval
+- Next action: build and wire the ClickUp branch into the main inactive SupportFlow workflow
 
 ## Deferred Beyond Phase 1
 
 - Slack resource ID and credential
-- ClickUp task-write fixture authorization and execution evidence
 - Gmail and Telegram triggers and credentials
 - Gemini workflow-node construction, exact structured-output configuration, and authorized API-call testing
 - Execution of defined fixtures `SF-FX-007` through `SF-FX-030`
@@ -100,10 +99,11 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Compatible node families found: Airtable 2.2, Google Gemini 1.2 / Gemini Chat Model 1.1, ClickUp 1, Slack 2.5, Gmail Trigger 1.4, and Telegram Trigger 1.3.
 - The saved inactive workflow now emits schema `0.1.0`, the approved unified source fields, and SHA-256 of the normalized sender, subject, and message text joined with `\u001F`.
 - Mervin accepts the documented Gemini free-tier privacy boundary for sanitized dummy DEV fixtures only; `models/gemini-3.1-flash-lite` is the approved future model and will be configured only when the Gemini workflow node is separately authorized and built.
-- Airtable base/table/field IDs are assigned and verified, with zero records and no n8n credential or connection.
+- Airtable base/table/field IDs are assigned and verified; approved retained DEV fixture evidence exists.
 - Resolved decisions: compact UTF-8 JSON serialization, `ai_schema_valid` blank/true/false handling, two read retries with 2-second and 5-second backoff, 15-second target timeout, exact-dedupe recheck after ambiguous create, and fail-closed persistent failure.
 - Remaining blocker: the four physical priority choices have not yet been renamed to the approved machine values.
-- Next action: perform the ClickUp fixture-test gate only. No ClickUp task operation is authorized.
+- ClickUp fixture creation and replay: **complete and passed**; task `86d3ut8nt` was created once and reused without another write.
+- Next action: build and wire the ClickUp branch into the main inactive SupportFlow workflow.
 
 ## Completed ClickUp Read-Only Credential Audit
 
@@ -119,6 +119,21 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Custom fields: seven required fields and all dropdown option IDs verified; canonical manifest is in [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Data Model#Verified ClickUp Physical Manifest|Data Model]]
 - Side effects: zero writes and zero notifications
 - SupportFlow isolation: no ClickUp credential attachment to workflow `cyiCqsjLQdB7apjP`
+
+## Completed ClickUp Fixture Evidence
+
+- Fixture: `SF-CUP-001`
+- Airtable record: `rechUtKgq1V0poegN`
+- Ticket ID: `SF-20260727-7A3F1C2D`
+- Task ID: `86d3ut8nt`
+- Task name: `[P3] SF-20260727-7A3F1C2D — billing — Dummy invoice question`
+- Task state: assigned to Mervin; status `to do`
+- Isolated workflow: `ths9GF0Z819GrHYe`; inactive and unpublished
+- Creation executions: pre-check `7127`, creation `7128`, verification `7129`
+- Creation result: exactly one task; Airtable updated only with `clickup_task_id: 86d3ut8nt`
+- Idempotency executions: pre-check `7130`, replay `7131`, final verification `7132`
+- Replay result: task `86d3ut8nt` reused; zero new tasks; final count `1`; Airtable reference unchanged; zero ClickUp writes, notification-producing writes, or Airtable writes
+- Known limitation: production-grade concurrency locking remains deferred
 
 ## Phase 1 Stop Conditions
 

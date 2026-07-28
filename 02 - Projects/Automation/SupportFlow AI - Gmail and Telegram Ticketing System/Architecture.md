@@ -1,11 +1,11 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-2-credential-gates
+phase: phase-2-controlled-dev-integration
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
-updated: 2026-07-27
+updated: 2026-07-28
 tags:
   - client-automation
   - architecture
@@ -16,7 +16,7 @@ tags:
 
 ## Status
 
-Implemented and validated architecture for the credential-free Phase 1 skeleton. Workflow `cyiCqsjLQdB7apjP` is inactive and contains no credentials, live triggers, external-service nodes, records, tasks, sends, or alerts.
+Implemented and validated architecture for the credential-free Phase 1 skeleton. Workflow `cyiCqsjLQdB7apjP` remains inactive. The separate inactive workflow `ths9GF0Z819GrHYe` created and then safely reused one sanitized ClickUp fixture task; the ClickUp branch is not yet wired into the main workflow.
 
 ## Phase 1 System Context
 
@@ -227,7 +227,7 @@ The Airtable base, table, and 43-field physical schema were verified read-only o
 - Credential `AI TASK` uses `googlePalmApi` and passed its connection test. `models/gemini-3.1-flash-lite` is approved for the future Gemini node; no Gemini request has been made.
 - The direct Google Gemini 1.2 text node supports JSON output, but its built-in Google Search, URL Context, and Code Execution controls must all be explicitly false.
 - ClickUp 1 supports task lookup/create/update and custom fields with `clickUpOAuth2Api` or `clickUpApi`.
-- The isolated ClickUp read-only credential audit passed. The canonical physical custom-field manifest is recorded in [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Data Model#Verified ClickUp Physical Manifest|Data Model]]. Task create/update and duplicate-prevention behavior remain not-run pending the ClickUp fixture-test gate.
+- The isolated ClickUp read-only credential audit passed. The canonical physical custom-field manifest is recorded in [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Data Model#Verified ClickUp Physical Manifest|Data Model]]. `SF-CUP-001` then created task `86d3ut8nt` once through executions `7127`–`7129`; replay executions `7130`–`7132` reused it with zero new tasks or notification-producing writes and a final count of one.
 - Slack 2.5 supports controlled message posting with `slackOAuth2Api` or `slackApi`.
 - Gmail Trigger 1.4 is polling-based, supports label/query filters, full message bodies with `simple=false`, and attachment download disabled.
 - Telegram Trigger 1.3 is webhook-based. Registration calls Telegram `setWebhook`, allows only one trigger per bot, and drops pending updates at this node version; test or production registration is an external mutation and is not approved.

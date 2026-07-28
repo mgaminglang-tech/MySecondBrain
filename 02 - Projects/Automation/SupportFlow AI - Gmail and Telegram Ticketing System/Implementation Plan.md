@@ -1,13 +1,13 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-2-credential-gates
+phase: phase-2-controlled-dev-integration
 client: internal-demo
 owner: Mervin
 production_ready: false
 version: 0.1.0
 created: 2026-07-25
-updated: 2026-07-27
+updated: 2026-07-28
 tags:
   - client-automation
   - implementation
@@ -127,10 +127,11 @@ The first implementation phase, once separately approved after the read-only aud
 - [x] Complete the Gemini credential stage with saved credential `AI TASK` (`Google Gemini(PaLM) API` / `googlePalmApi`) and a passed connection test.
 - [x] Approve `models/gemini-3.1-flash-lite` as the future DEV classification model; defer model configuration until the Gemini workflow node is separately authorized and built.
 - [x] Complete the ClickUp credential gate and isolated read-only audit: workflow `6yZO7DfXRD8yjsp9`, execution `7126`, PASS, inactive and unpublished, zero writes and notifications.
-- [ ] Perform the ClickUp fixture-test gate only.
+- [x] Complete the ClickUp `SF-CUP-001` create and idempotency fixture: creation executions `7127`–`7129`; replay executions `7130`–`7132`; one retained task; zero replay writes.
+- [ ] Build and wire the ClickUp branch into the main inactive SupportFlow workflow.
 - [ ] Obtain separate approval before creating or connecting any remaining service credential.
 
-**Current status:** the ClickUp read-only credential audit is complete. It verified Workspace `90161719575`, Space `90167621384`, Folder `901610630678`, List `901616152035`, the three statuses, all seven custom-field definitions and option IDs, and an existing task count of zero. Audit workflow `6yZO7DfXRD8yjsp9` remained inactive and unpublished; execution `7126` passed with zero writes and notifications, and no ClickUp credential was attached to SupportFlow workflow `cyiCqsjLQdB7apjP`. The next action is the ClickUp fixture-test gate only.
+**Current status:** the ClickUp read-only audit and `SF-CUP-001` fixture are complete. Isolated workflow `ths9GF0Z819GrHYe` remained inactive and unpublished. Executions `7127`–`7129` created and verified exactly one task, `86d3ut8nt`, and updated only the Airtable `clickup_task_id`. Executions `7130`–`7132` reused that task with zero new tasks, zero ClickUp writes, zero notification-producing writes, zero Airtable writes, and a final task count of one. Production-grade concurrency locking remains deferred. The next action is to build and wire the ClickUp branch into the main inactive SupportFlow workflow.
 
 ## Phase 6 — Demo Evidence
 

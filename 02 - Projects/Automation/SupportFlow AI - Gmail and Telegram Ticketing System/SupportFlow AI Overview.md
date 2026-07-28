@@ -2,14 +2,14 @@
 type: project
 project_type: ai-automation
 status: in-progress
-phase: phase-2-credential-gates
+phase: phase-2-controlled-dev-integration
 priority: medium
 client: internal-demo
 owner: Mervin
 production_ready: false
 version: 0.1.0
 created: 2026-07-25
-updated: 2026-07-27
+updated: 2026-07-28
 tags:
   - project
   - client-automation
@@ -27,7 +27,7 @@ Design a centralized DEV-only support-ticket process that converts dummy or sani
 ## Initial State
 
 - Status: in-progress
-- Current phase: Phase 2 controlled DEV integration — ClickUp fixture-test gate
+- Current phase: Phase 2 controlled DEV integration — ClickUp branch build gate
 - Owner and current approver: Mervin
 - Target date: Not Yet Defined
 - Production ready: false
@@ -151,6 +151,18 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 - Side effects: zero writes and zero notifications
 - Isolation: no ClickUp credential was attached to SupportFlow workflow `cyiCqsjLQdB7apjP`
 
+## ClickUp Fixture Evidence
+
+- Fixture: `SF-CUP-001`
+- Source Airtable record: `rechUtKgq1V0poegN`
+- Ticket ID: `SF-20260727-7A3F1C2D`
+- Created task: `[P3] SF-20260727-7A3F1C2D — billing — Dummy invoice question` (`86d3ut8nt`)
+- Task state: assigned to Mervin; status `to do`
+- Isolated workflow: `ths9GF0Z819GrHYe`; inactive and unpublished
+- Creation evidence: pre-check `7127`, creation `7128`, verification `7129`; exactly one task created; Airtable changed only at `clickup_task_id`
+- Idempotency evidence: pre-check `7130`, replay `7131`, final verification `7132`; existing task reused; zero new tasks; final task count `1`; Airtable reference unchanged; zero ClickUp writes, notification-producing writes, or Airtable writes
+- Known limitation: production-grade concurrency locking remains deferred
+
 ## Phase 1 Evidence
 
 - Workflow ID: `cyiCqsjLQdB7apjP`
@@ -165,7 +177,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 
 ## Next Action
 
-Perform the **ClickUp fixture-test gate only**. Define and review the exact sanitized fixtures, expected create and duplicate-prevention behavior, allowed task count, evidence requirements, and retention before any ClickUp task operation. Do not create, update, assign, comment on, move, or delete a task without separate explicit approval.
+Build and wire the ClickUp branch into the main inactive SupportFlow workflow.
 
 ## Related Notes
 

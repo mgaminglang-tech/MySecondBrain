@@ -1,11 +1,11 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-2-credential-gates
+phase: phase-2-controlled-dev-integration
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
-updated: 2026-07-27
+updated: 2026-07-28
 tags:
   - client-automation
   - limitations
@@ -45,7 +45,7 @@ These are current limitations after the Phase 1 credential-free skeleton build. 
 | LIM-022 | Native integration nodes do not expose the approved 15-second target timeout or exact 2s/5s backoff | Reliability contract requires explicit orchestration | Validate the approved retry design before connection or execution | Mervin | implementation deferred |
 | LIM-023 | Airtable priority choices still use `P1 critical` through `P4 low`, not the approved `p1-critical` through `p4-low` values | Direct writes can fail or silently diverge from the approved schema | Separately authorize the four schema-only renames, verify read-only, then repeat the gate | Mervin | blocking Airtable credential |
 | LIM-024 | Multiline JSON and nullable `ai_schema_valid` needed physical conventions | The decision blocker is resolved, but storage behavior is untested | Use the approved compact UTF-8 JSON and blank/true/false rules; validate only in an authorized integration batch | Mervin | resolved decision; not-run |
-| LIM-025 | ClickUp hierarchy, List, statuses, custom fields, and zero-task state are verified read-only, but task creation, update, notifications, and idempotency behavior are not tested | ClickUp integration readiness cannot be claimed | Perform the ClickUp fixture-test gate before authorizing any sanitized DEV task write | Mervin | read-only passed; writes not-run |
+| LIM-025 | One sanitized ClickUp create and replay passed, but the ClickUp branch is not wired into the main inactive workflow and the failure path remains not-run | End-to-end ClickUp integration readiness cannot be claimed | Build and validate the branch separately; keep production-grade concurrency locking deferred | Mervin | fixture passed; integration deferred |
 
 ## Current Safety Boundaries
 
