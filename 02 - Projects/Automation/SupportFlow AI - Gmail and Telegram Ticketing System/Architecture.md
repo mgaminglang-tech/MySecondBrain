@@ -1,7 +1,7 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-2-controlled-dev-integration
+phase: phase-2-architecture-alignment
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -16,9 +16,58 @@ tags:
 
 ## Status
 
-Implemented and validated architecture for the credential-free Phase 1 skeleton. Workflow `cyiCqsjLQdB7apjP` remains inactive. The separate inactive workflow `ths9GF0Z819GrHYe` created and then safely reused one sanitized ClickUp fixture task; the ClickUp branch is not yet wired into the main workflow.
+The approved target is a compact, inactive DEV architecture with one main workflow and one separate Error Handler. Documentation alignment is complete; n8n alignment and consolidated testing are not yet authorized or verified. Historical Phase 1 and isolated integration evidence below remains valid only for the boundary in which it was produced.
 
-## Phase 1 System Context
+## Approved Architecture Principles
+
+- One main workflow by default: `SupportFlow AI - Gmail and Telegram Ticketing System`.
+- One separate workflow: `SupportFlow - Error Handler`.
+- No Manual DEV Trigger.
+- Gmail Trigger and Telegram Trigger are the only intake entry points.
+- Both triggers remain inactive during the initial build and use sanitized DEV data only.
+- Use sub-workflows only for clearly reusable, duplicated, or oversized logic.
+- Target approximately 15–25 meaningful nodes and five to six labeled visual stages.
+- Keep retries, API-attempt orchestration, validation details, and fallbacks robust but visually compact.
+- Complete the full inactive structure and connection audit before consolidated testing.
+- Update project documentation and Git only at meaningful milestones.
+
+## Approved System Context
+
+```mermaid
+flowchart LR
+    G["Gmail Trigger<br/>inactive"] --> N["Normalize and Validate"]
+    T["Telegram Trigger<br/>inactive"] --> N
+    N --> A["Duplicate Prevention<br/>and Airtable Persistence"]
+    A --> AI["Gemini Classification<br/>and Draft Guidance"]
+    AI --> O["Operational Actions"]
+    O --> F["Final Result"]
+    N --> E["SupportFlow - Error Handler"]
+    A --> E
+    AI --> E
+    O --> E
+    E --> F
+```
+
+## Main Workflow Stages
+
+| Order | Visual stage | Meaningful responsibility |
+|---|---|---|
+| 1 | Intake | Real Gmail Trigger and real Telegram Trigger; inactive during build |
+| 2 | Normalize and Validate | Channel mapping, shared schema, required fields, unsupported-content rejection, sanitization |
+| 3 | Duplicate Prevention and Airtable Persistence | Exact source lookup, record reuse, safe create, ambiguity stop, reference preservation |
+| 4 | AI Classification and Draft Guidance | Gemini structured classification, schema validation, one retry, deterministic fallback, approved Airtable classification updates |
+| 5 | Operational Actions | ClickUp reuse/create, Gmail draft preparation, Telegram reply preparation, Slack payload preparation |
+| 6 | Final Result | One compact audit object with references and safe failure details |
+
+## Separate Error Handler
+
+`SupportFlow - Error Handler` remains inactive, unpublished, DEV-only, and approximately five to eight nodes. It receives fatal or stopped execution context, sanitizes the error, classifies `warning`, `error`, or `critical` severity, records a safe operational error when storage is available, prepares an unsent internal-alert payload, and returns a controlled result.
+
+Input contract: `ticket_id`, `source_channel`, `stage`, `error_code`, `sanitized_error_message`, `severity`, `retry_count`, optional `airtable_record_id`, optional `clickup_task_id`, and `execution_id`.
+
+Output contract: `handled`, `final_status`, `safe_next_action`, `retry_allowed`, and `alert_prepared`.
+
+## Historical Phase 1 System Context
 
 ```mermaid
 flowchart LR
@@ -39,11 +88,11 @@ No node in this boundary may call Gmail, Telegram, Airtable, ClickUp, Slack, Gem
 
 | Environment | Workflow name                                                | Data                                  | Credentials  | Active               |
 | ----------- | ------------------------------------------------------------ | ------------------------------------- | ------------ | -------------------- |
-| DEV         | `DEV - SupportFlow AI - Gmail and Telegram Ticketing System` | Dummy or sanitized                    | None         | No; built and inactive |
+| DEV         | `SupportFlow AI - Gmail and Telegram Ticketing System` | Dummy or sanitized                    | Approved DEV credentials only | No; architecture alignment pending |
 | STAGING     | Not Yet Defined                                              | Not Yet Defined                       | Not approved | No                   |
 | PROD        | Not approved                                                 | Real data prohibited in current scope | Not approved | No                   |
 
-## Deferred Integration Context
+## Historical Integration Concept — Superseded
 
 ```mermaid
 flowchart LR
@@ -73,7 +122,7 @@ flowchart LR
     R --> M
 ```
 
-## Proposed Logical Stages
+## Historical Detailed Stage Plan — Superseded
 
 | Order | Stage | Responsibility | Safe failure behavior |
 |---|---|---|---|
@@ -92,7 +141,7 @@ flowchart LR
 
 Exact integration nodes, credentials, external connections, and failure-workflow design remain **Not Yet Defined**. The Phase 1 credential-free node sequence is recorded below.
 
-## Implemented Phase 1 Node Sequence
+## Historical Implemented Phase 1 Node Sequence
 
 | Order | Node name | Type | Version |
 |---|---|---|---|
@@ -111,7 +160,7 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 | 13 | Apply Deterministic Business Rules | `n8n-nodes-base.code` | 2 |
 | 14 | Final Structured Output | `n8n-nodes-base.set` | 3.4 |
 
-## Approved Phase 1 Stages
+## Historical Approved Phase 1 Stages
 
 | Order | Stage | Phase 1 behavior |
 |---|---|---|
@@ -160,8 +209,8 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 | AD-004 | Store the ticket before creating task or alert effects | approved |
 | AD-005 | Fail closed when duplicate status is unknown | approved |
 | AD-006 | Keep customer response as an unsent reviewable draft | confirmed constraint |
-| AD-007 | One inactive DEV workflow with two controlled intake branches | approved design boundary |
-| AD-008 | Shared error workflow and notification pattern | Not Yet Defined |
+| AD-007 | One compact main workflow with Gmail and Telegram intake branches | approved |
+| AD-008 | One separate `SupportFlow - Error Handler` workflow | approved |
 | AD-009 | One Airtable `Tickets` table | approved |
 | AD-010 | Exact duplicates update existing records; content duplicates remain reviewable tickets | approved |
 | AD-011 | AI failure uses the approved non-escalating fallback | approved |
@@ -174,6 +223,11 @@ Exact integration nodes, credentials, external connections, and failure-workflow
 | AD-018 | Fingerprint components use the literal `\u001F` separator | approved |
 | AD-019 | Gmail trigger is read-only and Telegram accepts new-message updates only | approved and node-compatible; configuration pending |
 | AD-020 | Gemini uses saved credential `AI TASK` (`Google Gemini(PaLM) API` / `googlePalmApi`) and future model `models/gemini-3.1-flash-lite`; model configuration waits for a separately authorized Gemini node build | approved |
+| AD-021 | The approved architecture contains no Manual DEV Trigger | approved |
+| AD-022 | Main workflow targets approximately 15–25 meaningful nodes in six labeled stages | approved |
+| AD-023 | Complete the full inactive workflow and consolidated connection audit before testing | approved |
+| AD-024 | Consolidated testing uses Gmail happy path, Telegram happy path, duplicate replay, and failure/fallback case | approved |
+| AD-025 | Documentation and Git checkpoints occur only at meaningful milestones | approved |
 
 ## Reserved DEV Resource Names
 
@@ -214,7 +268,19 @@ The Airtable base, table, and 43-field physical schema were verified read-only o
 - Gmail Trigger: dedicated DEV mailbox, dummy/sanitized messages, approved label or search filter, read-only access, no send, draft, modification, label mutation, deletion, or attachment-content download.
 - Telegram Trigger: dedicated DEV bot, one private DEV chat, dummy new-message updates only, no edited/outbound messages, file downloads, attachment contents, admin permissions, or production chats.
 - Trigger node operation/version, polling or webhook behavior, activation requirements, lookback/pending-update handling, filtering, pagination, mapping, and idempotency must be verified in the credential-free compatibility audit.
-- No trigger may be added, connected, registered, executed, or activated under the current authorization.
+- This documentation approval does not authorize adding, connecting, registering, executing, or activating either trigger. A separate inactive-build authorization is required.
+
+## Milestone Documentation Policy
+
+Update the project notes and consider a Git checkpoint only when one of these milestones has verified evidence:
+
+1. approved architecture recorded
+2. complete inactive workflow structure built
+3. consolidated connection and configuration audit passed
+4. authorized consolidated test batch completed
+5. demo or production review decision recorded
+
+Do not record every small tool action, credential check, node edit, or retry attempt as a lifecycle milestone.
 
 ## Phase 2 Credential-Free Compatibility Findings
 
@@ -243,8 +309,8 @@ The saved inactive Phase 1 workflow now uses `schema_version: 0.1.0`; `source_ev
 - Reviewer: Mervin
 - Approval status: approved for Phase 1 boundary
 - Approval date: 2026-07-25
-- Build authorized: yes, Phase 1 only
-- Build status: completed and manually validated; workflow remains inactive
+- New architecture build authorized: no
+- Current status: documentation aligned; inactive n8n refactor and consolidated testing pending separate approval
 
 ## Related Notes
 

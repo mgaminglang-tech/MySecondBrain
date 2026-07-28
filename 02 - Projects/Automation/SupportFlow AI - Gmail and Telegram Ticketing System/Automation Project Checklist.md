@@ -1,7 +1,7 @@
 ---
 type: automation-project-checklist
 status: in-progress
-phase: phase-2-controlled-dev-integration
+phase: phase-2-architecture-alignment
 client: internal-demo
 project: SupportFlow AI - Gmail and Telegram Ticketing System
 owner: Mervin
@@ -19,7 +19,7 @@ tags:
 Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]. A checked gate requires evidence and approval; creating a planning note does not complete its gate.
 
 > [!danger] Authorization boundary
-> Phase 1 build and six manual fixture runs were completed. The Gemini credential stage, isolated ClickUp read-only audit, and `SF-CUP-001` create/idempotency fixture are complete. The fixture created exactly one sanitized DEV task and its replay created none. This record does not authorize the next workflow build, additional fixture execution, workflow activation, production work, or any other external side effect.
+> The clean SupportFlow architecture is approved for documentation only. This record does not authorize n8n modification, trigger connection or registration, workflow execution, additional fixtures, external writes or sends, workflow activation, production work, commit, or push.
 
 ## Project Record
 
@@ -27,13 +27,13 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Project owner: Mervin
 - Current approver: Mervin
 - Future client stakeholders: Not Yet Defined
-- Current phase: Phase 2 controlled DEV integration — ClickUp branch build gate
+- Current phase: Phase 2 architecture alignment — compact inactive full-build gate
 - Project status: in-progress
 - Production ready: false
-- DEV workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System` — built and inactive; ID `cyiCqsjLQdB7apjP`
+- DEV workflow: existing workflow `cyiCqsjLQdB7apjP` is inactive; alignment to working name `SupportFlow AI - Gmail and Telegram Ticketing System` and the approved compact architecture is pending
 - STAGING workflow: not used
 - PROD workflow: not approved
-- Testing: Phase 1 seed suite and ClickUp `SF-CUP-001` fixture passed; full integration testing not-run
+- Testing: historical Phase 1 and isolated ClickUp evidence passed; consolidated testing for the approved architecture is not-run
 - Updated: 2026-07-28
 
 ## Lifecycle Gates
@@ -43,12 +43,13 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 | 1. Discovery | complete | Approved Discovery Decision Pack recorded | Mervin, 2026-07-25 |
 | 2. Scope | complete | Version-one boundary and exclusions approved | Mervin, 2026-07-25 |
 | 3. Requirements | complete-for-phase-1 | Credential-free skeleton contracts approved | Mervin, 2026-07-25 |
-| 4. Architecture | complete-for-phase-1 | Exact Phase 1 boundary and prohibitions approved | Mervin, 2026-07-25 |
+| 4. Architecture | revised-and-approved | One main workflow, separate Error Handler, real Gmail/Telegram triggers, no Manual DEV Trigger, six stages | Mervin, 2026-07-28 |
 | 5. Pre-development review | complete | Phase 1 readiness review completed | Mervin, 2026-07-25 |
 | 6. Git checkpoint | pending | Separately authorized status/diff review and checkpoint decision | Not Yet Defined |
 | 7. Read-only MCP audit | complete | Required node types and versions confirmed compatible | Mervin authorization, 2026-07-25 |
-| 8. Inactive DEV build | complete-for-phase-1 | Workflow `cyiCqsjLQdB7apjP`, 14 approved nodes, inactive, no credentials | Mervin authorization, 2026-07-25 |
-| 9. Core release suite | complete-for-phase-1 | Initial executions `7107`–`7112` and schema-alignment rerun `7113`–`7118` both passed 6 of 6; integration suite remains not-run | Mervin authorization, 2026-07-25 |
+| 8. Inactive DEV build | pending-realignment | Historical Phase 1 skeleton evidence remains valid; compact 15–25-node full architecture is not yet built or verified | Separate authorization required |
+| 8a. Consolidated connection audit | pending | Full inactive structure, workflow references, credentials, mappings, and safe output paths must be validated before testing | Not Yet Defined |
+| 8b. Consolidated test suite | not-run | Gmail happy path, Telegram happy path, duplicate replay, and failure/fallback case | Separate authorization required |
 | 9a. Phase 2 decision resolution | complete | Gemini, fingerprint, schema, mapping, resource, fixture, trigger, and DEV-limit decisions recorded | Mervin, 2026-07-25 |
 | 9b. Phase 2 credential-free compatibility audit | complete | All six node families exist; schema migration, Gemini privacy/model validation, and resource assignment block credentials | Mervin authorization, 2026-07-25 |
 | 9c. Inactive schema alignment | complete | Workflow emits schema `0.1.0`, approved source mapping, and U+001F-composed SHA-256 input; executions `7113`–`7118` passed | Mervin authorization, 2026-07-25 |
@@ -70,15 +71,27 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Not authorized after this completed batch: further workflow modification or execution, credentials, connections, external writes or sends, activation, integration, deployment, commit, or push
 - Decision owner: Mervin
 - Decision date: 2026-07-25
-- Next action: build and wire the ClickUp branch into the main inactive SupportFlow workflow
+- Next action: historical only; superseded by the approved compact full-workflow build gate
 
 ## Deferred Beyond Phase 1
 
 - Slack resource ID and credential
-- Gmail and Telegram triggers and credentials
+- Gmail and Telegram credentials, registration, and controlled connection testing
 - Gemini workflow-node construction, exact structured-output configuration, and authorized API-call testing
 - Execution of defined fixtures `SF-FX-007` through `SF-FX-030`
 - Production-grade locking and all production work
+
+## Approved Architecture Milestone
+
+- One main workflow by default; target approximately 15–25 meaningful nodes.
+- One separate `SupportFlow - Error Handler` workflow; target approximately five to eight nodes.
+- No Manual DEV Trigger.
+- Real Gmail Trigger and Telegram Trigger only; both remain inactive until separately approved.
+- Six visual stages: Intake; Normalize and Validate; Duplicate Prevention and Airtable Persistence; AI Classification and Draft Guidance; Operational Actions; Final Result.
+- Build the complete inactive workflow before any consolidated execution.
+- Complete one connection/configuration audit before testing.
+- Consolidated test strategy: Gmail happy path, Telegram happy path, duplicate replay, and failure/fallback.
+- Documentation and Git checkpoints occur only at verified milestones, not after individual tool actions.
 
 ## Approved Phase 2 Control Boundary
 
@@ -103,7 +116,7 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - Resolved decisions: compact UTF-8 JSON serialization, `ai_schema_valid` blank/true/false handling, two read retries with 2-second and 5-second backoff, 15-second target timeout, exact-dedupe recheck after ambiguous create, and fail-closed persistent failure.
 - Remaining blocker: the four physical priority choices have not yet been renamed to the approved machine values.
 - ClickUp fixture creation and replay: **complete and passed**; task `86d3ut8nt` was created once and reused without another write.
-- Next action: build and wire the ClickUp branch into the main inactive SupportFlow workflow.
+- Next action: obtain explicit authorization to refactor the inactive main workflow and Error Handler to the approved compact architecture, then perform configuration and connection validation only.
 
 ## Completed ClickUp Read-Only Credential Audit
 
@@ -154,4 +167,4 @@ Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Stand
 - [x] [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Test Plan|Test Plan]]
 - [x] [[02 - Projects/Automation/SupportFlow AI - Gmail and Telegram Ticketing System/Known Limitations|Known Limitations]]
 
-These records remain the project documentation set. Phase 1 implementation and test claims are limited to the evidence recorded above; integration and production remain unverified.
+These records remain the project documentation set. Historical Phase 1 and isolated integration evidence remains limited to its original boundary. The newly approved architecture is in the build-pending phase; consolidated testing, demo, integration, and production readiness remain unverified.

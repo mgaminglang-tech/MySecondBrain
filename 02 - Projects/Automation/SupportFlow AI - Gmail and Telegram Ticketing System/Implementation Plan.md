@@ -1,7 +1,7 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-2-controlled-dev-integration
+phase: phase-2-architecture-alignment
 client: internal-demo
 owner: Mervin
 production_ready: false
@@ -18,18 +18,43 @@ tags:
 
 ## Objective
 
-Record the gated path and verified evidence for the inactive DEV Phase 1 workflow. Further implementation still requires separate authorization.
+Build the complete inactive SupportFlow DEV architecture as one readable main workflow plus one focused Error Handler, validate the full configuration and connections, and only then request authorization for consolidated testing.
 
 ## Development Boundaries
 
-- Workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
-- Current state: built and inactive; workflow ID `cyiCqsjLQdB7apjP`
+- Working workflow: `SupportFlow AI - Gmail and Telegram Ticketing System`
+- Current state: existing workflow `cyiCqsjLQdB7apjP` is inactive; compact architecture alignment is pending
 - Data: dummy or sanitized only
-- Credentials: not approved
+- Intake: real Gmail Trigger and Telegram Trigger only; no Manual DEV Trigger
+- Credentials: preserve approved DEV credentials; do not change or expose them
 - External side effects: not approved
 - Customer replies: prohibited
 - Production work: outside current scope
-- Testing: Phase 1 seed suite passed; integration testing not-run
+- Testing: historical evidence retained; consolidated testing for the new architecture is not-run
+
+## Approved Full-Build Sequence
+
+1. **Intake** — add real Gmail and Telegram triggers, keep both inactive, and remove the Manual DEV Trigger from the approved design.
+2. **Normalize and Validate** — normalize each channel, map the shared schema, validate required fields, reject unsupported attachments/media, and sanitize content.
+3. **Duplicate Prevention and Airtable Persistence** — perform exact source-message lookup, reuse one exact record, create only on no match, preserve references, and stop on ambiguity.
+4. **AI Classification and Draft Guidance** — use `AI TASK` with `models/gemini-3.1-flash-lite`, structured JSON, one retry, deterministic fallback, and approved Airtable classification updates.
+5. **Operational Actions** — create or reuse the ClickUp task and prepare Gmail, Telegram, and Slack outputs without sending them.
+6. **Final Result** — return one compact audit object containing successful references or safe failure details.
+
+The main canvas should contain approximately 15–25 meaningful nodes. Robust retry, validation, API-attempt, and fallback details should be consolidated rather than expanded into long visible chains.
+
+## Separate Error Handler Build
+
+Retain or create `SupportFlow - Error Handler` as an inactive, unpublished, DEV-only workflow of approximately five to eight nodes:
+
+1. receive stopped execution context
+2. normalize and sanitize error details
+3. classify `warning`, `error`, or `critical`
+4. record a safe operational error when storage is available
+5. prepare an unsent internal-alert payload
+6. return `handled`, `final_status`, `safe_next_action`, `retry_allowed`, and `alert_prepared`
+
+Authentication, billing, schema mismatch, and security issues never retry. Transient reads permit at most two retries; Gemini permits one retry; create/write actions never retry blindly.
 
 ## Phase 1 — Complete Discovery
 
@@ -73,7 +98,7 @@ Record the gated path and verified evidence for the inactive DEV Phase 1 workflo
 
 **Current status:** complete on 2026-07-25.
 
-## Phase 4 — Inactive DEV Build
+## Historical Phase 4 — Credential-Free DEV Build
 
 The first implementation phase, once separately approved after the read-only audit gate, is an inactive credential-free skeleton.
 
@@ -104,18 +129,20 @@ The first implementation phase, once separately approved after the read-only aud
 - Compatibility correction: Edit Fields raw JSON was changed from object form to runtime-compatible JSON-string form after execution `7106` failed with `jsonOutput?.startsWith is not a function`. This did not change scope or add a side effect; the complete suite was restarted afterward.
 - Final verification: inactive, no active version, no credentials, no external-service nodes
 
-## Phase 5 — Controlled Testing
+## Phase 5 — Consolidated Testing
 
-- [ ] Approve an exact Core Release Suite and fixture batch.
-- [ ] Execute only approved DEV tests.
-- [ ] Record execution IDs, expected and observed results, and allowed statuses.
-- [ ] Stop when failures make later results unreliable.
-- [ ] Clear temporary test data as required.
-- [ ] Confirm final inactive state.
+- [ ] Finish the complete inactive workflow and separate Error Handler.
+- [ ] Pass a consolidated connection/configuration audit with no broken active path.
+- [ ] Obtain explicit authorization for one consolidated batch.
+- [ ] Run Gmail happy path.
+- [ ] Run Telegram happy path.
+- [ ] Run duplicate replay.
+- [ ] Run one failure and deterministic-fallback case.
+- [ ] Record execution IDs, expected and observed results, permitted side effects, and final inactive state.
 
 **Gate:** critical tests pass with evidence and limitations are current.
 
-**Current status:** Phase 1 skeleton suite complete; the 30-fixture integration suite is not-run and not authorized.
+**Current status:** historical Phase 1 evidence is retained. The new consolidated suite is not-run and cannot begin until the complete compact build and connection audit pass.
 
 ## Phase 2 — Controlled DEV Integration Readiness
 
@@ -128,10 +155,22 @@ The first implementation phase, once separately approved after the read-only aud
 - [x] Approve `models/gemini-3.1-flash-lite` as the future DEV classification model; defer model configuration until the Gemini workflow node is separately authorized and built.
 - [x] Complete the ClickUp credential gate and isolated read-only audit: workflow `6yZO7DfXRD8yjsp9`, execution `7126`, PASS, inactive and unpublished, zero writes and notifications.
 - [x] Complete the ClickUp `SF-CUP-001` create and idempotency fixture: creation executions `7127`–`7129`; replay executions `7130`–`7132`; one retained task; zero replay writes.
-- [ ] Build and wire the ClickUp branch into the main inactive SupportFlow workflow.
+- [ ] Refactor and complete the full compact inactive architecture, including the approved ClickUp behavior.
 - [ ] Obtain separate approval before creating or connecting any remaining service credential.
 
-**Current status:** the ClickUp read-only audit and `SF-CUP-001` fixture are complete. Isolated workflow `ths9GF0Z819GrHYe` remained inactive and unpublished. Executions `7127`–`7129` created and verified exactly one task, `86d3ut8nt`, and updated only the Airtable `clickup_task_id`. Executions `7130`–`7132` reused that task with zero new tasks, zero ClickUp writes, zero notification-producing writes, zero Airtable writes, and a final task count of one. Production-grade concurrency locking remains deferred. The next action is to build and wire the ClickUp branch into the main inactive SupportFlow workflow.
+**Current status:** verified Airtable, Gemini credential, and ClickUp evidence is preserved. The next milestone is the separately authorized compact full-workflow build and consolidated connection audit. Production-grade concurrency locking remains deferred.
+
+## Milestone Documentation and Git Policy
+
+Update project notes and consider a Git checkpoint only after:
+
+- architecture approval
+- complete inactive build
+- consolidated connection/configuration audit
+- authorized consolidated test batch
+- demo or production review decision
+
+Do not document every small node edit, tool action, retry, credential check, or intermediate configuration attempt.
 
 ## Phase 6 — Demo Evidence
 
@@ -149,7 +188,7 @@ The first implementation phase, once separately approved after the read-only aud
 - Keep the workflow inactive throughout DEV.
 - Stop if real data, secrets, production access, or an unapproved destination appears.
 - Stop if ticket-ID, fingerprint, mocked duplicate, mocked AI, deterministic priority, or final-output behavior differs from the approved contract.
-- Stop if any Gmail/Telegram trigger, Airtable, ClickUp, Slack, Gemini connection, credential, API call, external effect, or activation is introduced.
+- Stop if a trigger is registered or activated, a workflow is executed before the consolidated test gate, an unapproved credential is changed, or any unapproved external write/send occurs.
 - Preserve the last validated DEV version before approved risky changes.
 - Never delete tickets, tasks, alerts, workflows, or evidence as a cleanup shortcut.
 

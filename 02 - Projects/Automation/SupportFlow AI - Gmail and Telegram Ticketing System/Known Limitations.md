@@ -1,7 +1,7 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-2-controlled-dev-integration
+phase: phase-2-architecture-alignment
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -15,7 +15,7 @@ tags:
 
 ## Status
 
-These are current limitations after the Phase 1 credential-free skeleton build. None is accepted for production, and no integration behavior is claimed.
+These are the current limitations while the project moves from historical Phase 1 evidence to the newly approved compact architecture. The documentation is aligned, but the inactive n8n implementation and consolidated tests are not yet verified against it. None is accepted for production.
 
 ## Limitation Register
 
@@ -46,6 +46,11 @@ These are current limitations after the Phase 1 credential-free skeleton build. 
 | LIM-023 | Airtable priority choices still use `P1 critical` through `P4 low`, not the approved `p1-critical` through `p4-low` values | Direct writes can fail or silently diverge from the approved schema | Separately authorize the four schema-only renames, verify read-only, then repeat the gate | Mervin | blocking Airtable credential |
 | LIM-024 | Multiline JSON and nullable `ai_schema_valid` needed physical conventions | The decision blocker is resolved, but storage behavior is untested | Use the approved compact UTF-8 JSON and blank/true/false rules; validate only in an authorized integration batch | Mervin | resolved decision; not-run |
 | LIM-025 | One sanitized ClickUp create and replay passed, but the ClickUp branch is not wired into the main inactive workflow and the failure path remains not-run | End-to-end ClickUp integration readiness cannot be claimed | Build and validate the branch separately; keep production-grade concurrency locking deferred | Mervin | fixture passed; integration deferred |
+| LIM-026 | The approved architecture removes the Manual DEV Trigger and uses real Gmail and Telegram triggers only | Historical manual-fixture evidence does not prove the new intake design | Complete the inactive full build and connection audit before testing | Mervin | build pending |
+| LIM-027 | The main workflow must be reduced to approximately 15–25 meaningful nodes in six visual stages | Existing implementation evidence is not sufficient to claim maintainability or alignment | Refactor only after explicit n8n authorization; validate the resulting graph without execution | Mervin | pending |
+| LIM-028 | `SupportFlow - Error Handler` requires the new compact input/output contract and severity handling | Fatal-path behavior is not yet verified against the approved design | Build the five-to-eight-node handler and validate every main-workflow stop path | Mervin | pending |
+| LIM-029 | Consolidated testing is intentionally deferred until the full inactive build and connection audit are complete | No current end-to-end architecture result exists | Run only the four approved consolidated scenarios after separate authorization | Mervin | not-run |
+| LIM-030 | Gmail and Telegram triggers have activation, polling, webhook, and credential side effects | Even DEV connection can mutate external trigger state or consume real messages | Use dedicated DEV resources and require separate connection, registration, and execution approval | Mervin | blocked pending authorization |
 
 ## Current Safety Boundaries
 
@@ -53,9 +58,12 @@ These are current limitations after the Phase 1 credential-free skeleton build. 
 - No real customer data, production credentials, or live destinations.
 - No automatic customer replies.
 - No activation, deployment, closure, deletion, or unapproved external side effects.
+- No Manual DEV Trigger in the approved target architecture.
+- Gmail and Telegram triggers may be designed and built only under a separate authorization and must remain inactive until testing is separately approved.
 - No portfolio screenshots until sanitized evidence exists.
 - Gemini may receive only approved dummy or sanitized structured JSON text. Credential `AI TASK` exists and passed its connection test, but no workflow node or Gemini API call is authorized or evidenced.
-- Phase 1 permits only mocked duplicate and AI results and a final structured output.
+- Historical Phase 1 evidence remains preserved but does not establish alignment with the new architecture.
+- Gmail, Telegram, and Slack outputs remain preparation-only during initial build and testing; no sends are approved.
 
 ## Future Review Triggers
 

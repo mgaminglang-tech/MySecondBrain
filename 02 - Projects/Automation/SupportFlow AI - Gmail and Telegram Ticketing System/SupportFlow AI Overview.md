@@ -2,7 +2,7 @@
 type: project
 project_type: ai-automation
 status: in-progress
-phase: phase-2-controlled-dev-integration
+phase: phase-2-architecture-alignment
 priority: medium
 client: internal-demo
 owner: Mervin
@@ -27,13 +27,13 @@ Design a centralized DEV-only support-ticket process that converts dummy or sani
 ## Initial State
 
 - Status: in-progress
-- Current phase: Phase 2 controlled DEV integration — ClickUp branch build gate
+- Current phase: Phase 2 architecture alignment — compact inactive full-build gate
 - Owner and current approver: Mervin
 - Target date: Not Yet Defined
 - Production ready: false
-- Canonical workflow name: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
-- Workflow state: built and inactive; workflow ID `cyiCqsjLQdB7apjP`
-- Testing state: Phase 1 seed suite passed; integration testing not-run
+- Working workflow name: `SupportFlow AI - Gmail and Telegram Ticketing System`
+- Workflow state: existing DEV workflow is inactive; alignment to the newly approved compact architecture is not yet authorized or verified
+- Testing state: historical Phase 1 and isolated ClickUp evidence is retained; consolidated testing for the new architecture is not-run
 - Data classification: dummy and sanitized test data only
 - External side effects: not approved
 - Production credentials, integrations, deployment, and activation: not approved
@@ -69,21 +69,22 @@ Both channels produce the same auditable ticket structure and follow a controlle
 - Automatic ticket closure or deletion
 - Full SLA enforcement, analytics dashboard, or customer portal
 
-## Planned Workflow
+## Approved Clean Architecture
+
+The project now uses one main workflow by default and one separate workflow named `SupportFlow - Error Handler`. The main canvas targets approximately 15–25 meaningful nodes arranged left to right in six visual stages. Sub-workflows are allowed only when logic is reusable, duplicated, or too large to maintain inline.
 
 ```text
-Gmail intake ─┐
-              ├→ Normalize → Validate → Generate ticket ID
-Telegram ─────┘              → Duplicate check
-                              → AI classification and draft
-                              → Apply deterministic rules
-                              → Store ticket
-                              → Create controlled ClickUp task
-                              → Send controlled Slack alert when eligible
-                              → Return audit summary
+Gmail Trigger ───┐
+                 ├→ Normalize and Validate
+Telegram Trigger ┘  → Duplicate Prevention and Airtable Persistence
+                    → Gemini Classification and Draft Guidance
+                    → ClickUp and Output Preparation
+                    → Final Audit Result
+
+Fatal or stopped paths → SupportFlow - Error Handler
 ```
 
-The credential-free portion of this architecture is implemented and validated only within the approved Phase 1 boundary. All integration stages remain proposed.
+There is no Manual DEV Trigger in the approved architecture. Gmail and Telegram are the only intake triggers. Both remain inactive during the initial build, use sanitized DEV inputs only, and converge into the same shared ticket-processing path.
 
 ## Success Criteria
 
@@ -116,13 +117,15 @@ The credential-free portion of this architecture is implemented and validated on
 
 ## Current Decision
 
-**GO — the Phase 1 credential-free skeleton meets its approved build and test boundary.** This decision is not integration, demo, production, deployment, or activation approval.
+**APPROVED ARCHITECTURE — implementation pending.** The clean one-main-workflow design and separate Error Handler are approved for documentation. This approval does not authorize n8n modification, workflow execution, trigger activation, external sends, production work, commit, or push.
 
-## Approved Phase 1 Boundary
+## Historical Phase 1 Boundary
 
 Manual Trigger → dummy Gmail and Telegram payloads → channel normalization → unified ticket → required-field validation → ticket ID and content fingerprint → mocked duplicate result → mocked AI classification and draft → deterministic rules → final structured output.
 
 Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemini connections, credentials, external side effects, real data, workflow activation, and production claims.
+
+This boundary is retained as historical evidence. It is superseded for future implementation by the approved clean architecture above, which removes the Manual DEV Trigger and requires the complete inactive workflow to be built before consolidated testing.
 
 ## Approved Phase 2 Decisions
 
@@ -177,7 +180,7 @@ Phase 1 prohibits Gmail or Telegram triggers, Airtable, ClickUp, Slack, or Gemin
 
 ## Next Action
 
-Build and wire the ClickUp branch into the main inactive SupportFlow workflow.
+Obtain explicit approval to refactor the inactive n8n implementation to the approved compact architecture: real-but-inactive Gmail and Telegram triggers, one shared six-stage main workflow, and the separate `SupportFlow - Error Handler`. Perform configuration and connection validation only; do not execute tests yet.
 
 ## Related Notes
 

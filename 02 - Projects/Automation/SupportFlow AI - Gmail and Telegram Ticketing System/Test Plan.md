@@ -1,8 +1,8 @@
 ---
 type: project-note
 status: in-progress
-phase: phase-2-controlled-dev-integration
-testing_status: passed-for-phase-1-and-clickup-fixture
+phase: phase-2-architecture-alignment
+testing_status: not-run-for-approved-architecture
 client: internal-demo
 owner: Mervin
 created: 2026-07-25
@@ -16,28 +16,41 @@ tags:
 
 ## Status
 
-- Testing status: **passed for Phase 1 seed suite and ClickUp `SF-CUP-001`; remaining integration suite not-run**
+- Testing status: **not-run for the newly approved compact architecture**
 - Environment: DEV
-- Workflow: `DEV - SupportFlow AI - Gmail and Telegram Ticketing System`
-- Workflow state: built and inactive
-- Workflow ID/version: `cyiCqsjLQdB7apjP` / `1e9a0fe9-314f-4c67-bce6-c303628508ef`
-- Credentials and destinations: not approved
+- Workflow: `SupportFlow AI - Gmail and Telegram Ticketing System`
+- Workflow state: existing workflow `cyiCqsjLQdB7apjP` is inactive; architecture alignment and connection audit are pending
+- Credentials and destinations: preserve approved DEV references; no new credential or destination action is authorized
 - Data: dummy or sanitized only
 - Planned fixture count: 30
 
-This note contains verified Phase 1 manual-test evidence only. It does not claim integration, performance, demo, or production readiness.
+Historical Phase 1 and isolated ClickUp evidence remains recorded below but does not validate the newly approved architecture. No integration, performance, demo, or production readiness is claimed.
 
 ## Entry Criteria
 
-- [x] Discovery and scope approved for Phase 1.
-- [x] Requirements and architecture approved for Phase 1.
-- [x] Exact Phase 1 schemas, enums, mocked duplicate rules, and escalation examples approved.
-- [x] Inactive DEV build separately authorized and validated.
-- [x] Six sanitized seed fixture IDs and scenarios approved.
-- [x] Mocked duplicate and AI behavior approved.
-- [x] No external side effects are allowed.
+- [x] Clean architecture documented and approved.
+- [ ] Complete inactive main workflow exists with Gmail and Telegram triggers and no Manual DEV Trigger.
+- [ ] Separate `SupportFlow - Error Handler` exists and matches its contract.
+- [ ] Full connection/configuration audit passes.
+- [ ] All workflow references, credentials, IDs, mappings, and stop paths resolve.
+- [ ] Gmail, Telegram, and Slack send actions remain absent, disabled, or mock-only.
+- [ ] Exact consolidated batch and allowed side effects receive separate approval.
+- [ ] Workflow remains inactive and unpublished immediately before execution.
 
-## Approved Fixture Plan
+## Consolidated Test Strategy
+
+Testing begins only after the entire inactive structure and connections are ready.
+
+| Order | Scenario | Required result | Initial external-send boundary |
+|---|---|---|---|
+| 1 | Gmail happy path | Shared schema, Airtable reference, Gemini classification, ClickUp reuse/create, Gmail draft payload, compact audit | No email or Slack send |
+| 2 | Telegram happy path | Same shared processing contract, Telegram references preserved, reply payload prepared | No Telegram or Slack send |
+| 3 | Duplicate replay | Exact Airtable/ClickUp references reused; no duplicate record or task | No new notification-producing write |
+| 4 | Failure and fallback | Approved stop or deterministic Gemini fallback; Error Handler returns controlled result | No external send |
+
+Each scenario must be run sequentially with dummy or sanitized DEV data. Stop the batch on real data, unexpected writes, authentication/billing/security failure, unresolved ambiguity, broken references, or workflow activation.
+
+## Historical Supporting Fixture Plan
 
 Thirty fabricated or irreversibly sanitized fixtures:
 
@@ -48,7 +61,7 @@ Thirty fabricated or irreversibly sanitized fixtures:
 - Gemini valid-output, malformed-output, timeout, quota, retry-exhaustion, and safe-fallback cases
 - four Airtable, ClickUp, Slack, replay, and workflow-state cases
 
-Fixture IDs `SF-FX-001` through `SF-FX-030` are reserved. The full thirty fixtures are required before integration testing, not before the skeleton build. Only `SF-FX-001` through `SF-FX-006` have been executed.
+Fixture IDs `SF-FX-001` through `SF-FX-030` remain reserved as supporting regression coverage. Only `SF-FX-001` through `SF-FX-006` have historical execution evidence; they must not be treated as the consolidated architecture test.
 
 ## Phase 1 Seed Fixtures
 
@@ -219,6 +232,9 @@ For each approved executed case, record:
 ## Approval
 
 - Test owner: Mervin
+- Approved architecture suite: Gmail happy path, Telegram happy path, duplicate replay, and failure/fallback
+- Approved architecture execution status: not-run
+- Execution authorization for the consolidated suite: Not Yet Defined
 - Phase 1 skeleton suite: `SF-FX-001` through `SF-FX-006`
 - Integration suite: `SF-FX-001` through `SF-FX-030`; fixtures `SF-FX-007` through `SF-FX-030` are defined but not-run
 - Plan approval date: 2026-07-25
