@@ -123,4 +123,4 @@ Duplicate this module into the project folder when production, performance, moni
 - [[Templates/Client Automation/Client Discovery Checklist|Client Discovery Checklist]]
 - [[Templates/Client Automation/Client Discovery - Integrations and Security Module|Client Discovery - Integrations and Security Module]]
 - [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]]
-- [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]
+- [[Standard Automation Project Workflow]]

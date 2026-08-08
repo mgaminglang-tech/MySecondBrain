@@ -72,6 +72,6 @@ YOUR_DATABASE_URL
 
 ## Related Notes
 
-- [[03 - Areas/Automation Operations/Secrets Management Policy|Secrets Management Policy]]
-- [[06 - SOPs/n8n/Rotate an API Credential|Rotate an API Credential]]
+- [[Credential and Secrets Management Standard]]
+- [[30 Systems/n8n/Rotate an API Credential|Rotate an API Credential]]
 - [[Templates/Client Automation/Deployment Checklist|Deployment Checklist]]

@@ -10,13 +10,13 @@ This folder contains reusable Obsidian templates for creating consistently struc
 
 Preserve template placeholders and avoid adding real credentials or sensitive information. Duplicate client-automation templates into the relevant project folder before use; update the project copy and keep the reusable source template unchanged.
 
-## General Templates
+## Framework Templates
 
-- [[Templates/Project|Project Template]]
-- [[Templates/Knowledge Note|Knowledge Note Template]]
-- [[Templates/SOP|SOP Template]]
+- [[Templates/Project Hub Template|Project Hub Template]]
+- [[Templates/Decision Note Template|Decision Note Template]]
+- [[Templates/Knowledge Note Template|Knowledge Note Template]]
+- [[Templates/System Standard Template|System Standard Template]]
 - [[Templates/AI Prompt|AI Prompt Template]]
-- [[Templates/Daily Note|Daily Note Template]]
 - [[Templates/Meeting Note|Meeting Note Template]]
 
 ## Client Automation Templates
@@ -50,5 +50,5 @@ Preserve template placeholders and avoid adding real credentials or sensitive in
 
 ## Related Notes
 
-- [[01 - Dashboard/Home|Home]]
-- [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]
+- [[Template Standard]]
+- [[30 Systems/Standard Automation Project Workflow|Standard Automation Project Workflow]]

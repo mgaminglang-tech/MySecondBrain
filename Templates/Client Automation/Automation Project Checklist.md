@@ -15,7 +15,7 @@ tags:
 
 ## How to Use This Template
 
-1. Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]].
+1. Follow [[Standard Automation Project Workflow]].
 2. Duplicate this checklist into every automation project folder.
 3. Use project documents for detailed rules; use this checklist only for lifecycle gates.
 4. Complete a gate only when its required evidence and approval exist.
@@ -167,7 +167,7 @@ tags:
 
 ## Related Notes
 
-- [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]
+- [[Standard Automation Project Workflow]]
 - [[Templates/Client Automation/Client Discovery Checklist|Client Discovery Checklist]]
 - [[Templates/Client Automation/Client Discovery - Integrations and Security Module|Client Discovery - Integrations and Security Module]]
 - [[Templates/Client Automation/Client Discovery - Operations and Support Module|Client Discovery - Operations and Support Module]]

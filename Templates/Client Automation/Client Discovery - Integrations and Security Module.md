@@ -115,4 +115,4 @@ Duplicate this module into the project folder when external tools, APIs, webhook
 - [[Templates/Client Automation/Client Discovery Checklist|Client Discovery Checklist]]
 - [[Templates/Client Automation/Client Discovery - Operations and Support Module|Client Discovery - Operations and Support Module]]
 - [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]]
-- [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]
+- [[Standard Automation Project Workflow]]

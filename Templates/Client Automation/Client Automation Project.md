@@ -57,7 +57,7 @@ Duplicate files into the project folder before use. Keep detailed module content
 
 ## Project Workflow
 
-Follow [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]. Use the project copy of [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]] to record gate evidence, approvals, blockers, owners, and next actions.
+Follow [[Standard Automation Project Workflow]]. Use the project copy of [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]] to record gate evidence, approvals, blockers, owners, and next actions.
 
 Detailed behavior belongs in Requirements and Architecture. Executable expectations and evidence belong in Test Plan and Test Results.
 
@@ -88,5 +88,5 @@ DEV uses dummy or sanitized data and approved non-production access. Real-client
 
 ## Related Operations
 
-- [[03 - Areas/Automation Operations/Automation Operations|Automation Operations]]
-- [[06 - SOPs/n8n/Start a New Client Automation|Start a New Client Automation]]
+- [[Standard Automation Project Workflow]]
+- [[30 Systems/n8n/Start a New Client Automation|Start a New Client Automation]]

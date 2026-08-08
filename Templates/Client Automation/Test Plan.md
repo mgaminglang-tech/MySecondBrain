@@ -83,4 +83,4 @@ Define repeatable tests and acceptance criteria before execution.
 
 - [[Templates/Client Automation/Requirements|Requirements]]
 - [[Templates/Client Automation/Issues and Fixes|Issues and Fixes]]
-- [[06 - SOPs/n8n/Build and Test a DEV Workflow|Build and Test a DEV Workflow]]
+- [[30 Systems/n8n/Build and Test a DEV Workflow|Build and Test a DEV Workflow]]

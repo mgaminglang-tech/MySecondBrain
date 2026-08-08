@@ -85,6 +85,6 @@ Codex and MCP must not modify PROD unless the specific change is explicitly appr
 
 ## Related Notes
 
-- [[03 - Areas/Automation Operations/Development and Production Policy|Development and Production Policy]]
+- [[Standard Automation Project Workflow]]
 - [[Templates/Client Automation/Backup and Restore|Backup and Restore]]
-- [[06 - SOPs/n8n/Promote DEV Workflow to PROD|Promote DEV Workflow to PROD]]
+- [[30 Systems/n8n/Promote DEV Workflow to PROD|Promote DEV Workflow to PROD]]

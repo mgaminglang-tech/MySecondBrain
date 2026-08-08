@@ -79,4 +79,4 @@ Define how the approved automation will be built and reviewed in DEV.
 
 - [[Templates/Client Automation/Architecture|Architecture]]
 - [[Templates/Client Automation/Test Plan|Test Plan]]
-- [[06 - SOPs/n8n/Build and Test a DEV Workflow|Build and Test a DEV Workflow]]
+- [[30 Systems/n8n/Build and Test a DEV Workflow|Build and Test a DEV Workflow]]

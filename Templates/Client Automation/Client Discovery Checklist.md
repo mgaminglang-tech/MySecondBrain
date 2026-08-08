@@ -242,7 +242,7 @@ Duplicate only the relevant modules into the project folder and link their appro
 
 ## Related Notes
 
-- [[06 - SOPs/Project Management/Standard Automation Project Workflow|Standard Automation Project Workflow]]
+- [[Standard Automation Project Workflow]]
 - [[Templates/Client Automation/Automation Project Checklist|Automation Project Checklist]]
 - [[Templates/Client Automation/Client Discovery - Integrations and Security Module|Client Discovery - Integrations and Security Module]]
 - [[Templates/Client Automation/Client Discovery - Operations and Support Module|Client Discovery - Operations and Support Module]]

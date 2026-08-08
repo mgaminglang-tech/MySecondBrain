@@ -69,4 +69,4 @@ Record sanitized evidence only. Never include secrets or unredacted client paylo
 
 - [[Templates/Client Automation/Test Results|Test Results]]
 - [[Templates/Client Automation/Known Limitations|Known Limitations]]
-- [[06 - SOPs/n8n/Handle a Failed Production Workflow|Handle a Failed Production Workflow]]
+- [[30 Systems/n8n/Handle a Failed Production Workflow|Handle a Failed Production Workflow]]

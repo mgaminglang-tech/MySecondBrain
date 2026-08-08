@@ -61,7 +61,7 @@ Codex and MCP must not modify PROD without explicit approval.
 - Rotation owner:
 - Review schedule:
 - Revocation process:
-- Related SOP: [[06 - SOPs/n8n/Rotate an API Credential|Rotate an API Credential]]
+- Related SOP: [[30 Systems/n8n/Rotate an API Credential|Rotate an API Credential]]
 
 ## Backup and Recovery
 
@@ -77,7 +77,7 @@ Codex and MCP must not modify PROD without explicit approval.
 - Containment authority:
 - Communication owner:
 - Recovery target:
-- Related SOP: [[06 - SOPs/n8n/Handle a Failed Production Workflow|Handle a Failed Production Workflow]]
+- Related SOP: [[30 Systems/n8n/Handle a Failed Production Workflow|Handle a Failed Production Workflow]]
 
 ## Known Limitations
 
@@ -93,4 +93,4 @@ Codex and MCP must not modify PROD without explicit approval.
 
 - [[Templates/Client Automation/Client Handover|Client Handover]]
 - [[Templates/Client Automation/Backup and Restore|Backup and Restore]]
-- [[03 - Areas/Automation Operations/Development and Production Policy|Development and Production Policy]]
+- [[Standard Automation Project Workflow]]

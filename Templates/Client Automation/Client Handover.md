@@ -91,4 +91,4 @@ Never include passwords, keys, tokens, or secret values.
 
 - [[Templates/Client Automation/Maintenance Guide|Maintenance Guide]]
 - [[Templates/Client Automation/Known Limitations|Known Limitations]]
-- [[06 - SOPs/n8n/Client Automation Handover|Client Automation Handover]]
+- [[30 Systems/n8n/Client Automation Handover|Client Automation Handover]]

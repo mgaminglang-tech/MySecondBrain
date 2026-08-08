@@ -94,4 +94,4 @@ tags:
 
 - [[Templates/Client Automation/Client Automation Project|Client Automation Project]]
 - [[Templates/Client Automation/Architecture|Architecture]]
-- [[03 - Areas/Automation Operations/Client Data Handling Policy|Client Data Handling Policy]]
+- [[Client Data Handling Standard]]

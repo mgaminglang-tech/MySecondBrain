@@ -86,6 +86,6 @@ Do not change `Result` to passed without evidence.
 
 ## Related Notes
 
-- [[03 - Areas/Automation Operations/Backup Policy|Backup Policy]]
-- [[06 - SOPs/n8n/Export and Version an n8n Workflow|Export and Version an n8n Workflow]]
-- [[06 - SOPs/n8n/Restore an n8n Workflow from Backup|Restore an n8n Workflow from Backup]]
+- [[Backup and Recovery Standard]]
+- [[30 Systems/n8n/Export and Version an n8n Workflow|Export and Version an n8n Workflow]]
+- [[30 Systems/n8n/Restore an n8n Workflow from Backup|Restore an n8n Workflow from Backup]]
